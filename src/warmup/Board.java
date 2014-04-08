@@ -138,7 +138,7 @@ public class Board {
                     int x = (int) Math.round(b.getX());
                     int y = (int) Math.round(b.getY());
                     if (x == i && y == j) {
-                        boardRep = boardRep + ".";
+                        boardRep = boardRep + "*";
                     }
 
                     else {
