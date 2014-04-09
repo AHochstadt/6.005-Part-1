@@ -14,8 +14,14 @@ public class Main {
         
         Board testBoard = new Board(20, 20, balls);
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             System.out.println(testBoard.update(0.05));
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }       
     }
 }
