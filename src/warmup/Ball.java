@@ -1,14 +1,14 @@
 package warmup;
 
 public class Ball {
-    private double x; //from left 
-    private double y; //from top 
-    private double angle; // x axis = 0, due north = 90, in degrees
-    private double velocity; //in spaces per second
+    private double x; // ball's position as measured from left wall 
+    private double y; // ball's position as measured from top wall
+    private double angle; // angle of ball's current trajectory; positive x axis = 0, due north = 90 (degrees)
+    private double velocity; // ball's current velocity (spaces per second)
     
-    Ball(double x, double y, double angle, double velocity) {
+    public Ball(double x, double y, double angle, double velocity) {
         this.x = x;
-        this.y= y;
+        this.y = y;
         this.angle = angle;
         this.velocity = velocity;
 

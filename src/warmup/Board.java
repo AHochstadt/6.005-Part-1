@@ -3,7 +3,7 @@ package warmup;
 public class Board {
     private final int height;
     private final int width;
-    private final Ball[] components;
+    private final Ball[] components; // the balls that are active on this Board
     
     Board(int h, int w, Ball[] components) {
         this.height = h;
@@ -17,6 +17,7 @@ public class Board {
      */
     public String update(double timestep) {
     	for (Ball ball: components){
+    	    
     		double oldX = ball.getX();
     		double oldY = ball.getY();
     		double oldAngle = ball.getAngle();
@@ -25,6 +26,7 @@ public class Board {
     		double newX = oldX + deltaX;
     		double newY = oldY + deltaY; 
     		double newAngle = oldAngle; //initializes new angle assuming no walls have been hit and therefore angle has not changed
+    		
     		while ((newX<0.0 || newX>this.width) || (newY<0.0 || newY>this.height)){ //will fix newX, newY and/or newAngle if walls have been hit
     			
     			//this while loop determines the first wall hit, then changes the x, y, and angle accordingly
@@ -33,7 +35,8 @@ public class Board {
     			String leftOrRightWall = "unknown";
     			String upperOrLowerWall = "unknown";
     			String wallHitFirst = "unknown";
-    			if (newX<0.0){ //we will determine whether the we are out of bounds to the left or to the right
+    			
+    			if (newX<0.0){ //we will determine whether we are out of bounds to the left or to the right
     				leftOrRightWall = "left";
     			} else if (newX>this.width){
     				leftOrRightWall = "right";
@@ -41,8 +44,8 @@ public class Board {
     				leftOrRightWall = "neither";
     			}
     			
-    			if (newY<0.0){ //we will determine whether the we are out of bounds up or down
-    				upperOrLowerWall = "upper";
+    			if (newY<0.0){ //we will determine whether we are out of bounds up or down
+    				upperOrLowerWall = "upper"; // negative y-coordinate corresponds to being ABOVE our top wall
     			} else if (newY>this.height){
     				upperOrLowerWall = "lower";
     			} else {
@@ -79,6 +82,7 @@ public class Board {
         return this.getBoardRep();
     }
     
+    // return a string stating which wall (left, right, upper, lower) the ball hits first
     private String determineFirstHitWall(String upperOrLowerWall, String leftOrRightWall, double newX, double newY, double newAngle, double velocity) {
     	double velX = velocity*Math.cos(newAngle);
     	double velY = -1*velocity*Math.sin(newAngle);
@@ -109,7 +113,7 @@ public class Board {
     		}
     	}
     	
-    	if (leftOrRightWall.equals("right") && upperOrLowerWall.equals("upper")){//we are too far both left and up
+    	if (leftOrRightWall.equals("right") && upperOrLowerWall.equals("upper")){//we are too far both right and up
     		if (((newX-this.width)/velX)>(newY/velY)){ //right wall hit first
     			return "right";
     		} else {
@@ -117,7 +121,7 @@ public class Board {
     		}
     	}
     	
-    	if (leftOrRightWall.equals("left") && upperOrLowerWall.equals("lower")){//we are too far both left and down
+    	if (leftOrRightWall.equals("right") && upperOrLowerWall.equals("lower")){//we are too far both left and down
     		if (((newX-this.width)/velX)>((newY-this.height)/velY)){//right wall hit first
     			return "right";
     		} else {
@@ -126,28 +130,34 @@ public class Board {
     	}
 		return "this string should never be returned";
 	}
+    
 	/**
      * 
-     * @return String representation of the boards current state
+     * @return String representation of the board's current state
      */
     public String getBoardRep() {
         String boardRep = ""; 
+        
         for (int j = 0; j < height; j++) {
-            for (int i = 0; i <width; i++) {
+            for (int i = 0; i < width; i++) {
                 for (Ball b: components) {
                     int x = (int) Math.round(b.getX());
                     int y = (int) Math.round(b.getY());
+                    // print a ball at the current position
                     if (x == i && y == j) {
                         boardRep = boardRep + "*";
                     }
-
+                    // print a wall piece
+                    else if (j == 0 || j == this.height - 1 || i == 0 || i == this.width - 1) {
+                        boardRep = boardRep + ".";
+                    }
+                    // print empty space
                     else {
                         boardRep = boardRep + " ";
                     }
                 }
-
-                boardRep = boardRep + "\n";
             }
+            boardRep = boardRep + "\n";
         }
         return boardRep;
     }
