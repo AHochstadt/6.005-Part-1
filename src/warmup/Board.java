@@ -21,13 +21,13 @@ public class Board {
     		double oldX = ball.getX();
     		double oldY = ball.getY();
     		double oldAngle = ball.getAngle();
-    		double deltaX = timestep*ball.getVelocity()*Math.cos(ball.getAngle());
-    		double deltaY = -1*timestep*ball.getVelocity()*Math.sin(ball.getAngle()); //*-1 because we define +y to be in the downward direction
+    		double deltaX = timestep*ball.getVelocity()*Math.cos(Math.toRadians(ball.getAngle()));
+    		double deltaY = -1*timestep*ball.getVelocity()*Math.sin(Math.toRadians(ball.getAngle())); //*-1 because we define +y to be in the downward direction
     		double newX = oldX + deltaX;
     		double newY = oldY + deltaY; 
     		double newAngle = oldAngle; //initializes new angle assuming no walls have been hit and therefore angle has not changed
     		
-    		while ((newX<0.0 || newX>this.width) || (newY<0.0 || newY>this.height)){ //will fix newX, newY and/or newAngle if walls have been hit
+    		if ((newX<0.0 || newX>this.width) || (newY<0.0 || newY>this.height)){ //will fix newX, newY and/or newAngle if walls have been hit
     			
     			//this while loop determines the first wall hit, then changes the x, y, and angle accordingly
     			//after that it determines the next wall hit and so on until we reach a valid position in the board
@@ -55,6 +55,7 @@ public class Board {
     			wallHitFirst = determineFirstHitWall(upperOrLowerWall, leftOrRightWall, newX, newY, newAngle, ball.getVelocity());
     			
     			if (!wallHitFirst.equals("none")){
+    				System.out.println(wallHitFirst);
     				if(wallHitFirst.equals("upper")){
     					newY = 0.0 - newY;
     					newAngle = 360.0 - newAngle;
@@ -84,8 +85,8 @@ public class Board {
     
     // return a string stating which wall (left, right, upper, lower) the ball hits first
     private String determineFirstHitWall(String upperOrLowerWall, String leftOrRightWall, double newX, double newY, double newAngle, double velocity) {
-    	double velX = velocity*Math.cos(newAngle);
-    	double velY = -1*velocity*Math.sin(newAngle);
+    	double velX = velocity*Math.cos(Math.toRadians(newAngle));
+    	double velY = -1*velocity*Math.sin(Math.toRadians(newAngle));
     	
     	if (upperOrLowerWall.equals("neither") && leftOrRightWall.equals("neither")){ //we are not out of bounds
 			return "none";
