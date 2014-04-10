@@ -40,7 +40,7 @@ public class Board {
     				leftOrRightWall = "left";
     			} else if (newX>this.width){
     				leftOrRightWall = "right";
-    			} else {
+    			} else { 
     				leftOrRightWall = "neither";
     			}
     			
