@@ -1,3 +1,5 @@
+import com.sun.java.util.jar.pack.Package.File;
+
 
 /**
 * A class representing a users Pingball board
@@ -9,7 +11,12 @@ public class Board {
     private final Flipper[] flippers;
     private Ball[] balls; //not final becuase balls can be added 
     
-    Board() {
+    /**
+     * creates a new instance of board from the input file
+     * @param boardFile a Pingball Board File specifying the board
+     */
+    
+    Board(File boardFile) {
         //TODO
 
     }
