@@ -2,13 +2,14 @@
 public interface Stationary {
     
     /**
-     * returns the bounds on the location (all parts of the object are contained within the region)
+     * returns true if the ball is within the bounds of this iten 
      */
-    public void getLocationBounds();
+    public boolean inBounds(Ball b);
     
     /**
      * returns the new speed and angle for the ball 
      */
-    public void getEffect();
+    public void getEffect(Ball b);
+
 
 }
