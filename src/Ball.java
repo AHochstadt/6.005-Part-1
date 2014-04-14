@@ -7,7 +7,7 @@
 * x: the current x-coordinate of the balls origin
 * y: the current y-coordinate of the balls origin
 * v: the current speed of the ball
-* theta: the angle of the balls current trajectory (measured w.r.t. + x-axis)
+* theta: the angle of the ball's current trajectory (measured w.r.t. + x-axis)
 * 
 * Rep Invariant: Ball must be in bounds of current board 
 **/
@@ -81,6 +81,13 @@ public class Ball {
      */
     public double getVelocity() {
         return this.velocity;
+    }
+    
+    /**
+     * ensure the rep invariant of Ball is preserved
+     */
+    private void checkRep() {
+        
     }
 
 }

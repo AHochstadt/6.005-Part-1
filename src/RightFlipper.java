@@ -21,7 +21,7 @@ public class RightFlipper implements Flipper{
     }
     /**
      * moves the moving end of the flipper
-     * flipper will move at a constant rotational velocity to be 90 degrees away from it's starting position.  
+     * flipper will move at a constant rotational velocity to be 90 degrees away from its starting position.  
      * flipper will never move outside of the bounding box 
      */
     public void move() {
@@ -69,5 +69,12 @@ public class RightFlipper implements Flipper{
      */
     public void getEffect(Ball b) {
         //TODO
+    }
+    
+    /**
+     * ensure the rep invariant of Right Flipper is preserved
+     */
+    private void checkRep() {
+        
     }
 }

@@ -4,13 +4,11 @@
  * 
  * An interface for stationary items.
  * 
- * Rep Invarient: position must not change 
- *
  */
 public interface Stationary {
     
     /**
-     * returns true if the ball is within the bounds of this iten 
+     * returns true if the ball is within the bounds of this item 
      */
     public boolean inBounds(Ball b);
     
