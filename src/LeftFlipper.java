@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Lauren 
+ * 
+ * A class representing a left flipper
+ * 
+ * Rep Invariaent: flipper remains within the bounding box 
+ *
+ */
 public class LeftFlipper implements Flipper {
     private final float xOrig;
     private final float yOrig;

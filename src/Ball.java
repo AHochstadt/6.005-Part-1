@@ -1,22 +1,29 @@
 
 /**
+ * 
+ * @author Lauren 
+ * 
 * A class representing a pingball
 * x: the current x-coordinate of the balls origin
 * y: the current y-coordinate of the balls origin
 * v: the current speed of the ball
 * theta: the angle of the balls current trajectory (measured w.r.t. + x-axis)
+* 
+* Rep Invariant: Ball must be in bounds of current board 
 **/
 public class Ball {
     private double x; // ball's position as measured from left wall 
     private double y; // ball's position as measured from top wall
     private double angle; // angle of ball's current trajectory; positive x axis = 0, due north = 90 (degrees)
     private double velocity; // ball's current velocity (spaces per second)
+    private String board; //board that the ball is currently on 
     
-    public Ball(double x, double y, double angle, double velocity) {
+    public Ball(double x, double y, double angle, double velocity, String board) {
         this.x = x;
         this.y = y;
         this.angle = angle;
         this.velocity = velocity;
+        this.board = board;
 
     }
 

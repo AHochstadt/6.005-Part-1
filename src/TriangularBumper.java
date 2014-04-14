@@ -3,7 +3,9 @@
  * 
  * @author Lauren 
  * 
- * A right-triangle shaped bumper with sides of 1L and hypotenuse of length Sqrt(2)L
+ * A right-triangle shaped bumper 
+ * 
+ * Rep Invarient: sides of 1L and hypotenuse of length Sqrt(2)L
  *
  */
 public class TriangularBumper extends Bumper {

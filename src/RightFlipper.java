@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Lauren 
+ * 
+ * A class representing a right flipper
+ * 
+ * Rep Invariant: flipper must never move outside of the bounding box 
+ *
+ */
 public class RightFlipper implements Flipper{
     private final float xOrig;
     private final float yOrig;
