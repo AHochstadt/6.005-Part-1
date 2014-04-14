@@ -9,6 +9,17 @@
  *
  */
 public class TriangularBumper extends Bumper {
+    int orgY;
+    int orgX;
+    int point1x;
+    int point1y;
+    
+    TriangularBumper(int orgX, int orgY, int point1x, int point2x) {
+        this.orgY = orgY;
+        this.orgX = orgX;
+        this.point1x = point1x;
+        this.point1y = point1y;
+    }
     
     /**
      * 

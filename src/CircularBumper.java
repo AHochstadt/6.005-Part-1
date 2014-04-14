@@ -10,6 +10,15 @@
  */
 public class CircularBumper extends Bumper{
     
+    int originX;
+    int orginY;
+    
+    CircularBumper(int x, int y) {
+        
+    }
+    
+    
+    
     /**
      * 
      * @param b : Ball that the bumper is interacting with 

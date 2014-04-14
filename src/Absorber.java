@@ -8,6 +8,18 @@
  *
  */
 public class Absorber implements Stationary {
+    int corner1x;
+    int corner2x;
+    int corner1y;
+    int corner2y;
+    
+    Absorber(int x1, int y1, int x2, int y2) {
+        corner1x = x1;
+        corner2x = x2;
+        corner1y = y1;
+        corner2y = y2;
+    }
+    
 
     @Override
     public boolean inBounds(Ball b) {

@@ -9,11 +9,13 @@
 * v: the current speed of the ball
 * theta: the angle of the balls current trajectory (measured w.r.t. + x-axis)
 * 
+* Ball has a 0.5L diameter
+* 
 * Rep Invariant: Ball must be in bounds of current board 
 **/
 public class Ball {
-    private double x; // ball's position as measured from left wall 
-    private double y; // ball's position as measured from top wall
+    private double x; // ball's position as measured from left wall (center of ball)
+    private double y; // ball's position as measured from top wall (center of ball) 
     private double angle; // angle of ball's current trajectory; positive x axis = 0, due north = 90 (degrees)
     private double velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 

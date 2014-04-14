@@ -27,7 +27,7 @@ public class Board {
     /**
      * 
      * @param timestep timestep in seconds
-     * @return String represetning the boards current state: will use the following procedure:
+     * @return String representing the boards current state: will use the following procedure:
      * flippers update
      * balls update
      * collisions are checked for balls (ball loop twice)
