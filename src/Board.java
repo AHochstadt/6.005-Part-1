@@ -1,4 +1,6 @@
-import com.sun.java.util.jar.pack.Package.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 
 
 /**
@@ -17,11 +19,13 @@ public class Board {
     
     /**
      * creates a new instance of board from the input file
-     * @param boardFile a Pingball Board File specifying the board
+     * @param filePath the address of the Pingball Board File specifying the board
      */
     
-    Board(File boardFile) {
-        //TODO
+    Board(String filePath) {
+    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
+    	//String line = null;
+    	//while ((line = reader.readLine()) != null) {
 
     }
     /**
