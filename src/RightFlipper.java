@@ -8,16 +8,16 @@
  *
  */
 public class RightFlipper implements Flipper{
-    private final float xOrig;
-    private final float yOrig;
-    private float xMov;
-    private float yMov;
+    private final double xOrig;
+    private final double yOrig;
+    private double xMov;
+    private double yMov;
     
-    RightFlipper(float x, float y, float xM, float yM) {
-        xOrig = x;
-        yOrig = y;
-        xMov = xM;
-        yMov = yM;
+    RightFlipper(double x, double y, double xM, double yM) {
+        this.xOrig = x;
+        this.yOrig = y;
+        this.xMov = xM;
+        this.yMov = yM;
     }
     /**
      * moves the moving end of the flipper
@@ -28,11 +28,17 @@ public class RightFlipper implements Flipper{
         //TODO 
     }
     
+    @Override
+    public boolean inBounds(Ball b) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
     /**
      * 
      * @return fixed x value 
      */
-    public float getFixedX() {
+    public double getFixedX() {
         return xOrig;
     }
 
@@ -40,7 +46,7 @@ public class RightFlipper implements Flipper{
      * 
      * @return moving y value 
      */
-    public float getFixedY() {
+    public double getFixedY() {
         return yOrig;
         
     }
@@ -49,7 +55,7 @@ public class RightFlipper implements Flipper{
      * 
      * @return moving x value 
      */
-    public float getMovingX() {
+    public double getMovingX() {
         return xMov;
         
     }
@@ -58,7 +64,7 @@ public class RightFlipper implements Flipper{
      * 
      * @return moving x value 
      */
-    public float getMovingY() {
+    public double getMovingY() {
         return yMov;
     }
     
@@ -77,4 +83,5 @@ public class RightFlipper implements Flipper{
     private void checkRep() {
         
     }
+
 }

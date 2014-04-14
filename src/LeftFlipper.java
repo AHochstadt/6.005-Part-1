@@ -29,11 +29,12 @@ public class LeftFlipper implements Flipper {
         //TODO 
     }
     
+    
     /**
      * 
      * @return fixed x value 
      */
-    public float getFixedX() {
+    public double getFixedX() {
         return xOrig;
     }
 
@@ -41,7 +42,7 @@ public class LeftFlipper implements Flipper {
      * 
      * @return moving y value 
      */
-    public float getFixedY() {
+    public double getFixedY() {
         return yOrig;
         
     }
@@ -50,7 +51,7 @@ public class LeftFlipper implements Flipper {
      * 
      * @return moving x value 
      */
-    public float getMovingX() {
+    public double getMovingX() {
         return xMov;
         
     }
@@ -59,8 +60,14 @@ public class LeftFlipper implements Flipper {
      * 
      * @return moving x value 
      */
-    public float getMovingY() {
+    public double getMovingY() {
         return yMov;
+    }
+    
+    @Override
+    public boolean inBounds(Ball b) {
+        // TODO Auto-generated method stub
+        return false;
     }
     
     /**
@@ -73,10 +80,11 @@ public class LeftFlipper implements Flipper {
     }
     
     /**
-     * ensure the rep invariant of Left Flipper is preserved
+     * ensure the rep invariant of Left Flipper is preserved.  Inside bounding box, with moving end, never further away than 2L from origin 
      */
     private void checkRep() {
         
     }
+
 
 }

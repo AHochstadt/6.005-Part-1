@@ -15,27 +15,31 @@ public interface Flipper {
     public void move();
     
     /**
+     * returns true if Ball is in bounds of the flipper
+     */
+    public boolean inBounds(Ball b);
+    /**
      * 
      * @return fixed x value 
      */
-    public float getFixedX() ;
+    public double getFixedX() ;
     /**
      * 
      * @return moving y value 
      */
-    public float getFixedY() ;
+    public double getFixedY() ;
     
     /**
      * 
      * @return moving x value 
      */
-    public float getMovingX() ;
+    public double getMovingX() ;
     
     /**
      * 
      * @return moving x value 
      */
-    public float getMovingY() ;
+    public double getMovingY() ;
     
     /**
      * modifies the ball based on the interaction 

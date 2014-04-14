@@ -3,22 +3,19 @@
  * 
  * @author Lauren 
  *
-<<<<<<< HEAD
  *A square shape with an edge length 1L.  Constructor takes two opposite corners as inputs 
-=======
  * A square shape with an edge length 1L.  
->>>>>>> 090516a470e2839e51b7936943dd191217377075
  *
  * Rep Invariant: edges of length 1L
  *                position is fixed
  */
 public class SquareBumper extends Bumper {
-    int corner1x;
-    int corner1y;
-    int corner2x;
-    int corner2y;
+    double corner1x;
+    double corner1y;
+    double corner2x;
+    double corner2y;
     
-    SquareBumper(int x1, int y1, int x2, int y2) {
+    SquareBumper(double x1, double y1, double x2, double y2) {
         this.corner1x = x1;
         this.corner1y = y1;
         this.corner2x = x2;

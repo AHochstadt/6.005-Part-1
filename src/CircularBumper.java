@@ -10,10 +10,10 @@
  */
 public class CircularBumper extends Bumper{
     
-    int originX;
-    int orginY;
+    double originX;
+    double orginY;
     
-    CircularBumper(int x, int y) {
+    CircularBumper(double x, double y) {
         
     }
     

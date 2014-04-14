@@ -10,12 +10,12 @@
  *
  */
 public class Absorber implements Stationary {
-    int corner1x;
-    int corner2x;
-    int corner1y;
-    int corner2y;
+    double corner1x;
+    double corner2x;
+    double corner1y;
+    double corner2y;
     
-    Absorber(int x1, int y1, int x2, int y2) {
+    Absorber(double x1, double y1, double x2, double y2) {
         corner1x = x1;
         corner2x = x2;
         corner1y = y1;
