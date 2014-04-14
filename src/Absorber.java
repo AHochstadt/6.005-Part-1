@@ -1,10 +1,12 @@
 /**
  * 
- * @author Lauren 
+ * @author Lauren
+ * 
  * A class representing the Absorber
  * An absorber is a rectangle kL x mL 
  * 
  * Rep Invariant: k and m are positive integers <= 20 and >= 1
+ *                position is fixed
  *
  */
 public class Absorber implements Stationary {
@@ -36,10 +38,16 @@ public class Absorber implements Stationary {
      * 
      * @param b
      */
-    //and 
     @Override
     public void getEffect(Ball b) {
         // TODO Auto-generated method stub
+        
+    }
+    
+    /**
+     * ensure the rep invariant of Absorber is preserved
+     */
+    private void checkRep() {
         
     }
 

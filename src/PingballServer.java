@@ -70,10 +70,12 @@ public class PingballServer {
      * @param wall1 the first Wall to be connected
      * @param wall2 the second Wall to be connected
      */
-    public void connectWalls(Wall wall1, Wall wall2) {
+    public void connectWalls() {
+        //(Wall wall1, Wall wall2) 
+    }
         // need to update wallConnections
         // send messages to the owners of wall1 and wall2 notifying that those walls are now connected
-    }
+    //
     
     /**
      * Disconnect two walls
@@ -81,7 +83,8 @@ public class PingballServer {
      * @param wall1 the first Wall to be connected
      * @param wall2 the second Wall to be connected
      */
-    public void disconnectWalls(Wall wall1, Wall wall2) {
+    public void disconnectWalls() {
+        // Wall wall1, Wall wall2
         // need to update wallConnections
         // send messages to the owners of wall1 and wall2 notifying that those walls are now connected
     }

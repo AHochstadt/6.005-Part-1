@@ -5,7 +5,8 @@
  * 
  * A right-triangle shaped bumper 
  * 
- * Rep Invarient: sides of 1L and hypotenuse of length Sqrt(2)L
+ * Rep Invariant: sides of 1L and hypotenuse of length Sqrt(2)L
+ *                position is fixed
  *
  */
 public class TriangularBumper extends Bumper {
@@ -39,6 +40,13 @@ public class TriangularBumper extends Bumper {
     public boolean inBounds(Ball b) {
         return false;
         //TODO
+    }
+    
+    /**
+     * ensure the rep invariant of Triangular Bumper is preserved
+     */
+    private void checkRep() {
+        
     }
 
 }

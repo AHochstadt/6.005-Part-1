@@ -1,27 +1,37 @@
-import com.sun.java.util.jar.pack.Package.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 
 
 /**
 * A class representing a users Pingball board
 *
-* rep invariant: flippers, stationaryItems, and balls all must not be null
+* Rep invariant: flippers, stationaryItems, and balls all must not be null
 **/ 
 public class Board {
-    private final Stationary[] nonMovingParts;
-    private final Flipper[] flippers;
-    private Ball[] balls; //not final becuase balls can be added 
-    private String leftWall; //either states the name of the ball or the String STATIONARY
-    private String rightWall;
-    private String topWall;
-    private String bottomWall;
+    // TODO: initialize all this to non-null
+    private final Stationary[] nonMovingParts = null;
+    private final Flipper[] flippers = null;
+    private Ball[] balls = null; //not final becuase balls can be added 
+    private String leftWall = null; //either states the name of the ball or the String STATIONARY
+    private String rightWall = null;
+    private String topWall = null;
+    private String bottomWall = null;
     
     /**
      * creates a new instance of board from the input file
-     * @param boardFile a Pingball Board File specifying the board
+     * @param filePath the address of the Pingball Board File specifying the board
      */
-    
-    Board(File boardFile) {
-        //TODO
+    public Board(String filePath) {
+    	try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+          //String line = null;
+            //while ((line = reader.readLine()) != null) {
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
     /**
@@ -63,6 +73,13 @@ public class Board {
      */
     public void removeBall(Ball b) {
         //TODO
+    }
+    
+    /**
+     * ensure the rep invariant of Board is preserved
+     */
+    private void checkRep() {
+        
     }
 
 }
