@@ -4,6 +4,8 @@
  * @author Lauren 
  *
  *A square shape with an edge length 1L.  
+ *
+ *Rep Invariant: edges of length 1L 
  */
 public class SquareBumper extends Bumper {
     

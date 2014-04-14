@@ -5,6 +5,8 @@
  * 
  *A circular shape with diameter 1L 
  *
+ *Rep Invariant: position is fixed
+ *
  */
 public class CircularBumper extends Bumper{
     

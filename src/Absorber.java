@@ -1,8 +1,10 @@
 /**
  * 
  * @author Lauren 
+ * A class representing the Absorber
+ * An absorber is a rectangle kL x mL 
  * 
- * A rectangle kL xmL where k and m are positive integers <= 20 and >= 1
+ * Rep Invariant: k and m are positive integers <= 20 and >= 1
  *
  */
 public class Absorber implements Stationary {

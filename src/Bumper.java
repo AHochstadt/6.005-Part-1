@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Lauren 
+ * 
+ * A class representing a bumper 
+ * 
+ * Rep Invarient: position values remain fixed
+ *
+ */
 public class Bumper implements Stationary {
 
     @Override

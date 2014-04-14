@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Lauren 
+ * 
+ * An representing flipper, an object with a stationary end and a moving end 
+ * 
+ * Rep Invariant: the flipper must never move outside of the bounding box 
+ *
+ */
 public interface Flipper {
 
     /**

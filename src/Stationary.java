@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Lauren 
+ * 
+ * An interface for stationary items.
+ * 
+ * Rep Invarient: position must not change 
+ *
+ */
 public interface Stationary {
     
     /**
