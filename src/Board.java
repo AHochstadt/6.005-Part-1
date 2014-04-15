@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import warmup.Ball;
@@ -23,14 +24,20 @@ public class Board {
     private String bottomWall = null;
     
     /**
+     * @author ahochstadt
      * creates a new instance of board from the input file
      * @param filePath the address of the Pingball Board File specifying the board
+     * @throws IOException 
      */
-    public Board(String filePath) {
+    public Board(String filePath) throws IOException {
     	try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
-          //String line = null;
-            //while ((line = reader.readLine()) != null) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+            	if(line.contains("board")){
+            		//parse board
+            	}
+            }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
