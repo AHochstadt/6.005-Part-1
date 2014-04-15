@@ -84,7 +84,7 @@ public class RightFlipper implements Flipper{
      * @effect : doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
      */
     public void getEffect(Ball b) {
-        Vect newV = Geometry.reflectRotatingWall(this.flipper,this.origin, 1.0,b.getCircle(),b.getVelocity(), 0.95);
+        Vect newV = Geometry.reflectRotatingWall(this.flipper,this.origin, 1.0,b.getCircle(),b.getVector(), 0.95);
         b.setVelocity(newV);
     }
     

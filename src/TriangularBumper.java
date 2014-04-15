@@ -13,11 +13,17 @@ public class TriangularBumper extends Bumper {
     LineSegment side1;
     LineSegment side2;
     LineSegment side3;
+    Circle corner1;
+    Circle corner2;
+    Circle corner3;
     
     TriangularBumper(double orgX, double orgY, double point1x, double point1y, double point2x, double point2y) {
         this.side1 = new LineSegment(orgX, orgY, point1x, point1y);
         this.side2 = new LineSegment(point1x, point1y, point2x, point2y);
         this.side3 = new LineSegment(point2x, point2y, orgX, orgY);
+        corner1 = new Circle(orgX, orgY, 0);
+        corner2 = new Circle(point1x, point1y,0);
+        corner3 = new Circle(point2x, point2y,0);
     }
     
     /**
@@ -27,15 +33,15 @@ public class TriangularBumper extends Bumper {
      */
     public void getEffect(Ball b) {
         //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVelocity());
+        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
         b.setVelocity(newV1);
         
         //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVelocity());
+        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
         b.setVelocity(newV2);
         
         //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVelocity());
+        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
         b.setVelocity(newV3);
     }
     
