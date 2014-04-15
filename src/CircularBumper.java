@@ -24,7 +24,8 @@ public class CircularBumper extends Bumper{
      * @param y y-coordinate of upper-left corner of bumper square (should be natural number)
      * @param name name of the bumper
      */
-    CircularBumper(double x, double y, String name) {
+    CircularBumper(int x, int y, String name) {
+    	//make sure to keep the +.5 in the lines below or make sure to keep the inputs to Vect and Circle doubles somehow
         this.center = new Vect(x+.5,y+.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         this.circleRep = new Circle(x+.5,y+.5,0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         

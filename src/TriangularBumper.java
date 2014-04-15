@@ -36,43 +36,43 @@ public class TriangularBumper extends Bumper {
      * @param name name of the bumper
      * @throws IOException if orientation != 0|90|180|270
      */
-    TriangularBumper(double x, double y, double orientation, String name) throws IOException{
-    	this.x = x;
-    	this.y = y;
-    	this.orientation = orientation;
+    TriangularBumper(int x, int y, int orientation, String name) throws IOException{
+    	this.x = (double) x;
+    	this.y = (double) y;
+    	this.orientation = (double) orientation;
     	this.name = name;
     	
-    	if (orientation == 0.0){
-    		side1 = new LineSegment(x, y+1, x, y);
-    		corner1 = new Circle(x, y, 0.0);
-    		side2 = new LineSegment(x, y, x+1, y);
-    		corner2 = new Circle(x+1, y, 0.0);
-    		side3 = new LineSegment(x+1, y, x, y+1);
-    		corner3 = new Circle(x, y+1, 0.0);
-    	} else if (orientation == 90.0){
-    		side1 = new LineSegment(x, y, x+1, y);
-    		corner1 = new Circle(x+1, y, 0.0);
-    		side2 = new LineSegment(x+1, y, x+1, y+1);
-    		corner2 = new Circle(x+1, y+1, 0.0);
-    		side3 = new LineSegment(x, y, x+1, y+1);
-    		corner3 = new Circle(x, y, 0.0);
-    	} else if (orientation == 180.0){
-    		side1 = new LineSegment(x, y+1, x+1, y);
-    		corner1 = new Circle(x+1, y, 0.0);
-    		side2 = new LineSegment(x+1, y, x+1, y+1);
-    		corner2 = new Circle(x+1, y+1, 0.0);
-    		side3 = new LineSegment(x, y+1, x+1, y+1);
-    		corner3 = new Circle(x, y+1, 0.0);
+    	if (orientation == 0){
+    		side1 = new LineSegment(this.x, this.y+1, this.x, this.y);
+    		corner1 = new Circle(this.x, this.y, 0.0);
+    		side2 = new LineSegment(this.x, this.y, this.x+1, this.y);
+    		corner2 = new Circle(this.x+1, this.y, 0.0);
+    		side3 = new LineSegment(this.x+1, this.y, this.x, this.y+1);
+    		corner3 = new Circle(this.x, this.y+1, 0.0);
+    	} else if (orientation == 90){
+    		side1 = new LineSegment(this.x, this.y, this.x+1, this.y);
+    		corner1 = new Circle(this.x+1, this.y, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y, this.x+1, this.y+1);
+    		corner2 = new Circle(this.x+1, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y, this.x+1, this.y+1);
+    		corner3 = new Circle(this.x, this.y, 0.0);
+    	} else if (orientation == 180){
+    		side1 = new LineSegment(this.x, this.y+1, this.x+1, this.y);
+    		corner1 = new Circle(this.x+1, this.y, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y, this.x+1, this.y+1);
+    		corner2 = new Circle(this.x+1, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y+1, this.x+1, this.y+1);
+    		corner3 = new Circle(this.x, this.y+1, 0.0);
     	} else {
-    		if (orientation != 270.0){
+    		if (orientation != 270){
     			throw new IOException("Invalid orientation");
     		}
-    		side1 = new LineSegment(x, y, x+1, y+1);
-    		corner1 = new Circle(x+1, y+1, 0.0);
-    		side2 = new LineSegment(x+1, y+1, x, y+1);
-    		corner2 = new Circle(x, y+1, 0.0);
-    		side3 = new LineSegment(x, y+1, x, y);
-    		corner3 = new Circle(x, y, 0.0);
+    		side1 = new LineSegment(this.x, this.y, this.x+1, this.y+1);
+    		corner1 = new Circle(this.x+1, this.y+1, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y+1, this.x, this.y+1);
+    		corner2 = new Circle(this.x, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y+1, this.x, y);
+    		corner3 = new Circle(this.x, this.y, 0.0);
     	}
     	this.sides.clear();
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); //populate this.sides

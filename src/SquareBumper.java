@@ -33,16 +33,19 @@ public class SquareBumper extends Bumper {
      * @param y y-coordinate of bumper (should be natural number)
      * @param name name of bumper
      */
-    SquareBumper(double x, double y, String name){
+    SquareBumper(int x, int y, String name){
+    	
+    	this.x = (double) x;
+    	this.y = (double) y;
     	this.name = name;
-    	this.corner1 = new Circle(x, y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
-    	this.side1 = new LineSegment(x, y, x+1, y);
-    	this.corner2 = new Circle(x+1, y, 0.0);
-    	this.side2 = new LineSegment(x+1, y, x+1, y+1);
-    	this.corner3 = new Circle(x+1, y+1, 0.0);
-    	this.side3 = new LineSegment(x+1, y+1, x, y+1);
-    	this.corner4 = new Circle(x, y+1, 0.0);
-    	this.side4 = new LineSegment(x, y, x, y+1);
+    	this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
+    	this.side1 = new LineSegment((double) x, (double) y, (double) x+1, (double) y);
+    	this.corner2 = new Circle((double) x+1, (double) y, 0.0);
+    	this.side2 = new LineSegment((double) x+1, (double) y, (double) x+1, (double) y+1);
+    	this.corner3 = new Circle((double) x+1, (double) y+1, 0.0);
+    	this.side3 = new LineSegment((double) x+1, (double) y+1, x, (double) y+1);
+    	this.corner4 = new Circle((double) x, (double) y+1, 0.0);
+    	this.side4 = new LineSegment((double) x, (double) y, (double) x, (double) y+1);
     	this.sides.clear();
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
