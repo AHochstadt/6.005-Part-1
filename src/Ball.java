@@ -23,15 +23,15 @@ public class Ball {
     private String board; //board that the ball is currently on 
     private Circle ballCircle;
     private Vect ballVector;
+	private String name;
     
-    public Ball(double x, double y, double angle, Vect velocity, String board) {
+    public Ball(double x, double y, double xVel, double yVel, String ballName) {
         this.x = x;
         this.y = y;
         this.ballCircle = new Circle(x,y,0.25);
         this.ballVector = new Vect(x,y);
-        this.angle = angle;
-        this.velocity = velocity;
-        this.board = board;
+        this.velocity = new Vect(xVel, yVel);
+        this.name = ballName;
 
     }
 
