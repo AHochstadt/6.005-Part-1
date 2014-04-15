@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+
+import warmup.Ball;
 
 
 
@@ -13,7 +16,7 @@ public class Board {
     // TODO: initialize all this to non-null
     private final Stationary[] nonMovingParts = null;
     private final Flipper[] flippers = null;
-    private Ball[] balls = null; //not final becuase balls can be added 
+    private ArrayList<Ball> balls = null; //not final becuase balls can be added 
     private String leftWall = null; //either states the name of the ball or the String STATIONARY
     private String rightWall = null;
     private String topWall = null;
@@ -44,17 +47,25 @@ public class Board {
      * new actions set 
      */
     public String update(double timestep) {
-        return null;
+        //I was not clear if flippers are moving in this version of the game, if so they would move here.  
         
-    }
-    
-	/**
-     * 
-     * @return String representation of the board's current state
-     */
-    public String getBoardRep() {
-        return null;
-        //TODO
+        for (Ball b: balls) {
+            for (Stationary s: nonMovingParts) {
+                if (s.inBounds(b)) {
+                    s.getEffect(b);
+                }
+            }
+        }
+        
+        for (Ball ball1: balls) {
+            for (Ball ball2: balls) {
+                if (ball1.getX() == ball2.getX() && ball1.getY() == ball2.getY()) {
+                    // calculate collision using reflectBalls
+                }
+            }
+        }
+        
+        return getBoardRep();
     }
     
     
@@ -63,7 +74,7 @@ public class Board {
      * @param b
      */
     public void addBall(Ball b) {
-        //TODO
+        balls.add(b);
     }
     
     /**
@@ -71,8 +82,42 @@ public class Board {
      * sends ball in a message to the server along with, the name of the board that the ball has come from 
      * @param b
      */
-    public void removeBall(Ball b) {
-        //TODO
+    public String removeBall(Ball b) {
+        balls.remove(b);
+        //returns a String board message including information about the ball and the board that it came from  
+        return "";
+    }
+    
+    
+    /**
+     * 
+     * @return String representation of the board's current state
+     */
+    public String getBoardRep() {
+        String boardRep = ""; 
+        
+        for (int j = 0; j < 20; j++) {
+            for (int i = 0; i < 20; i++) {
+                for (Ball b: balls) {
+                    int x = (int) Math.round(b.getX());
+                    int y = (int) Math.round(b.getY());
+                    // print a ball at the current position
+                    if (x == i && y == j) {
+                        boardRep = boardRep + "*";
+                    }
+                    // print a wall piece
+                    else if (j == 0 || j == 20 - 1 || i == 0 || i == 20 - 1) {
+                        boardRep = boardRep + ".";
+                    }
+                    // print empty space
+                    else {
+                        boardRep = boardRep + " ";
+                    }
+                }
+            }
+            boardRep = boardRep + "\n";
+        }
+        return boardRep;
     }
     
     /**

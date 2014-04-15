@@ -1,4 +1,6 @@
+import java.lang.Object;
 
+import physics.*;
 /**
  * 
  * @author Lauren 
@@ -17,12 +19,16 @@ public class Ball {
     private double x; // ball's position as measured from left wall (center of ball)
     private double y; // ball's position as measured from top wall (center of ball) 
     private double angle; // angle of ball's current trajectory; positive x axis = 0, due north = 90 (degrees)
-    private double velocity; // ball's current velocity (spaces per second)
+    private Vect velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 
+    private Circle ballCircle;
+    private Vect ballVector;
     
-    public Ball(double x, double y, double angle, double velocity, String board) {
+    public Ball(double x, double y, double angle, Vect velocity, String board) {
         this.x = x;
         this.y = y;
+        this.ballCircle = new Circle(x,y,0.25);
+        this.ballVector = new Vect(x,y);
         this.angle = angle;
         this.velocity = velocity;
         this.board = board;
@@ -35,6 +41,10 @@ public class Ball {
      */
     public double getAngle() {
         return this.angle;
+    }
+    
+    public Vect getVector() {
+        return this.ballVector;
     }
 
     /**
@@ -81,15 +91,29 @@ public class Ball {
      * 
      * @return velocity of the ball in spaces per second 
      */
-    public double getVelocity() {
+    public Vect getVelocity() {
         return this.velocity;
     }
     
+    /**
+     * 
+     * @param newV the velocity to change the current velocity to
+     */
+    public void setVelocity(Vect newV) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public Circle getCircle() {
+        return this.ballCircle;
+    }
+
     /**
      * ensure the rep invariant of Ball is preserved
      */
     private void checkRep() {
         
     }
+
 
 }

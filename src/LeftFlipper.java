@@ -1,3 +1,4 @@
+import physics.*;
 /**
  * 
  * @author Lauren 
@@ -9,16 +10,20 @@
  *
  */
 public class LeftFlipper implements Flipper {
-    private final float xOrig;
-    private final float yOrig;
-    private float xMov;
-    private float yMov;
+    LineSegment flipper;
+    Vect origin;
+    double xOrig;
+    double yOrig;
+    double xMov;
+    double yMov;
     
     LeftFlipper(float x, float y, float xM, float yM) {
-        xOrig = x;
-        yOrig = y;
-        xMov = xM;
-        yMov = yM;
+        this.flipper = new LineSegment(x,y,xM,yM);
+        this.origin = new Vect(x,y);
+        this.xOrig = x;
+        this.xMov = xM;
+        this.yOrig = y;
+        this.yMov = yM;
     }
     /**
      * moves the moving end of the flipper
@@ -26,7 +31,8 @@ public class LeftFlipper implements Flipper {
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        //TODO 
+        Geometry.rotateAround(this.flipper,this.origin, new Angle(-90));
+        //update xMov and yMov
     }
     
     
@@ -76,7 +82,8 @@ public class LeftFlipper implements Flipper {
      * @effect doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
      */
     public void getEffect(Ball b) {
-        //TODO
+        Vect newV = Geometry.reflectRotatingWall(this.flipper,this.origin, 1.0,b.getCircle(),b.getVelocity(), 0.95);
+        b.setVelocity(newV);
     }
     
     /**

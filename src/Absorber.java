@@ -1,3 +1,5 @@
+import warmup.Ball;
+
 /**
  * 
  * @author Lauren
@@ -22,14 +24,21 @@ public class Absorber implements Stationary {
         corner2y = y2;
     }
     
-
-    @Override
-    public boolean inBounds(Ball b) {
-        return false;
-        // TODO Auto-generated method stub
+    /**
+     * ensure the rep invariant of Absorber is preserved
+     */
+    private void checkRep() {
         
     }
 
+    /**
+     * will return true if the ball is in the bounds of the absorber 
+     */
+    @Override
+    public boolean inBounds(Ball b) {
+        // TODO Auto-generated method stub
+        return false;
+    }
     /**
      * ball will be removed from the board if absorber is not holding a ball (board.remove)
      * absorber will hold the ball
@@ -43,12 +52,7 @@ public class Absorber implements Stationary {
         // TODO Auto-generated method stub
         
     }
-    
-    /**
-     * ensure the rep invariant of Absorber is preserved
-     */
-    private void checkRep() {
-        
-    }
+
+
 
 }

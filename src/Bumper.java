@@ -12,7 +12,6 @@ public class Bumper implements Stationary {
     /**
      * TODO: Javadoc
      */
-    @Override
     public boolean inBounds(Ball b) {
         return false;
         // TODO Auto-generated method stub
@@ -22,7 +21,6 @@ public class Bumper implements Stationary {
     /**
      * TODO: Javadoc
      */
-    @Override
     public void getEffect(Ball b) {
         // TODO Auto-generated method stub
         
@@ -32,6 +30,18 @@ public class Bumper implements Stationary {
      * ensure the rep invariant of Bumper is preserved
      */
     private void checkRep() {
+        
+    }
+
+    @Override
+    public boolean inBounds(warmup.Ball b) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void getEffect(warmup.Ball b) {
+        // TODO Auto-generated method stub
         
     }
 

@@ -1,4 +1,8 @@
+import java.lang.Object;
 
+import javax.media.j3d.PhysicalBody;
+
+import physics.*;
 /**
  * 
  * @author Lauren 
@@ -10,10 +14,12 @@
  */
 public class CircularBumper extends Bumper{
     
-    double originX;
-    double orginY;
+    Vect center;
+    Circle circleRep;
     
     CircularBumper(double x, double y) {
+        this.center = new Vect(x,y);
+        this.circleRep = new Circle(x,y,0.5);
         
     }
     
@@ -25,7 +31,10 @@ public class CircularBumper extends Bumper{
      * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
      */
     public void getEffect(Ball b) {
-        //TODO
+        
+        Vect newV = Geometry.reflectCircle(this.center, b.getVector(), b.getVelocity());
+        b.setVelocity(newV);
+        
     }
     
     /**
@@ -34,6 +43,7 @@ public class CircularBumper extends Bumper{
      * @return: true if the ball is in the space that is occupied by the bumper 
      * 
      */
+    @Override
     public boolean inBounds(Ball b) {
         return false;
         //TODO

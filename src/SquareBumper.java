@@ -1,4 +1,4 @@
-
+import physics.*;
 /**
  * 
  * @author Lauren 
@@ -10,16 +10,16 @@
  *                position is fixed
  */
 public class SquareBumper extends Bumper {
-    double corner1x;
-    double corner1y;
-    double corner2x;
-    double corner2y;
+    LineSegment side1;
+    LineSegment side2;
+    LineSegment side3;
+    LineSegment side4;
     
     SquareBumper(double x1, double y1, double x2, double y2) {
-        this.corner1x = x1;
-        this.corner1y = y1;
-        this.corner2x = x2;
-        this.corner2y = y2;
+        side1 = new LineSegment(x1,y1,x1,y2);
+        side2 = new LineSegment(x1,y2, x2,y2);
+        side3 = new LineSegment(x2,y2,x2,y1);
+        side4 = new LineSegment(x2,y1,x1,y1);
      
     }
     
@@ -29,7 +29,23 @@ public class SquareBumper extends Bumper {
      * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
      */
     public void getEffect(Ball b) {
-        //TODO
+        //if ball is going to hit side 1
+        Vect newV1 = Geometry.reflectWall(this.side1, b.getVelocity());
+        b.setVelocity(newV1);
+        
+        //if ball is going to hit side 2
+        Vect newV2 = Geometry.reflectWall(this.side2, b.getVelocity());
+        b.setVelocity(newV2);
+        
+        //if ball is going to hit side3
+        Vect newV3 = Geometry.reflectWall(this.side3, b.getVelocity());
+        b.setVelocity(newV3);
+        
+        //if ball is going to hit side4
+        Vect newV4 = Geometry.reflectWall(this.side4, b.getVelocity());
+        b.setVelocity(newV4);
+        
+       
     }
     
     /**
@@ -38,6 +54,7 @@ public class SquareBumper extends Bumper {
      * @return: true if the ball is in the space that is occupied by the bumper 
      * 
      */
+    @Override
     public boolean inBounds(Ball b) {
         return false;
         //TODO
