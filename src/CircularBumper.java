@@ -1,6 +1,5 @@
 import java.lang.Object;
 
-import javax.media.j3d.PhysicalBody;
 
 import physics.*;
 /**
