@@ -1,6 +1,10 @@
 import java.io.File;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 
@@ -23,6 +27,12 @@ import java.net.Socket;
 @SuppressWarnings("unused") // to be removed later
 public class PingballServer {
     
+    private final ServerSocket serverSocket;
+    
+    private final BlockingQueue<Ball> queue;
+    
+    //private final Map<Wall, Wall> wallConnections;
+    
     /**
      * Make a Pingball Server that listens for connections on port.
      * 
@@ -32,6 +42,12 @@ public class PingballServer {
      */
     public PingballServer(int port) throws IOException {
         
+        this.serverSocket = new ServerSocket(port);
+        
+        this.queue = new LinkedBlockingQueue<Ball>();
+        
+        
+        
     }
     
     /**
@@ -40,9 +56,14 @@ public class PingballServer {
      * @throws IOException if the main server socket is broken
      */
     public void serve() throws IOException {
-        //block until a client connects
         
-        //create a new thread for each client
+        while (true) {
+            //block until a client connects
+            final Socket socket = serverSocket.accept();
+            
+            //create a new thread for each client
+        }
+        
     }
     
     /**
@@ -62,6 +83,12 @@ public class PingballServer {
      */
     public void sendBall() {
         // take ball off queue, determine where it will go, send it to the appropriate board
+        try {
+            Ball ballToSend = this.queue.take();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -122,7 +149,7 @@ public class PingballServer {
      * Ensure the rep invariants of queue and wallConnections are maintained at all times
      */
     private void checkRep() {
-        
+        assert(this.queue != null);
     }
 
 }
