@@ -25,7 +25,7 @@ public class RightFlipper implements Flipper{
     double yEndpt;
     
     /**
-     * Constructor for Left Pivot
+     * Constructor for Right Flipper
      * @author ahochstadt
      * @param x x-coordinate for upperleft corner of 2Lx2L bounding box
      * @param y y-coordinate for upperleft corner of 2Lx2L bounding box
