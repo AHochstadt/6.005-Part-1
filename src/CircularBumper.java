@@ -16,9 +16,17 @@ public class CircularBumper extends Bumper{
     Vect center;
     Circle circleRep;
     
-    CircularBumper(double x, double y) {
-        this.center = new Vect(x,y);
-        this.circleRep = new Circle(x,y,0.5);
+    /**
+     * @author ahochstadt
+     * @author Lauren
+     * Constructor for Circular Bumper
+     * @param x x-coordinate of upper-left corner of bumper square (should be natural number)
+     * @param y y-coordinate of upper-left corner of bumper square (should be natural number)
+     * @param name name of the bumper
+     */
+    CircularBumper(double x, double y, String name) {
+        this.center = new Vect(x+.5,y+.5); //+.5 because (x, y) specifies the upper left corner of the gadget
+        this.circleRep = new Circle(x+.5,y+.5,0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         
     }
     
