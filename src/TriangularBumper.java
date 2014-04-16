@@ -17,19 +17,6 @@ public class TriangularBumper extends Bumper {
     LineSegment side1;
     LineSegment side2;
     LineSegment side3;
-<<<<<<< HEAD
-    Circle corner1;
-    Circle corner2;
-    Circle corner3;
-    
-    TriangularBumper(double orgX, double orgY, double point1x, double point1y, double point2x, double point2y) {
-        this.side1 = new LineSegment(orgX, orgY, point1x, point1y);
-        this.side2 = new LineSegment(point1x, point1y, point2x, point2y);
-        this.side3 = new LineSegment(point2x, point2y, orgX, orgY);
-        corner1 = new Circle(orgX, orgY, 0);
-        corner2 = new Circle(point1x, point1y,0);
-        corner3 = new Circle(point2x, point2y,0);
-=======
     ArrayList<LineSegment> sides;
     Circle corner1;
     Circle corner2;
@@ -93,7 +80,6 @@ public class TriangularBumper extends Bumper {
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); //populate this.corners
     	
     	
->>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
     }
     
     

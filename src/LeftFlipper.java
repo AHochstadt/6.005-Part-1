@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import physics.*;
 /**
  * 
@@ -13,12 +15,7 @@ public class LeftFlipper implements Flipper {
 	Circle pivot;
 	Circle endPoint;
     LineSegment flipper;
-    Vect origin;
     double orientation;
-    double xPivot;
-    double yPivot;
-    double xEndpt;
-    double yEndpt;
     
     /**
      * Constructor for Left Flipper
@@ -27,11 +24,29 @@ public class LeftFlipper implements Flipper {
      * @param y y-coordinate for upperleft corner of 2Lx2L bounding box
      * @param orientation can be 0|90|180|270. Measure (in degrees) of how much the original flipper bumper is rotated. Original bumper (orientation = 0) lies on the west side of the bounding box.
      * @param name name of the flipper
+     * @throws IOException if orientation does not equal 0|90|180|270
      */
-    LeftFlipper(int x, int y, int orientation, String name) {
-        this.flipper = new LineSegment(x,y,x+2,y);
-        this.origin = new Vect(x,y);
-        // TODO write constructor
+    LeftFlipper(int x, int y, int orientation, String name) throws IOException {
+    	if (orientation == 0){
+    		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);
+    		this.pivot = new Circle((double) x,(double) y, 0.0);
+    		this.endPoint = new Circle((double) x, (double) y+2, 0.0);
+    	} else if (orientation == 90){
+    		this.flipper = new LineSegment((double) x,(double) y,(double) x+2, (double) y);
+    		this.pivot = new Circle((double) x+2,(double) y, 0.0);
+    		this.endPoint = new Circle((double) x, (double) y, 0.0);
+    	} else if (orientation == 180){
+    		this.flipper = new LineSegment((double) x+2,(double) y,(double) x+2, (double) y+2);
+    		this.pivot = new Circle((double) x+2,(double) y+2, 0.0);
+    		this.endPoint = new Circle((double) x+2, (double) y, 0.0);
+    	} else {
+    		if (orientation != 270){
+    			throw new IOException("Invalid orientation");
+    		}
+    		this.flipper = new LineSegment((double) x,(double) y+2,(double) x+2, (double) y+2);
+    		this.pivot = new Circle((double) x,(double) y+2, 0.0);
+    		this.endPoint = new Circle((double) x+2, (double) y+2, 0.0);
+    	}
     }
     /**
      * moves the moving end of the flipper
@@ -39,8 +54,8 @@ public class LeftFlipper implements Flipper {
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        Geometry.rotateAround(this.flipper,this.origin, new Angle(-90));
-        //update xMov and yMov
+        Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
+        Geometry.rotateAround(this.endPoint, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
     }
     
     
@@ -49,7 +64,7 @@ public class LeftFlipper implements Flipper {
      * @return fixed x value 
      */
     public double getFixedX() {
-        return xPivot;
+        return this.pivot.getCenter().x();
     }
 
     /**
@@ -57,7 +72,7 @@ public class LeftFlipper implements Flipper {
      * @return moving y value 
      */
     public double getFixedY() {
-        return yPivot;
+        return this.pivot.getCenter().y();
         
     }
     
@@ -66,7 +81,7 @@ public class LeftFlipper implements Flipper {
      * @return moving x value 
      */
     public double getMovingX() {
-        return xEndpt;
+        return this.endPoint.getCenter().x();
         
     }
     
@@ -75,7 +90,7 @@ public class LeftFlipper implements Flipper {
      * @return moving x value 
      */
     public double getMovingY() {
-        return yEndpt;
+    	return this.endPoint.getCenter().y();
     }
     
     @Override
@@ -90,8 +105,9 @@ public class LeftFlipper implements Flipper {
      * @effect doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
      */
     public void getEffect(Ball b) {
-        Vect newV = Geometry.reflectRotatingWall(this.flipper,this.origin, 1.0,b.getCircle(),b.getVector(), 0.95);
-        b.setVelocity(newV);
+    	Vect newVel = Geometry.reflectRotatingWall(this.flipper, this.pivot.getCenter(), 1.0, b.getCircle(), b.getVelocity());
+        b.setVelocity(newVel);
+        
     }
     
     /**
