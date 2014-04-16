@@ -1,8 +1,7 @@
-grammar Expression;
+grammar BoardMaker;
 
 // This puts a Java package statement at the top of the output Java files.
 @header {
-package expr;
 }
 
 // This adds code to the generated lexer and parser.
@@ -55,6 +54,7 @@ HEIGHTFIELD: 'height=';
  * These are the parser rules. They define the structures used by the parser.
  * *** ANTLR requires grammar nonterminals to be lowercase, like html, normal, and italic.
  */
+ file: board ball|squareBumper|circleBumper|triangleBumper|rightFlipper|leftFlipper|absorber|fire*;
 board: NAMEFIELD NAME GRAVITYFIELD FLOAT FRICTION1FIELD FLOAT FRICTION2FIELD FLOAT;
 ball: NAMEFIELD NAME XFIELD FLOAT YFIELD FLOAT XVELOCITYFIELD FLOAT YVELOCITYFIELD FLOAT;
 squareBumper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER;
@@ -64,6 +64,22 @@ rightFlipper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTE
 leftFlipper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTEGER;
 absorber: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER WIDTHFIELD INTEGER HEIGHTFIELD INTEGER;
 fire: TRIGGERFIELD NAME ACTIONFIELD NAME;
+name: NAMEFIELD NAME;
+gravity: GRAVITYFIELD FLOAT;
+friction1: FRICTION1FIELD FLOAT;
+friction2: FRICTION2FIELD FLOAT;
+xball: XFIELD FLOAT;
+yball: YFIELD FLOAT;
+xvelocity: XVELOCITYFIELD FLOAT;
+yvelocity: YVELOCITYFIELD FLOAT;
+orientation: ORIENTATIONFIELD INTEGER;
+x: XFIELD INTEGER;
+y: YFIELD INTEGER;
+trigger: TRIGGERFIELD NAME;
+action: ACTIONFIELD NAME;
+width: WIDTHFIELD INTEGER;
+height: HEIGHTFIELD INTEGER;
+
 
 COMMENT : '#' [ \t\r\n]+ -> skip;
 WHITESPACE : [ \t\r\n]+ -> skip ;

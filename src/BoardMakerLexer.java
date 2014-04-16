@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ExpressionLexer extends Lexer {
+public class BoardMakerLexer extends Lexer {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -56,7 +56,7 @@ public class ExpressionLexer extends Lexer {
 	    }
 
 
-	public ExpressionLexer(CharStream input) {
+	public BoardMakerLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
