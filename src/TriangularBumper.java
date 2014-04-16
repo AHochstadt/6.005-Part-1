@@ -90,15 +90,15 @@ public class TriangularBumper extends Bumper {
      */
     public void getEffect(Ball b) {
         //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVelocity());
+        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
         b.setVelocity(newV1);
         
         //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVelocity());
+        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
         b.setVelocity(newV2);
         
         //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVelocity());
+        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
         b.setVelocity(newV3);
     }
     

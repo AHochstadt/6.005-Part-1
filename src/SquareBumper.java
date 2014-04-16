@@ -50,7 +50,6 @@ public class SquareBumper extends Bumper {
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
-    	
     }
      
     
@@ -61,21 +60,24 @@ public class SquareBumper extends Bumper {
      * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
      */
     public void getEffect(Ball b) {
+        
         //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVelocity());
+        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
         b.setVelocity(newV1);
         
         //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVelocity());
+        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
         b.setVelocity(newV2);
         
         //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVelocity());
+        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
         b.setVelocity(newV3);
         
         //if ball is going to hit side4
-        Vect newV4 = Geometry.reflectWall(this.side4, b.getVelocity());
+        Vect newV4 = Geometry.reflectWall(this.side4, b.getVector());
         b.setVelocity(newV4);
+        
+        //do this for corners as well
         
        
     }

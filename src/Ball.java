@@ -22,7 +22,8 @@ public class Ball {
     private Vect velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 
     private Circle ballCircle;
-    private Vect ballVector;
+    private Vect ballVelocity;
+	private Vect ballVector;
 	private String name;
     
     public Ball(double x, double y, double xVel, double yVel, String ballName) {
@@ -44,7 +45,7 @@ public class Ball {
     }
     
     public Vect getVector() {
-        return this.ballVector;
+        return this.ballVelocity;
     }
 
     /**
@@ -86,14 +87,6 @@ public class Ball {
     public void setX(double x) {
         this.x = x;
     }
-
-    /**
-     * 
-     * @return velocity of the ball in spaces per second 
-     */
-    public Vect getVelocity() {
-        return this.velocity;
-    }
     
     /**
      * 
@@ -114,6 +107,10 @@ public class Ball {
     private void checkRep() {
         
     }
+
+	public Vect getVelocity() {
+		return velocity;
+	}
 
 
 }

@@ -133,5 +133,20 @@ public class Board {
     private void checkRep() {
         
     }
+    /**
+     * creates a wall that was previously connected to another board
+     * @param wallLocation should be "left"|"right"|"up"|"down"
+     */
+    public void wallify(String wallLocation){
+    	
+    }
+    /**
+     * connects a wall to a board
+     * @param wallLocation should be "left"|"right"|"up"|"down"
+     * @param connectedBoardName is the name of the board the wall is being connected to ex. "Mars". If the connected board has no name, pass in the empty string ""
+     */
+    public void connectWall(String wallLocation, String connectedBoardName){
+    	
+    }
 
 }

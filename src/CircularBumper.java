@@ -15,7 +15,15 @@ public class CircularBumper extends Bumper{
     
     Vect center;
     Circle circleRep;
+    Double x;
+    Double y;
     
+    CircularBumper(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.center = new Vect(x,y);
+        this.circleRep = new Circle(x,y,0.5);
+        }
     /**
      * @author ahochstadt
      * @author Lauren
@@ -40,7 +48,7 @@ public class CircularBumper extends Bumper{
      */
     public void getEffect(Ball b) {
         
-        Vect newV = Geometry.reflectCircle(this.center, b.getVector(), b.getVelocity());
+        Vect newV = Geometry.reflectCircle(this.center, b.getVector(), b.getVector());
         b.setVelocity(newV);
         
     }
@@ -53,8 +61,12 @@ public class CircularBumper extends Bumper{
      */
     @Override
     public boolean inBounds(Ball b) {
+        if (b.getX() < (this.x + 0.5) && b.getX() > (this.x +0.5)) {
+            if (b.getY() < (this.y +0.5) && b.getY() > (this.y + 0.5)) {
+                return true;
+            }
+        }
         return false;
-        //TODO
     }
     
     /**
