@@ -1,4 +1,4 @@
-// Generated from Expression.g4 by ANTLR 4.0
+// Generated from src/Expression.g4 by ANTLR 4.0
 
 package expr;
 
@@ -17,14 +17,23 @@ public class ExpressionParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		TRUE=1, FALSE=2, AND=3, WHITESPACE=4;
+		INTEGER=1, FLOAT=2, NAME=3, NAMEFIELD=4, GRAVITYFIELD=5, XFIELD=6, YFIELD=7, 
+		XVELOCITYFIELD=8, YVELOCITYFIELD=9, ORIENTATIONFIELD=10, TRIGGERFIELD=11, 
+		ACTIONFIELD=12, FRICTION1FIELD=13, FRICTION2FIELD=14, WIDTHFIELD=15, HEIGHTFIELD=16, 
+		COMMENT=17, WHITESPACE=18;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'TRUE'", "'FALSE'", "'&'", "WHITESPACE"
+		"<INVALID>", "INTEGER", "FLOAT", "NAME", "'name='", "'gravity='", "'x='", 
+		"'y='", "'xvelocity='", "'yvelocity='", "'orientation='", "'trigger='", 
+		"'action='", "'friction1='", "'friction2='", "'width='", "'height='", 
+		"COMMENT", "WHITESPACE"
 	};
 	public static final int
-		RULE_expression = 0, RULE_conjunction = 1, RULE_literal = 2;
+		RULE_board = 0, RULE_ball = 1, RULE_squareBumper = 2, RULE_circleBumper = 3, 
+		RULE_triangleBumper = 4, RULE_rightFlipper = 5, RULE_leftFlipper = 6, 
+		RULE_absorber = 7, RULE_fire = 8;
 	public static final String[] ruleNames = {
-		"expression", "conjunction", "literal"
+		"board", "ball", "squareBumper", "circleBumper", "triangleBumper", "rightFlipper", 
+		"leftFlipper", "absorber", "fire"
 	};
 
 	@Override
@@ -61,33 +70,44 @@ public class ExpressionParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class ExpressionContext extends ParserRuleContext {
-		public ConjunctionContext conjunction() {
-			return getRuleContext(ConjunctionContext.class,0);
+	public static class BoardContext extends ParserRuleContext {
+		public TerminalNode FRICTION2FIELD() { return getToken(ExpressionParser.FRICTION2FIELD, 0); }
+		public TerminalNode FRICTION1FIELD() { return getToken(ExpressionParser.FRICTION1FIELD, 0); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public List<TerminalNode> FLOAT() { return getTokens(ExpressionParser.FLOAT); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode GRAVITYFIELD() { return getToken(ExpressionParser.GRAVITYFIELD, 0); }
+		public TerminalNode FLOAT(int i) {
+			return getToken(ExpressionParser.FLOAT, i);
 		}
-		public TerminalNode EOF() { return getToken(ExpressionParser.EOF, 0); }
-		public ExpressionContext(ParserRuleContext parent, int invokingState) {
+		public BoardContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_expression; }
+		@Override public int getRuleIndex() { return RULE_board; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterExpression(this);
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterBoard(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitExpression(this);
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitBoard(this);
 		}
 	}
 
-	public final ExpressionContext expression() throws RecognitionException {
-		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_expression);
+	public final BoardContext board() throws RecognitionException {
+		BoardContext _localctx = new BoardContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_board);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(6); conjunction(0);
-			setState(7); match(EOF);
+			setState(18); match(NAMEFIELD);
+			setState(19); match(NAME);
+			setState(20); match(GRAVITYFIELD);
+			setState(21); match(FLOAT);
+			setState(22); match(FRICTION1FIELD);
+			setState(23); match(FLOAT);
+			setState(24); match(FRICTION2FIELD);
+			setState(25); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -101,114 +121,47 @@ public class ExpressionParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ConjunctionContext extends ParserRuleContext {
-		public int _p;
-		public ConjunctionContext conjunction(int i) {
-			return getRuleContext(ConjunctionContext.class,i);
+	public static class BallContext extends ParserRuleContext {
+		public TerminalNode XVELOCITYFIELD() { return getToken(ExpressionParser.XVELOCITYFIELD, 0); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public List<TerminalNode> FLOAT() { return getTokens(ExpressionParser.FLOAT); }
+		public TerminalNode YVELOCITYFIELD() { return getToken(ExpressionParser.YVELOCITYFIELD, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public TerminalNode FLOAT(int i) {
+			return getToken(ExpressionParser.FLOAT, i);
 		}
-		public TerminalNode AND() { return getToken(ExpressionParser.AND, 0); }
-		public List<ConjunctionContext> conjunction() {
-			return getRuleContexts(ConjunctionContext.class);
-		}
-		public LiteralContext literal() {
-			return getRuleContext(LiteralContext.class,0);
-		}
-		public ConjunctionContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
-		public ConjunctionContext(ParserRuleContext parent, int invokingState, int _p) {
+		public BallContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
-			this._p = _p;
 		}
-		@Override public int getRuleIndex() { return RULE_conjunction; }
+		@Override public int getRuleIndex() { return RULE_ball; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterConjunction(this);
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterBall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitConjunction(this);
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitBall(this);
 		}
 	}
 
-	public final ConjunctionContext conjunction(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		ConjunctionContext _localctx = new ConjunctionContext(_ctx, _parentState, _p);
-		ConjunctionContext _prevctx = _localctx;
-		int _startState = 2;
-		enterRecursionRule(_localctx, RULE_conjunction);
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
-			{
-			setState(10); literal();
-			}
-			_ctx.stop = _input.LT(-1);
-			setState(17);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
-			while ( _alt!=2 && _alt!=-1 ) {
-				if ( _alt==1 ) {
-					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
-					{
-					{
-					_localctx = new ConjunctionContext(_parentctx, _parentState, _p);
-					pushNewRecursionContext(_localctx, _startState, RULE_conjunction);
-					setState(12);
-					if (!(2 >= _localctx._p)) throw new FailedPredicateException(this, "2 >= $_p");
-					setState(13); match(AND);
-					setState(14); conjunction(3);
-					}
-					} 
-				}
-				setState(19);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			unrollRecursionContexts(_parentctx);
-		}
-		return _localctx;
-	}
-
-	public static class LiteralContext extends ParserRuleContext {
-		public TerminalNode FALSE() { return getToken(ExpressionParser.FALSE, 0); }
-		public TerminalNode TRUE() { return getToken(ExpressionParser.TRUE, 0); }
-		public LiteralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_literal; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitLiteral(this);
-		}
-	}
-
-	public final LiteralContext literal() throws RecognitionException {
-		LiteralContext _localctx = new LiteralContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_literal);
-		int _la;
+	public final BallContext ball() throws RecognitionException {
+		BallContext _localctx = new BallContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_ball);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(20);
-			_la = _input.LA(1);
-			if ( !(_la==TRUE || _la==FALSE) ) {
-			_errHandler.recoverInline(this);
-			}
-			consume();
+			setState(27); match(NAMEFIELD);
+			setState(28); match(NAME);
+			setState(29); match(XFIELD);
+			setState(30); match(FLOAT);
+			setState(31); match(YFIELD);
+			setState(32); match(FLOAT);
+			setState(33); match(XVELOCITYFIELD);
+			setState(34); match(FLOAT);
+			setState(35); match(YVELOCITYFIELD);
+			setState(36); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -222,26 +175,375 @@ public class ExpressionParser extends Parser {
 		return _localctx;
 	}
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
-		case 1: return conjunction_sempred((ConjunctionContext)_localctx, predIndex);
+	public static class SquareBumperContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
 		}
-		return true;
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public SquareBumperContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_squareBumper; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterSquareBumper(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitSquareBumper(this);
+		}
 	}
-	private boolean conjunction_sempred(ConjunctionContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 0: return 2 >= _localctx._p;
+
+	public final SquareBumperContext squareBumper() throws RecognitionException {
+		SquareBumperContext _localctx = new SquareBumperContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_squareBumper);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(38); match(NAMEFIELD);
+			setState(39); match(NAME);
+			setState(40); match(XFIELD);
+			setState(41); match(INTEGER);
+			setState(42); match(YFIELD);
+			setState(43); match(INTEGER);
+			}
 		}
-		return true;
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CircleBumperContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
+		}
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public CircleBumperContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_circleBumper; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterCircleBumper(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitCircleBumper(this);
+		}
+	}
+
+	public final CircleBumperContext circleBumper() throws RecognitionException {
+		CircleBumperContext _localctx = new CircleBumperContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_circleBumper);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(45); match(NAMEFIELD);
+			setState(46); match(NAME);
+			setState(47); match(XFIELD);
+			setState(48); match(INTEGER);
+			setState(49); match(YFIELD);
+			setState(50); match(INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TriangleBumperContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode ORIENTATIONFIELD() { return getToken(ExpressionParser.ORIENTATIONFIELD, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
+		}
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public TriangleBumperContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_triangleBumper; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterTriangleBumper(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitTriangleBumper(this);
+		}
+	}
+
+	public final TriangleBumperContext triangleBumper() throws RecognitionException {
+		TriangleBumperContext _localctx = new TriangleBumperContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_triangleBumper);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(52); match(NAMEFIELD);
+			setState(53); match(NAME);
+			setState(54); match(XFIELD);
+			setState(55); match(INTEGER);
+			setState(56); match(YFIELD);
+			setState(57); match(INTEGER);
+			setState(58); match(ORIENTATIONFIELD);
+			setState(59); match(INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RightFlipperContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode ORIENTATIONFIELD() { return getToken(ExpressionParser.ORIENTATIONFIELD, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
+		}
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public RightFlipperContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_rightFlipper; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterRightFlipper(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitRightFlipper(this);
+		}
+	}
+
+	public final RightFlipperContext rightFlipper() throws RecognitionException {
+		RightFlipperContext _localctx = new RightFlipperContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_rightFlipper);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(61); match(NAMEFIELD);
+			setState(62); match(NAME);
+			setState(63); match(XFIELD);
+			setState(64); match(INTEGER);
+			setState(65); match(YFIELD);
+			setState(66); match(INTEGER);
+			setState(67); match(ORIENTATIONFIELD);
+			setState(68); match(INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class LeftFlipperContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode ORIENTATIONFIELD() { return getToken(ExpressionParser.ORIENTATIONFIELD, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
+		}
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public LeftFlipperContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_leftFlipper; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterLeftFlipper(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitLeftFlipper(this);
+		}
+	}
+
+	public final LeftFlipperContext leftFlipper() throws RecognitionException {
+		LeftFlipperContext _localctx = new LeftFlipperContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_leftFlipper);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(70); match(NAMEFIELD);
+			setState(71); match(NAME);
+			setState(72); match(XFIELD);
+			setState(73); match(INTEGER);
+			setState(74); match(YFIELD);
+			setState(75); match(INTEGER);
+			setState(76); match(ORIENTATIONFIELD);
+			setState(77); match(INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AbsorberContext extends ParserRuleContext {
+		public List<TerminalNode> INTEGER() { return getTokens(ExpressionParser.INTEGER); }
+		public TerminalNode NAME() { return getToken(ExpressionParser.NAME, 0); }
+		public TerminalNode WIDTHFIELD() { return getToken(ExpressionParser.WIDTHFIELD, 0); }
+		public TerminalNode YFIELD() { return getToken(ExpressionParser.YFIELD, 0); }
+		public TerminalNode NAMEFIELD() { return getToken(ExpressionParser.NAMEFIELD, 0); }
+		public TerminalNode HEIGHTFIELD() { return getToken(ExpressionParser.HEIGHTFIELD, 0); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(ExpressionParser.INTEGER, i);
+		}
+		public TerminalNode XFIELD() { return getToken(ExpressionParser.XFIELD, 0); }
+		public AbsorberContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_absorber; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterAbsorber(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitAbsorber(this);
+		}
+	}
+
+	public final AbsorberContext absorber() throws RecognitionException {
+		AbsorberContext _localctx = new AbsorberContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_absorber);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(79); match(NAMEFIELD);
+			setState(80); match(NAME);
+			setState(81); match(XFIELD);
+			setState(82); match(INTEGER);
+			setState(83); match(YFIELD);
+			setState(84); match(INTEGER);
+			setState(85); match(WIDTHFIELD);
+			setState(86); match(INTEGER);
+			setState(87); match(HEIGHTFIELD);
+			setState(88); match(INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FireContext extends ParserRuleContext {
+		public TerminalNode ACTIONFIELD() { return getToken(ExpressionParser.ACTIONFIELD, 0); }
+		public List<TerminalNode> NAME() { return getTokens(ExpressionParser.NAME); }
+		public TerminalNode NAME(int i) {
+			return getToken(ExpressionParser.NAME, i);
+		}
+		public TerminalNode TRIGGERFIELD() { return getToken(ExpressionParser.TRIGGERFIELD, 0); }
+		public FireContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fire; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterFire(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitFire(this);
+		}
+	}
+
+	public final FireContext fire() throws RecognitionException {
+		FireContext _localctx = new FireContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_fire);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(90); match(TRIGGERFIELD);
+			setState(91); match(NAME);
+			setState(92); match(ACTIONFIELD);
+			setState(93); match(NAME);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
 	}
 
 	public static final String _serializedATN =
-		"\2\3\6\31\4\2\t\2\4\3\t\3\4\4\t\4\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\7\3\22\n\3\f\3\16\3\25\13\3\3\4\3\4\3\4\2\5\2\4\6\2\3\3\3\4\26\2\b\3"+
-		"\2\2\2\4\13\3\2\2\2\6\26\3\2\2\2\b\t\5\4\3\2\t\n\7\1\2\2\n\3\3\2\2\2\13"+
-		"\f\b\3\1\2\f\r\5\6\4\2\r\23\3\2\2\2\16\17\6\3\2\3\17\20\7\5\2\2\20\22"+
-		"\5\4\3\2\21\16\3\2\2\2\22\25\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2\24\5"+
-		"\3\2\2\2\25\23\3\2\2\2\26\27\t\2\2\2\27\7\3\2\2\2\3\23";
+		"\2\3\24b\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t"+
+		"\t\4\n\t\n\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3"+
+		"\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
+		"\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\2\13\2\4\6\b\n\f\16\20\22\2"+
+		"\2X\2\24\3\2\2\2\4\35\3\2\2\2\6(\3\2\2\2\b/\3\2\2\2\n\66\3\2\2\2\f?\3"+
+		"\2\2\2\16H\3\2\2\2\20Q\3\2\2\2\22\\\3\2\2\2\24\25\7\6\2\2\25\26\7\5\2"+
+		"\2\26\27\7\7\2\2\27\30\7\4\2\2\30\31\7\17\2\2\31\32\7\4\2\2\32\33\7\20"+
+		"\2\2\33\34\7\4\2\2\34\3\3\2\2\2\35\36\7\6\2\2\36\37\7\5\2\2\37 \7\b\2"+
+		"\2 !\7\4\2\2!\"\7\t\2\2\"#\7\4\2\2#$\7\n\2\2$%\7\4\2\2%&\7\13\2\2&\'\7"+
+		"\4\2\2\'\5\3\2\2\2()\7\6\2\2)*\7\5\2\2*+\7\b\2\2+,\7\3\2\2,-\7\t\2\2-"+
+		".\7\3\2\2.\7\3\2\2\2/\60\7\6\2\2\60\61\7\5\2\2\61\62\7\b\2\2\62\63\7\3"+
+		"\2\2\63\64\7\t\2\2\64\65\7\3\2\2\65\t\3\2\2\2\66\67\7\6\2\2\678\7\5\2"+
+		"\289\7\b\2\29:\7\3\2\2:;\7\t\2\2;<\7\3\2\2<=\7\f\2\2=>\7\3\2\2>\13\3\2"+
+		"\2\2?@\7\6\2\2@A\7\5\2\2AB\7\b\2\2BC\7\3\2\2CD\7\t\2\2DE\7\3\2\2EF\7\f"+
+		"\2\2FG\7\3\2\2G\r\3\2\2\2HI\7\6\2\2IJ\7\5\2\2JK\7\b\2\2KL\7\3\2\2LM\7"+
+		"\t\2\2MN\7\3\2\2NO\7\f\2\2OP\7\3\2\2P\17\3\2\2\2QR\7\6\2\2RS\7\5\2\2S"+
+		"T\7\b\2\2TU\7\3\2\2UV\7\t\2\2VW\7\3\2\2WX\7\21\2\2XY\7\3\2\2YZ\7\22\2"+
+		"\2Z[\7\3\2\2[\21\3\2\2\2\\]\7\r\2\2]^\7\5\2\2^_\7\16\2\2_`\7\5\2\2`\23"+
+		"\3\2\2\2\2";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {
