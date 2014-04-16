@@ -2,7 +2,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -117,31 +121,60 @@ public class PingballServer {
     }
     
     /**
-     * Start a PingballServer using the given arguments
+     * Start a PingballServer using the given argument
      * 
-     * Usage: PingballClient [--host HOST] [--port PORT] FILE
-     * 
-     * HOST is an optional hostname or IP address of the server to connect to. 
-     * If no HOST is provided, then the client starts in single-machine play mode.
+     * Usage: PingballServer [--port PORT]
      * 
      * PORT is an optional integer in the range 0 to 65535 inclusive, specifying the port 
-     * where the server is listening for incoming connections. The default port is 10987.
-     * 
-     * FILE is a required argument specifying a file pathname of the Pingball board that this client should run.
-     * Its grammar may be found in Parser.java.
+     * where the server should listen for incoming connections. The default port is 10987.
      * 
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        // handle command line arguments here
+        int port = 10987;
+        
+        Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
+        try {
+            while ( ! arguments.isEmpty()) {
+                String flag = arguments.remove();            
+                try {
+                    if (flag.equals("--port")) {
+                        port = Integer.parseInt(arguments.remove());
+                        if (port < 0 || port > 65535) {
+                            throw new IllegalArgumentException("port " + port + " out of range");
+                        }
+                    }
+                } catch (NoSuchElementException nsee) {
+                    throw new IllegalArgumentException("missing argument for " + flag);
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalArgumentException("unable to parse number for " + flag);
+                }
+            }
+        } catch (IllegalArgumentException iae) {
+            System.err.println(iae.getMessage());
+            System.err.println("PingballClient [--host HOST] [--port PORT] FILE");
+            return;
+        }
+        
+        try {
+            runPingballServer(port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+                    
     }
     
     /**
      * Start a Pingball server running on the specified port.
      * 
+     * Usage: PORT is an optional integer in the range 0 to 65535 inclusive, specifying the port where the server 
+     * should listen for incoming connections. The default port is 10987.
+     * 
      * @param port The network port on which the server should listen.
+     * 
+     * @throws IOException
      */
-    public static void runPingballServer(int port) {
+    public static void runPingballServer(int port) throws IOException {
         
     }
     
