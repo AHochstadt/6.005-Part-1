@@ -22,6 +22,7 @@ public class Ball {
     private Vect velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 
     private Circle ballCircle;
+<<<<<<< HEAD
     private Vect ballVelocity;
     
     public Ball(double x, double y, double angle, double speed, String board) {
@@ -31,6 +32,18 @@ public class Ball {
         this.ballVelocity = new Vect(new Angle(angle), speed);
         this.angle = angle;
         this.board = board;
+=======
+    private Vect ballVector;
+	private String name;
+    
+    public Ball(double x, double y, double xVel, double yVel, String ballName) {
+        this.x = x;
+        this.y = y;
+        this.ballCircle = new Circle(x,y,0.25);
+        this.ballVector = new Vect(x,y);
+        this.velocity = new Vect(xVel, yVel);
+        this.name = ballName;
+>>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
 
     }
 

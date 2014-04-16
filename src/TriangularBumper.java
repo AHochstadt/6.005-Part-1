@@ -1,7 +1,11 @@
+import java.io.IOException;
+import java.util.ArrayList;
+
 import physics.*;
 /**
  * 
  * @author Lauren 
+ * @author ahochstadt
  * 
  * A right-triangle shaped bumper 
  * 
@@ -13,6 +17,7 @@ public class TriangularBumper extends Bumper {
     LineSegment side1;
     LineSegment side2;
     LineSegment side3;
+<<<<<<< HEAD
     Circle corner1;
     Circle corner2;
     Circle corner3;
@@ -24,7 +29,73 @@ public class TriangularBumper extends Bumper {
         corner1 = new Circle(orgX, orgY, 0);
         corner2 = new Circle(point1x, point1y,0);
         corner3 = new Circle(point2x, point2y,0);
+=======
+    ArrayList<LineSegment> sides;
+    Circle corner1;
+    Circle corner2;
+    Circle corner3;
+    ArrayList<Circle> corners;
+    double x;
+    double y;
+    double orientation;
+    String name;
+    
+    /**
+     * Constructor for Triangular Bumper
+     * @author ahochstadt
+     * @param x x-coordinate of upper-left corner of bumper square
+     * @param y y-coordinate of upper-left corner of bumper square
+     * @param orientation can be 0|90|180|270. Measure (in degrees) of how much the original triangular bumper is rotated. Original bumper (orientation = 0) has legs on the north and west sides of the square.
+     * @param name name of the bumper
+     * @throws IOException if orientation != 0|90|180|270
+     */
+    TriangularBumper(int x, int y, int orientation, String name) throws IOException{
+    	this.x = (double) x;
+    	this.y = (double) y;
+    	this.orientation = (double) orientation;
+    	this.name = name;
+    	
+    	if (orientation == 0){
+    		side1 = new LineSegment(this.x, this.y+1, this.x, this.y);
+    		corner1 = new Circle(this.x, this.y, 0.0);
+    		side2 = new LineSegment(this.x, this.y, this.x+1, this.y);
+    		corner2 = new Circle(this.x+1, this.y, 0.0);
+    		side3 = new LineSegment(this.x+1, this.y, this.x, this.y+1);
+    		corner3 = new Circle(this.x, this.y+1, 0.0);
+    	} else if (orientation == 90){
+    		side1 = new LineSegment(this.x, this.y, this.x+1, this.y);
+    		corner1 = new Circle(this.x+1, this.y, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y, this.x+1, this.y+1);
+    		corner2 = new Circle(this.x+1, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y, this.x+1, this.y+1);
+    		corner3 = new Circle(this.x, this.y, 0.0);
+    	} else if (orientation == 180){
+    		side1 = new LineSegment(this.x, this.y+1, this.x+1, this.y);
+    		corner1 = new Circle(this.x+1, this.y, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y, this.x+1, this.y+1);
+    		corner2 = new Circle(this.x+1, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y+1, this.x+1, this.y+1);
+    		corner3 = new Circle(this.x, this.y+1, 0.0);
+    	} else {
+    		if (orientation != 270){
+    			throw new IOException("Invalid orientation");
+    		}
+    		side1 = new LineSegment(this.x, this.y, this.x+1, this.y+1);
+    		corner1 = new Circle(this.x+1, this.y+1, 0.0);
+    		side2 = new LineSegment(this.x+1, this.y+1, this.x, this.y+1);
+    		corner2 = new Circle(this.x, this.y+1, 0.0);
+    		side3 = new LineSegment(this.x, this.y+1, this.x, y);
+    		corner3 = new Circle(this.x, this.y, 0.0);
+    	}
+    	this.sides.clear();
+    	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); //populate this.sides
+    	this.corners.clear();
+    	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); //populate this.corners
+    	
+    	
+>>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
     }
+    
     
     /**
      * 

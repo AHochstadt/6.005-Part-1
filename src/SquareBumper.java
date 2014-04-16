@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import physics.*;
 /**
  * 
@@ -10,14 +11,20 @@ import physics.*;
  *                position is fixed
  */
 public class SquareBumper extends Bumper {
+	
     LineSegment side1;
     LineSegment side2;
     LineSegment side3;
     LineSegment side4;
+<<<<<<< HEAD
+=======
+    ArrayList<LineSegment> sides = new ArrayList<LineSegment>();
+>>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
     Circle corner1;
     Circle corner2;
     Circle corner3;
     Circle corner4;
+<<<<<<< HEAD
     
     SquareBumper(double x1, double y1, double x2, double y2) {
         side1 = new LineSegment(x1,y1,x1,y2);
@@ -29,7 +36,41 @@ public class SquareBumper extends Bumper {
         corner3 = new Circle(x2,y2,0);
         corner4 = new Circle(x2,y2,0);
      
+=======
+    ArrayList<Circle> corners = new ArrayList<Circle>();
+
+    String name;
+    double x;
+    double y;
+    /**
+     * Constructor for Square Bumper
+     * @author ahochstadt
+     * @param x x-coordinate of bumper (should be natural number)
+     * @param y y-coordinate of bumper (should be natural number)
+     * @param name name of bumper
+     */
+    SquareBumper(int x, int y, String name){
+    	
+    	this.x = (double) x;
+    	this.y = (double) y;
+    	this.name = name;
+    	this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
+    	this.side1 = new LineSegment((double) x, (double) y, (double) x+1, (double) y);
+    	this.corner2 = new Circle((double) x+1, (double) y, 0.0);
+    	this.side2 = new LineSegment((double) x+1, (double) y, (double) x+1, (double) y+1);
+    	this.corner3 = new Circle((double) x+1, (double) y+1, 0.0);
+    	this.side3 = new LineSegment((double) x+1, (double) y+1, x, (double) y+1);
+    	this.corner4 = new Circle((double) x, (double) y+1, 0.0);
+    	this.side4 = new LineSegment((double) x, (double) y, (double) x, (double) y+1);
+    	this.sides.clear();
+    	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
+    	this.corners.clear();
+    	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
+    	
+>>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
     }
+     
+    
     
     /**
      * 

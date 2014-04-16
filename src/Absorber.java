@@ -3,7 +3,7 @@ import warmup.Ball;
 /**
  * 
  * @author Lauren
- * 
+ * @author ahochstadt
  * A class representing the Absorber
  * An absorber is a rectangle kL x mL 
  * 
@@ -12,16 +12,27 @@ import warmup.Ball;
  *
  */
 public class Absorber implements Stationary {
-    double corner1x;
-    double corner2x;
-    double corner1y;
-    double corner2y;
-    
-    Absorber(double x1, double y1, double x2, double y2) {
-        corner1x = x1;
-        corner2x = x2;
-        corner1y = y1;
-        corner2y = y2;
+    double x;
+    double y;
+    double width;
+    double height;
+    String name;
+    /**
+     * Constructor for Absorber
+     * @author ahochstadt
+     * @param x x-coordinate for upperleft corner of height x width absorber
+     * @param y y-coordinate for upperleft corner of height x width absorber
+     * @param width width of the absorber
+     * @param height height of the absorber
+     * @param name name of the absorber. Must be unique to the board file
+     */
+    Absorber(int x, int y, int width, int height, String name) {
+        this.x = (double) x;
+        this.y = (double) y; 
+        this.width = (double) width;
+        this.height = (double) height;
+        this.name = name;
+        // TODO write Constructor
     }
     
     /**

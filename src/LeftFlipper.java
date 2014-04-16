@@ -2,7 +2,7 @@ import physics.*;
 /**
  * 
  * @author Lauren 
- * 
+ * @author ahochstadt
  * A class representing a left flipper
  * 
  * Rep Invariant: flipper remains within the bounding box
@@ -10,20 +10,28 @@ import physics.*;
  *
  */
 public class LeftFlipper implements Flipper {
+	Circle pivot;
+	Circle endPoint;
     LineSegment flipper;
     Vect origin;
-    double xOrig;
-    double yOrig;
-    double xMov;
-    double yMov;
+    double orientation;
+    double xPivot;
+    double yPivot;
+    double xEndpt;
+    double yEndpt;
     
-    LeftFlipper(float x, float y, float xM, float yM) {
-        this.flipper = new LineSegment(x,y,xM,yM);
+    /**
+     * Constructor for Left Flipper
+     * @author ahochstadt
+     * @param x x-coordinate for upperleft corner of 2Lx2L bounding box
+     * @param y y-coordinate for upperleft corner of 2Lx2L bounding box
+     * @param orientation can be 0|90|180|270. Measure (in degrees) of how much the original flipper bumper is rotated. Original bumper (orientation = 0) lies on the west side of the bounding box.
+     * @param name name of the flipper
+     */
+    LeftFlipper(int x, int y, int orientation, String name) {
+        this.flipper = new LineSegment(x,y,x+2,y);
         this.origin = new Vect(x,y);
-        this.xOrig = x;
-        this.xMov = xM;
-        this.yOrig = y;
-        this.yMov = yM;
+        // TODO write constructor
     }
     /**
      * moves the moving end of the flipper
@@ -41,7 +49,7 @@ public class LeftFlipper implements Flipper {
      * @return fixed x value 
      */
     public double getFixedX() {
-        return xOrig;
+        return xPivot;
     }
 
     /**
@@ -49,7 +57,7 @@ public class LeftFlipper implements Flipper {
      * @return moving y value 
      */
     public double getFixedY() {
-        return yOrig;
+        return yPivot;
         
     }
     
@@ -58,7 +66,7 @@ public class LeftFlipper implements Flipper {
      * @return moving x value 
      */
     public double getMovingX() {
-        return xMov;
+        return xEndpt;
         
     }
     
@@ -67,7 +75,7 @@ public class LeftFlipper implements Flipper {
      * @return moving x value 
      */
     public double getMovingY() {
-        return yMov;
+        return yEndpt;
     }
     
     @Override
