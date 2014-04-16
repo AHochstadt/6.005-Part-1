@@ -18,13 +18,12 @@ public class CircularBumper extends Bumper{
     Double x;
     Double y;
     
-<<<<<<< HEAD
     CircularBumper(double x, double y) {
         this.x = x;
         this.y = y;
         this.center = new Vect(x,y);
         this.circleRep = new Circle(x,y,0.5);
-=======
+        }
     /**
      * @author ahochstadt
      * @author Lauren
@@ -37,7 +36,6 @@ public class CircularBumper extends Bumper{
     	//make sure to keep the +.5 in the lines below or make sure to keep the inputs to Vect and Circle doubles somehow
         this.center = new Vect(x+.5,y+.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         this.circleRep = new Circle(x+.5,y+.5,0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
->>>>>>> 6d71ce573344d0da9b17d0cb5678f2b8533bc582
         
     }
     
