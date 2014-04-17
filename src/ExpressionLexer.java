@@ -1,6 +1,5 @@
-// Generated from src/Expression.g4 by ANTLR 4.0
+// Generated from src/BoardMaker.g4 by ANTLR 4.0
 
-package expr;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -63,7 +62,7 @@ public class ExpressionLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Expression.g4"; }
+	public String getGrammarFileName() { return "BoardMaker.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }

@@ -1,8 +1,7 @@
-grammar Expression;
+grammar BoardMaker;
 
 // This puts a Java package statement at the top of the output Java files.
 @header {
-package expr;
 }
 
 // This adds code to the generated lexer and parser.
@@ -47,6 +46,15 @@ FRICTION1FIELD: 'friction1=';
 FRICTION2FIELD: 'friction2=';
 WIDTHFIELD: 'width=';
 HEIGHTFIELD: 'height=';
+SQUAREBUMPERLABLE: 'squareBumper';
+CIRCLEBUMPERLABLE: 'circleBumper';
+TRIANGLEBUMPERLABLE: 'triangleBumper';
+BOARDLABLE: 'board';
+BALLLABLE: 'ball';
+RIGHTFLIPPERLABLE: 'rightFlipper';
+LEFTFLIPPERLABLE: 'leftFlipper';
+ABSORBERLABLE: 'absorber';
+FIRELABLE: 'fire';
 
 
 
@@ -55,15 +63,32 @@ HEIGHTFIELD: 'height=';
  * These are the parser rules. They define the structures used by the parser.
  * *** ANTLR requires grammar nonterminals to be lowercase, like html, normal, and italic.
  */
-board: NAMEFIELD NAME GRAVITYFIELD FLOAT FRICTION1FIELD FLOAT FRICTION2FIELD FLOAT;
-ball: NAMEFIELD NAME XFIELD FLOAT YFIELD FLOAT XVELOCITYFIELD FLOAT YVELOCITYFIELD FLOAT;
-squareBumper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER;
-circleBumper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER;
-triangleBumper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTEGER;
-rightFlipper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTEGER;
-leftFlipper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTEGER;
-absorber: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER WIDTHFIELD INTEGER HEIGHTFIELD INTEGER;
-fire: TRIGGERFIELD NAME ACTIONFIELD NAME;
+ file: board  (ball|squareBumper|circleBumper|triangleBumper|rightFlipper|leftFlipper|absorber|fire)* EOF; 
+board: BOARDLABLE name gravity friction1 friction2;
+ball: BALLLABLE name xball yball xvelocity yvelocity;
+squareBumper: SQUAREBUMPERLABLE name x y;
+circleBumper: CIRCLEBUMPERLABLE name x y;
+triangleBumper: TRIANGLEBUMPERLABLE name x y orientation;
+rightFlipper: RIGHTFLIPPERLABLE name x y orientation;
+leftFlipper: LEFTFLIPPERLABLE name x y orientation;
+absorber: ABSORBERLABLE name x y width height;
+fire: FIRELABLE trigger action;
+name: NAMEFIELD NAME;
+gravity: GRAVITYFIELD FLOAT;
+friction1: FRICTION1FIELD FLOAT;
+friction2: FRICTION2FIELD FLOAT;
+xball: XFIELD FLOAT;
+yball: YFIELD FLOAT;
+xvelocity: XVELOCITYFIELD FLOAT;
+yvelocity: YVELOCITYFIELD FLOAT;
+orientation: ORIENTATIONFIELD INTEGER;
+x: XFIELD INTEGER;
+y: YFIELD INTEGER;
+trigger: TRIGGERFIELD NAME;
+action: ACTIONFIELD NAME;
+width: WIDTHFIELD INTEGER;
+height: HEIGHTFIELD INTEGER;
 
-COMMENT : '#' [ \t\r\n]+ -> skip;
+
+COMMENT : '#' ~('\n'|'\r')* '\r'? '\n'-> skip;
 WHITESPACE : [ \t\r\n]+ -> skip ;

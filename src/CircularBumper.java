@@ -17,9 +17,8 @@ public class CircularBumper extends Bumper{
 	private Board parentBoard;
 	private String name;
     
-    CircularBumper(Board parentBoard, double x, double y, String name) {
+    CircularBumper(double x, double y, String name) {
     	this.name = name;
-    	this.parentBoard = parentBoard;
         this.x = x;
         this.y = y;
         this.center = new Vect(x,y);
@@ -49,6 +48,12 @@ public class CircularBumper extends Bumper{
     	//TODO write this method
         return true;
     }
+    
+    @Override 
+    public String getName() {
+        return this.name;
+    }
+    
 	public Board getParentBoard() {
 		return parentBoard;
 	}
@@ -67,4 +72,7 @@ public class CircularBumper extends Bumper{
 	public void action() { //does nothing by definition of Bumper
 	}
 
+	public void setParentBoard(Board parent) {
+	    this.parentBoard = parent;
+	}
 }

@@ -27,6 +27,7 @@ public class TriangularBumper extends Bumper {
     double orientation;
     String name;
 	private Board parentBoard;
+
     
     /**
      * Constructor for Triangular Bumper
@@ -37,8 +38,7 @@ public class TriangularBumper extends Bumper {
      * @param name name of the bumper
      * @throws IOException if orientation != 0|90|180|270
      */
-    TriangularBumper(Board parentBoard, int x, int y, int orientation, String name) throws IOException{
-    	this.parentBoard = parentBoard;
+    TriangularBumper(int x, int y, int orientation, String name) throws IOException{
     	this.x = (double) x;
     	this.y = (double) y;
     	this.orientation = (double) orientation;
@@ -96,8 +96,18 @@ public class TriangularBumper extends Bumper {
 	}
     
     @Override
+
 	public void action() { //does nothing by definition of Bumper
 	}
+
+    public String getName() {
+        return this.name;
+    }
+    
+    @Override
+    public void setParentBoard(Board parent) {
+        this.parentBoard = parent;
+    }
     
     /**
      * ensure the rep invariant of Triangular Bumper is preserved
@@ -105,6 +115,7 @@ public class TriangularBumper extends Bumper {
     public boolean checkRep() {
     	//TODO write this
         return true;
+        
     }
 
 }

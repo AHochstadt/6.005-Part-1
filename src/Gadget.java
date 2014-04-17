@@ -26,5 +26,17 @@ public interface Gadget {
      * returns a list of Circles and Segments that belong to the gadget or wall
      */
     public ArrayList<Object> getPhysicsObjects();
+    
+    /**
+     * @author Lauren 
+     * @return name of the Object 
+     */
+    public String getName();
+    
+    /**
+     * @author Lauren
+     * sets parent board 
+     */
+    public void setParentBoard(Board parent);
 
 }
