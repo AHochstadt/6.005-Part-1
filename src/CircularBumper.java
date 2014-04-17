@@ -15,8 +15,10 @@ public class CircularBumper extends Bumper{
     Double x;
     Double y;
 	private Board parentBoard;
+	private String name;
     
-    CircularBumper(Board parentBoard, double x, double y) {
+    CircularBumper(Board parentBoard, double x, double y, String name) {
+    	this.name = name;
     	this.parentBoard = parentBoard;
         this.x = x;
         this.y = y;
@@ -37,28 +39,7 @@ public class CircularBumper extends Bumper{
         this.circleRep = new Circle(x+.5,y+.5,0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         
     }
-    
-    
-    
-    /**
-     * 
-     * @param b: Ball that the bumper is interacting with 
-     * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
-     */
-    public void getEffect(Ball b) {
-        
-        Vect newV = Geometry.reflectCircle(this.center, b.getVector(), b.getVector());
-        b.setVelocity(newV);
-        
-    }
-    
-    /**
-     * 
-     * @param b: ball object to test if in bounds 
-     * @return: true if the ball is in the space that is occupied by the bumper 
-     * 
-     */
-    
+
     
     /**
      * ensure the rep invariant of Circular Bumper is preserved
@@ -70,6 +51,20 @@ public class CircularBumper extends Bumper{
     }
 	public Board getParentBoard() {
 		return parentBoard;
+	}
+	
+	/**
+     * @author ahochstadt
+     * gets the triggered gadget and triggers its action
+     */
+    @Override
+	public void trigger() {
+    	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+    	triggeredGadget.action();
+	}
+    
+    @Override
+	public void action() { //does nothing by definition of Bumper
 	}
 
 }

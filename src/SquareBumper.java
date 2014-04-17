@@ -27,6 +27,8 @@ public class SquareBumper extends Bumper {
     String name;
     double x;
     double y;
+    private Board parentBoard;
+	private ArrayList<Object> physicsObjects;
     /**
      * Constructor for Square Bumper
      * @author ahochstadt
@@ -36,7 +38,7 @@ public class SquareBumper extends Bumper {
      * @param name name of bumper
      */
     SquareBumper(Board parentBoard, int x, int y, String name){
-    	
+    	this.parentBoard = parentBoard;
     	this.x = (double) x;
     	this.y = (double) y;
     	this.name = name;
@@ -52,15 +54,25 @@ public class SquareBumper extends Bumper {
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
+    	for (Object physicsObject: this.corners){ //adds corners to physicsObjects
+    		this.physicsObjects.add(physicsObject);
+    	}
+    	for (Object physicsObject: this.sides){ //adds corners to physicsObjects
+    		this.physicsObjects.add(physicsObject);
+    	}
     }
      
     
     
     
-    
+    /**
+     * @author ahochstadt
+     * gets the triggered gadget and triggers its action
+     */
     @Override
 	public void trigger() {
-    	// TODO write method
+    	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+    	triggeredGadget.action();
 	}
 
 
@@ -74,6 +86,11 @@ public class SquareBumper extends Bumper {
     
     public double getY() {
 		return this.y;
+	}
+    
+    @Override
+	public ArrayList<Object> getPhysicsObjects() {
+		return this.physicsObjects;
 	}
 
 

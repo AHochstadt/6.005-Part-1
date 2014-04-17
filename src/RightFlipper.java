@@ -125,10 +125,14 @@ public class RightFlipper implements Flipper{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+	/**
+     * @author ahochstadt
+     * gets the triggered gadget and triggers its action
+     */
+    @Override
 	public void trigger() {
-		// TODO Auto-generated method stub
-		
+    	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+    	triggeredGadget.action();
 	}
 	@Override
 	public void action() {

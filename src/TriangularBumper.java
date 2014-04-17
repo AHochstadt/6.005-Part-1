@@ -26,6 +26,7 @@ public class TriangularBumper extends Bumper {
     double y;
     double orientation;
     String name;
+	private Board parentBoard;
     
     /**
      * Constructor for Triangular Bumper
@@ -36,7 +37,8 @@ public class TriangularBumper extends Bumper {
      * @param name name of the bumper
      * @throws IOException if orientation != 0|90|180|270
      */
-    TriangularBumper(int x, int y, int orientation, String name) throws IOException{
+    TriangularBumper(Board parentBoard, int x, int y, int orientation, String name) throws IOException{
+    	this.parentBoard = parentBoard;
     	this.x = (double) x;
     	this.y = (double) y;
     	this.orientation = (double) orientation;
@@ -84,46 +86,25 @@ public class TriangularBumper extends Bumper {
     
     
     /**
-     * 
-     * @param b : Ball that the bumper is interacting with 
-     * @effect : ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
-     */
-    public void getEffect(Ball b) {
-        //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
-        b.setVelocity(newV1);
-        
-        //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
-        b.setVelocity(newV2);
-        
-        //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
-        b.setVelocity(newV3);
-    }
-    
-    /**
-     * 
-     * @param b : ball object to test if in bounds 
-     * @return : true if the ball is in the space that is occupied by the bumper 
-     * 
+     * @author ahochstadt
+     * gets the triggered gadget and triggers its action
      */
     @Override
-    public boolean inBounds(Ball b) {
-    	b.getX();
-    	boolean inSide1 = false;
-    	boolean inSide2 = false;
-    	boolean inSide3 = false;
-        if (this.orientation == 0.0){
-        	if (b.)
-        }
-    }
+	public void trigger() {
+    	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+    	triggeredGadget.action();
+	}
+    
+    @Override
+	public void action() { //does nothing by definition of Bumper
+	}
     
     /**
      * ensure the rep invariant of Triangular Bumper is preserved
      */
-    private void checkRep() {
-        
+    public boolean checkRep() {
+    	//TODO write this
+        return true;
     }
 
 }

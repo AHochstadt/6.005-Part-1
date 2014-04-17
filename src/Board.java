@@ -19,7 +19,7 @@ import physics.Vect;
 * Rep invariant: flippers, stationaryItems, and balls all must not be null
 **/ 
 public class Board {
-	private ConcurrentHashMap<Stationary, Stationary> triggerMap = new ConcurrentHashMap<Stationary, Stationary>();
+	private ConcurrentHashMap<String, Gadget> triggerMap = new ConcurrentHashMap<String, Gadget>();
     private final Stationary[] nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
     private final Flipper[] flippers = null;
     private ArrayList<Ball> balls = null; //not final becuase balls can be added 
@@ -90,10 +90,10 @@ public class Board {
         this.boardName = listener.getBoardName();
         this.triggerMap.putAll(listener.getTriggerMap()); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
 
-        leftWall = new Wall("left"); //adds walls to board, solid by default
-        upWall = new Wall("up");
-        rightWall = new Wall("right");
-        downWall = new Wall("down");
+        leftWall = new Wall(this, "left"); //adds walls to board, solid by default
+        upWall = new Wall(this, "up");
+        rightWall = new Wall(this, "right");
+        downWall = new Wall(this, "down");
         
         this.walls.clear(); 
         this.walls.add(upWall); this.walls.add(leftWall); this.walls.add(downWall); this.walls.add(rightWall); //populates this.walls
@@ -543,6 +543,9 @@ public class Board {
 	}
 	public void setDownWall(Wall downWall) {
 		this.downWall = downWall;
+	}
+	public ConcurrentHashMap<String, Gadget> getTriggerMap(){
+		return this.triggerMap;
 	}
 
 }
