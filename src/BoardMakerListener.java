@@ -1,4 +1,4 @@
-// Generated from src/BoardMaker.g4 by ANTLR 4.0
+// Generated from BoardMaker.g4 by ANTLR 4.0
 
 
 import org.antlr.v4.runtime.tree.*;

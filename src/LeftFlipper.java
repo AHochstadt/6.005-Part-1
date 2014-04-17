@@ -17,7 +17,7 @@ public class LeftFlipper implements Flipper{
 	Circle endPoint;
     LineSegment flipper;
     double orientation;
-	private Board parentBoard;
+	private Board parentBoard = null;
 	private String name;
     
     /**
@@ -30,8 +30,7 @@ public class LeftFlipper implements Flipper{
      * @param parentBoard 
      * @throws IOException if orientation does not equal 0|90|180|270
      */
-    LeftFlipper(Board parentBoard, int x, int y, int orientation, String name) throws IOException {
-    	this.parentBoard = parentBoard;
+    LeftFlipper(int x, int y, int orientation, String name) throws IOException {
     	this.setName(name);
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);
@@ -140,16 +139,24 @@ public class LeftFlipper implements Flipper{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Board getParentBoard() {
 		return this.parentBoard;
 	}
+	
+	@Override
 	public String getName() {
 		return name;
 	}
 	private void setName(String name) {
 		this.name = name;
 	}
+    @Override
+    public void setParentBoard(Board parent) {
+        this.parentBoard = parent;
+        
+    }
 
 
 }

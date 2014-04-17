@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class MakerListener extends BoardMakerBaseListener {
     private ArrayList<Stationary> nonMovingParts;
     private ArrayList<Flipper> flippers;
+    private ArrayList<Gadget> allParts;
     private ArrayList<Ball> balls;
     private Stack<String> stack;
     private float gravity;
@@ -65,7 +66,7 @@ public class MakerListener extends BoardMakerBaseListener {
             }
         } 
         
-        TriangularBumper t = new TriangularBumper(name, x, y, orientation);
+        TriangularBumper t = new TriangularBumper(x, y, orientation, name);
         nonMovingParts.add(t);
        
     }
@@ -234,7 +235,7 @@ public class MakerListener extends BoardMakerBaseListener {
         CircularBumper c = new CircularBumper(x, y, name);
         nonMovingParts.add(c);
     }
-    }
+    
 
     @Override public void enterBoard(BoardMakerParser.BoardContext ctx) { }
     @Override public void exitBoard(BoardMakerParser.BoardContext ctx) { 
@@ -521,10 +522,20 @@ public class MakerListener extends BoardMakerBaseListener {
     public String getBoardName() {
         return this.boardName;
     }
-    public HashMap<String, String> getTriggerMap() {
-        return this.triggerMap;
-    }
+    public HashMap<String, Gadget> getNameMap() {
+        //getNameMap() that returns a HashMap<String, Gadget>
+        HashMap<String, Gadget> newMap = new HashMap<String, Gadget>();
+        for (String key: triggerMap.keySet()) {
+            String value = triggerMap.get(key);
+            for (Gadget g: allParts) {
+                if (g.getName() == value) {
+                    newMap.put(key,  g);
+                }
+            }
+        }
+        
+        return newMap;
 
-    
+    }
 
 }

@@ -1,4 +1,4 @@
-// Generated from src/BoardMaker.g4 by ANTLR 4.0
+// Generated from BoardMaker.g4 by ANTLR 4.0
 
 
 import org.antlr.v4.runtime.atn.*;
@@ -19,12 +19,16 @@ public class BoardMakerParser extends Parser {
 		INTEGER=1, FLOAT=2, NAME=3, NAMEFIELD=4, GRAVITYFIELD=5, XFIELD=6, YFIELD=7, 
 		XVELOCITYFIELD=8, YVELOCITYFIELD=9, ORIENTATIONFIELD=10, TRIGGERFIELD=11, 
 		ACTIONFIELD=12, FRICTION1FIELD=13, FRICTION2FIELD=14, WIDTHFIELD=15, HEIGHTFIELD=16, 
-		COMMENT=17, WHITESPACE=18;
+		SQUAREBUMPERLABLE=17, CIRCLEBUMPERLABLE=18, TRIANGLEBUMPERLABLE=19, BOARDLABLE=20, 
+		BALLLABLE=21, RIGHTFLIPPERLABLE=22, LEFTFLIPPERLABLE=23, ABSORBERLABLE=24, 
+		FIRELABLE=25, COMMENT=26, WHITESPACE=27;
 	public static final String[] tokenNames = {
 		"<INVALID>", "INTEGER", "FLOAT", "NAME", "'name='", "'gravity='", "'x='", 
 		"'y='", "'xvelocity='", "'yvelocity='", "'orientation='", "'trigger='", 
 		"'action='", "'friction1='", "'friction2='", "'width='", "'height='", 
-		"COMMENT", "WHITESPACE"
+		"'squareBumper'", "'circleBumper'", "'triangleBumper'", "'board'", "'ball'", 
+		"'rightFlipper'", "'leftFlipper'", "'absorber'", "'fire'", "COMMENT", 
+		"WHITESPACE"
 	};
 	public static final int
 		RULE_file = 0, RULE_board = 1, RULE_ball = 2, RULE_squareBumper = 3, RULE_circleBumper = 4, 
@@ -75,26 +79,29 @@ public class BoardMakerParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class FileContext extends ParserRuleContext {
-		public TriangleBumperContext triangleBumper() {
-			return getRuleContext(TriangleBumperContext.class,0);
+		public SquareBumperContext squareBumper(int i) {
+			return getRuleContext(SquareBumperContext.class,i);
 		}
-		public AbsorberContext absorber() {
-			return getRuleContext(AbsorberContext.class,0);
+		public CircleBumperContext circleBumper(int i) {
+			return getRuleContext(CircleBumperContext.class,i);
 		}
-		public BallContext ball() {
-			return getRuleContext(BallContext.class,0);
+		public List<TriangleBumperContext> triangleBumper() {
+			return getRuleContexts(TriangleBumperContext.class);
 		}
-		public SquareBumperContext squareBumper() {
-			return getRuleContext(SquareBumperContext.class,0);
+		public List<AbsorberContext> absorber() {
+			return getRuleContexts(AbsorberContext.class);
 		}
-		public FireContext fire(int i) {
-			return getRuleContext(FireContext.class,i);
+		public List<BallContext> ball() {
+			return getRuleContexts(BallContext.class);
 		}
-		public RightFlipperContext rightFlipper() {
-			return getRuleContext(RightFlipperContext.class,0);
+		public AbsorberContext absorber(int i) {
+			return getRuleContext(AbsorberContext.class,i);
 		}
-		public CircleBumperContext circleBumper() {
-			return getRuleContext(CircleBumperContext.class,0);
+		public List<SquareBumperContext> squareBumper() {
+			return getRuleContexts(SquareBumperContext.class);
+		}
+		public List<CircleBumperContext> circleBumper() {
+			return getRuleContexts(CircleBumperContext.class);
 		}
 		public BoardContext board() {
 			return getRuleContext(BoardContext.class,0);
@@ -102,8 +109,27 @@ public class BoardMakerParser extends Parser {
 		public List<FireContext> fire() {
 			return getRuleContexts(FireContext.class);
 		}
-		public LeftFlipperContext leftFlipper() {
-			return getRuleContext(LeftFlipperContext.class,0);
+		public TriangleBumperContext triangleBumper(int i) {
+			return getRuleContext(TriangleBumperContext.class,i);
+		}
+		public LeftFlipperContext leftFlipper(int i) {
+			return getRuleContext(LeftFlipperContext.class,i);
+		}
+		public FireContext fire(int i) {
+			return getRuleContext(FireContext.class,i);
+		}
+		public TerminalNode EOF() { return getToken(BoardMakerParser.EOF, 0); }
+		public List<RightFlipperContext> rightFlipper() {
+			return getRuleContexts(RightFlipperContext.class);
+		}
+		public BallContext ball(int i) {
+			return getRuleContext(BallContext.class,i);
+		}
+		public RightFlipperContext rightFlipper(int i) {
+			return getRuleContext(RightFlipperContext.class,i);
+		}
+		public List<LeftFlipperContext> leftFlipper() {
+			return getRuleContexts(LeftFlipperContext.class);
 		}
 		public FileContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -124,76 +150,65 @@ public class BoardMakerParser extends Parser {
 		enterRule(_localctx, 0, RULE_file);
 		int _la;
 		try {
-			setState(65);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(50); board();
+			setState(61);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SQUAREBUMPERLABLE) | (1L << CIRCLEBUMPERLABLE) | (1L << TRIANGLEBUMPERLABLE) | (1L << BALLLABLE) | (1L << RIGHTFLIPPERLABLE) | (1L << LEFTFLIPPERLABLE) | (1L << ABSORBERLABLE) | (1L << FIRELABLE))) != 0)) {
 				{
-				setState(50); board();
-				setState(51); ball();
+				setState(59);
+				switch (_input.LA(1)) {
+				case BALLLABLE:
+					{
+					setState(51); ball();
+					}
+					break;
+				case SQUAREBUMPERLABLE:
+					{
+					setState(52); squareBumper();
+					}
+					break;
+				case CIRCLEBUMPERLABLE:
+					{
+					setState(53); circleBumper();
+					}
+					break;
+				case TRIANGLEBUMPERLABLE:
+					{
+					setState(54); triangleBumper();
+					}
+					break;
+				case RIGHTFLIPPERLABLE:
+					{
+					setState(55); rightFlipper();
+					}
+					break;
+				case LEFTFLIPPERLABLE:
+					{
+					setState(56); leftFlipper();
+					}
+					break;
+				case ABSORBERLABLE:
+					{
+					setState(57); absorber();
+					}
+					break;
+				case FIRELABLE:
+					{
+					setState(58); fire();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				break;
-
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(53); squareBumper();
 				}
-				break;
-
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(54); circleBumper();
-				}
-				break;
-
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(55); triangleBumper();
-				}
-				break;
-
-			case 5:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(56); rightFlipper();
-				}
-				break;
-
-			case 6:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(57); leftFlipper();
-				}
-				break;
-
-			case 7:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(58); absorber();
-				}
-				break;
-
-			case 8:
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(62);
+				setState(63);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==TRIGGERFIELD) {
-					{
-					{
-					setState(59); fire();
-					}
-					}
-					setState(64);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				}
-				break;
+			}
+			setState(64); match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -208,14 +223,18 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class BoardContext extends ParserRuleContext {
-		public TerminalNode FRICTION2FIELD() { return getToken(BoardMakerParser.FRICTION2FIELD, 0); }
-		public TerminalNode FRICTION1FIELD() { return getToken(BoardMakerParser.FRICTION1FIELD, 0); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public List<TerminalNode> FLOAT() { return getTokens(BoardMakerParser.FLOAT); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode GRAVITYFIELD() { return getToken(BoardMakerParser.GRAVITYFIELD, 0); }
-		public TerminalNode FLOAT(int i) {
-			return getToken(BoardMakerParser.FLOAT, i);
+		public Friction1Context friction1() {
+			return getRuleContext(Friction1Context.class,0);
+		}
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public TerminalNode BOARDLABLE() { return getToken(BoardMakerParser.BOARDLABLE, 0); }
+		public Friction2Context friction2() {
+			return getRuleContext(Friction2Context.class,0);
+		}
+		public GravityContext gravity() {
+			return getRuleContext(GravityContext.class,0);
 		}
 		public BoardContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -237,14 +256,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(67); match(NAMEFIELD);
-			setState(68); match(NAME);
-			setState(69); match(GRAVITYFIELD);
-			setState(70); match(FLOAT);
-			setState(71); match(FRICTION1FIELD);
-			setState(72); match(FLOAT);
-			setState(73); match(FRICTION2FIELD);
-			setState(74); match(FLOAT);
+			setState(66); match(BOARDLABLE);
+			setState(67); name();
+			setState(68); gravity();
+			setState(69); friction1();
+			setState(70); friction2();
 			}
 		}
 		catch (RecognitionException re) {
@@ -259,15 +275,21 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class BallContext extends ParserRuleContext {
-		public TerminalNode XVELOCITYFIELD() { return getToken(BoardMakerParser.XVELOCITYFIELD, 0); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public List<TerminalNode> FLOAT() { return getTokens(BoardMakerParser.FLOAT); }
-		public TerminalNode YVELOCITYFIELD() { return getToken(BoardMakerParser.YVELOCITYFIELD, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
-		public TerminalNode FLOAT(int i) {
-			return getToken(BoardMakerParser.FLOAT, i);
+		public YballContext yball() {
+			return getRuleContext(YballContext.class,0);
+		}
+		public TerminalNode BALLLABLE() { return getToken(BoardMakerParser.BALLLABLE, 0); }
+		public YvelocityContext yvelocity() {
+			return getRuleContext(YvelocityContext.class,0);
+		}
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public XvelocityContext xvelocity() {
+			return getRuleContext(XvelocityContext.class,0);
+		}
+		public XballContext xball() {
+			return getRuleContext(XballContext.class,0);
 		}
 		public BallContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -289,16 +311,12 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76); match(NAMEFIELD);
-			setState(77); match(NAME);
-			setState(78); match(XFIELD);
-			setState(79); match(FLOAT);
-			setState(80); match(YFIELD);
-			setState(81); match(FLOAT);
-			setState(82); match(XVELOCITYFIELD);
-			setState(83); match(FLOAT);
-			setState(84); match(YVELOCITYFIELD);
-			setState(85); match(FLOAT);
+			setState(72); match(BALLLABLE);
+			setState(73); name();
+			setState(74); xball();
+			setState(75); yball();
+			setState(76); xvelocity();
+			setState(77); yvelocity();
 			}
 		}
 		catch (RecognitionException re) {
@@ -313,14 +331,16 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class SquareBumperContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
+		public TerminalNode SQUAREBUMPERLABLE() { return getToken(BoardMakerParser.SQUAREBUMPERLABLE, 0); }
 		public SquareBumperContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -341,12 +361,10 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(87); match(NAMEFIELD);
-			setState(88); match(NAME);
-			setState(89); match(XFIELD);
-			setState(90); match(INTEGER);
-			setState(91); match(YFIELD);
-			setState(92); match(INTEGER);
+			setState(79); match(SQUAREBUMPERLABLE);
+			setState(80); name();
+			setState(81); x();
+			setState(82); y();
 			}
 		}
 		catch (RecognitionException re) {
@@ -361,14 +379,16 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class CircleBumperContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public TerminalNode CIRCLEBUMPERLABLE() { return getToken(BoardMakerParser.CIRCLEBUMPERLABLE, 0); }
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
 		public CircleBumperContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -389,12 +409,10 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(94); match(NAMEFIELD);
-			setState(95); match(NAME);
-			setState(96); match(XFIELD);
-			setState(97); match(INTEGER);
-			setState(98); match(YFIELD);
-			setState(99); match(INTEGER);
+			setState(84); match(CIRCLEBUMPERLABLE);
+			setState(85); name();
+			setState(86); x();
+			setState(87); y();
 			}
 		}
 		catch (RecognitionException re) {
@@ -409,15 +427,19 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class TriangleBumperContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode ORIENTATIONFIELD() { return getToken(BoardMakerParser.ORIENTATIONFIELD, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public OrientationContext orientation() {
+			return getRuleContext(OrientationContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public TerminalNode TRIANGLEBUMPERLABLE() { return getToken(BoardMakerParser.TRIANGLEBUMPERLABLE, 0); }
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
 		public TriangleBumperContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -438,14 +460,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101); match(NAMEFIELD);
-			setState(102); match(NAME);
-			setState(103); match(XFIELD);
-			setState(104); match(INTEGER);
-			setState(105); match(YFIELD);
-			setState(106); match(INTEGER);
-			setState(107); match(ORIENTATIONFIELD);
-			setState(108); match(INTEGER);
+			setState(89); match(TRIANGLEBUMPERLABLE);
+			setState(90); name();
+			setState(91); x();
+			setState(92); y();
+			setState(93); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -460,15 +479,19 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class RightFlipperContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode ORIENTATIONFIELD() { return getToken(BoardMakerParser.ORIENTATIONFIELD, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public OrientationContext orientation() {
+			return getRuleContext(OrientationContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public TerminalNode RIGHTFLIPPERLABLE() { return getToken(BoardMakerParser.RIGHTFLIPPERLABLE, 0); }
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
 		public RightFlipperContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -489,14 +512,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(110); match(NAMEFIELD);
-			setState(111); match(NAME);
-			setState(112); match(XFIELD);
-			setState(113); match(INTEGER);
-			setState(114); match(YFIELD);
-			setState(115); match(INTEGER);
-			setState(116); match(ORIENTATIONFIELD);
-			setState(117); match(INTEGER);
+			setState(95); match(RIGHTFLIPPERLABLE);
+			setState(96); name();
+			setState(97); x();
+			setState(98); y();
+			setState(99); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -511,15 +531,19 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class LeftFlipperContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode ORIENTATIONFIELD() { return getToken(BoardMakerParser.ORIENTATIONFIELD, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public OrientationContext orientation() {
+			return getRuleContext(OrientationContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public TerminalNode LEFTFLIPPERLABLE() { return getToken(BoardMakerParser.LEFTFLIPPERLABLE, 0); }
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
 		public LeftFlipperContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -540,14 +564,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(119); match(NAMEFIELD);
-			setState(120); match(NAME);
-			setState(121); match(XFIELD);
-			setState(122); match(INTEGER);
-			setState(123); match(YFIELD);
-			setState(124); match(INTEGER);
-			setState(125); match(ORIENTATIONFIELD);
-			setState(126); match(INTEGER);
+			setState(101); match(LEFTFLIPPERLABLE);
+			setState(102); name();
+			setState(103); x();
+			setState(104); y();
+			setState(105); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -562,16 +583,22 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class AbsorberContext extends ParserRuleContext {
-		public List<TerminalNode> INTEGER() { return getTokens(BoardMakerParser.INTEGER); }
-		public TerminalNode NAME() { return getToken(BoardMakerParser.NAME, 0); }
-		public TerminalNode WIDTHFIELD() { return getToken(BoardMakerParser.WIDTHFIELD, 0); }
-		public TerminalNode YFIELD() { return getToken(BoardMakerParser.YFIELD, 0); }
-		public TerminalNode NAMEFIELD() { return getToken(BoardMakerParser.NAMEFIELD, 0); }
-		public TerminalNode HEIGHTFIELD() { return getToken(BoardMakerParser.HEIGHTFIELD, 0); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(BoardMakerParser.INTEGER, i);
+		public HeightContext height() {
+			return getRuleContext(HeightContext.class,0);
 		}
-		public TerminalNode XFIELD() { return getToken(BoardMakerParser.XFIELD, 0); }
+		public WidthContext width() {
+			return getRuleContext(WidthContext.class,0);
+		}
+		public NameContext name() {
+			return getRuleContext(NameContext.class,0);
+		}
+		public TerminalNode ABSORBERLABLE() { return getToken(BoardMakerParser.ABSORBERLABLE, 0); }
+		public YContext y() {
+			return getRuleContext(YContext.class,0);
+		}
+		public XContext x() {
+			return getRuleContext(XContext.class,0);
+		}
 		public AbsorberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -592,16 +619,12 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(128); match(NAMEFIELD);
-			setState(129); match(NAME);
-			setState(130); match(XFIELD);
-			setState(131); match(INTEGER);
-			setState(132); match(YFIELD);
-			setState(133); match(INTEGER);
-			setState(134); match(WIDTHFIELD);
-			setState(135); match(INTEGER);
-			setState(136); match(HEIGHTFIELD);
-			setState(137); match(INTEGER);
+			setState(107); match(ABSORBERLABLE);
+			setState(108); name();
+			setState(109); x();
+			setState(110); y();
+			setState(111); width();
+			setState(112); height();
 			}
 		}
 		catch (RecognitionException re) {
@@ -616,12 +639,13 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static class FireContext extends ParserRuleContext {
-		public TerminalNode ACTIONFIELD() { return getToken(BoardMakerParser.ACTIONFIELD, 0); }
-		public List<TerminalNode> NAME() { return getTokens(BoardMakerParser.NAME); }
-		public TerminalNode NAME(int i) {
-			return getToken(BoardMakerParser.NAME, i);
+		public TriggerContext trigger() {
+			return getRuleContext(TriggerContext.class,0);
 		}
-		public TerminalNode TRIGGERFIELD() { return getToken(BoardMakerParser.TRIGGERFIELD, 0); }
+		public ActionContext action() {
+			return getRuleContext(ActionContext.class,0);
+		}
+		public TerminalNode FIRELABLE() { return getToken(BoardMakerParser.FIRELABLE, 0); }
 		public FireContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -642,10 +666,9 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(139); match(TRIGGERFIELD);
-			setState(140); match(NAME);
-			setState(141); match(ACTIONFIELD);
-			setState(142); match(NAME);
+			setState(114); match(FIRELABLE);
+			setState(115); trigger();
+			setState(116); action();
 			}
 		}
 		catch (RecognitionException re) {
@@ -682,8 +705,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(144); match(NAMEFIELD);
-			setState(145); match(NAME);
+			setState(118); match(NAMEFIELD);
+			setState(119); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -720,8 +743,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(147); match(GRAVITYFIELD);
-			setState(148); match(FLOAT);
+			setState(121); match(GRAVITYFIELD);
+			setState(122); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -758,8 +781,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(150); match(FRICTION1FIELD);
-			setState(151); match(FLOAT);
+			setState(124); match(FRICTION1FIELD);
+			setState(125); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -796,8 +819,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(153); match(FRICTION2FIELD);
-			setState(154); match(FLOAT);
+			setState(127); match(FRICTION2FIELD);
+			setState(128); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -834,8 +857,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(156); match(XFIELD);
-			setState(157); match(FLOAT);
+			setState(130); match(XFIELD);
+			setState(131); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -872,8 +895,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(159); match(YFIELD);
-			setState(160); match(FLOAT);
+			setState(133); match(YFIELD);
+			setState(134); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -910,8 +933,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(162); match(XVELOCITYFIELD);
-			setState(163); match(FLOAT);
+			setState(136); match(XVELOCITYFIELD);
+			setState(137); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -948,8 +971,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(165); match(YVELOCITYFIELD);
-			setState(166); match(FLOAT);
+			setState(139); match(YVELOCITYFIELD);
+			setState(140); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -986,8 +1009,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(168); match(ORIENTATIONFIELD);
-			setState(169); match(INTEGER);
+			setState(142); match(ORIENTATIONFIELD);
+			setState(143); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1024,8 +1047,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(171); match(XFIELD);
-			setState(172); match(INTEGER);
+			setState(145); match(XFIELD);
+			setState(146); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1062,8 +1085,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(174); match(YFIELD);
-			setState(175); match(INTEGER);
+			setState(148); match(YFIELD);
+			setState(149); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1100,8 +1123,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(177); match(TRIGGERFIELD);
-			setState(178); match(NAME);
+			setState(151); match(TRIGGERFIELD);
+			setState(152); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1138,8 +1161,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(180); match(ACTIONFIELD);
-			setState(181); match(NAME);
+			setState(154); match(ACTIONFIELD);
+			setState(155); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1176,8 +1199,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(183); match(WIDTHFIELD);
-			setState(184); match(INTEGER);
+			setState(157); match(WIDTHFIELD);
+			setState(158); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1214,8 +1237,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(186); match(HEIGHTFIELD);
-			setState(187); match(INTEGER);
+			setState(160); match(HEIGHTFIELD);
+			setState(161); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1230,55 +1253,46 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\2\3\24\u00c0\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b"+
+		"\2\3\35\u00a6\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b"+
 		"\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t"+
 		"\20\4\21\t\21\4\22\t\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t"+
 		"\27\4\30\t\30\4\31\t\31\4\32\t\32\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
-		"\3\2\7\2?\n\2\f\2\16\2B\13\2\5\2D\n\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3"+
-		"\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13"+
-		"\3\f\3\f\3\f\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3\20"+
-		"\3\21\3\21\3\21\3\22\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3\25"+
-		"\3\25\3\26\3\26\3\26\3\27\3\27\3\27\3\30\3\30\3\30\3\31\3\31\3\31\3\32"+
-		"\3\32\3\32\3\32\2\33\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60"+
-		"\62\2\2\u00ae\2C\3\2\2\2\4E\3\2\2\2\6N\3\2\2\2\bY\3\2\2\2\n`\3\2\2\2\f"+
-		"g\3\2\2\2\16p\3\2\2\2\20y\3\2\2\2\22\u0082\3\2\2\2\24\u008d\3\2\2\2\26"+
-		"\u0092\3\2\2\2\30\u0095\3\2\2\2\32\u0098\3\2\2\2\34\u009b\3\2\2\2\36\u009e"+
-		"\3\2\2\2 \u00a1\3\2\2\2\"\u00a4\3\2\2\2$\u00a7\3\2\2\2&\u00aa\3\2\2\2"+
-		"(\u00ad\3\2\2\2*\u00b0\3\2\2\2,\u00b3\3\2\2\2.\u00b6\3\2\2\2\60\u00b9"+
-		"\3\2\2\2\62\u00bc\3\2\2\2\64\65\5\4\3\2\65\66\5\6\4\2\66D\3\2\2\2\67D"+
-		"\5\b\5\28D\5\n\6\29D\5\f\7\2:D\5\16\b\2;D\5\20\t\2<D\5\22\n\2=?\5\24\13"+
-		"\2>=\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2AD\3\2\2\2B@\3\2\2\2C\64\3\2"+
-		"\2\2C\67\3\2\2\2C8\3\2\2\2C9\3\2\2\2C:\3\2\2\2C;\3\2\2\2C<\3\2\2\2C@\3"+
-		"\2\2\2D\3\3\2\2\2EF\7\6\2\2FG\7\5\2\2GH\7\7\2\2HI\7\4\2\2IJ\7\17\2\2J"+
-		"K\7\4\2\2KL\7\20\2\2LM\7\4\2\2M\5\3\2\2\2NO\7\6\2\2OP\7\5\2\2PQ\7\b\2"+
-		"\2QR\7\4\2\2RS\7\t\2\2ST\7\4\2\2TU\7\n\2\2UV\7\4\2\2VW\7\13\2\2WX\7\4"+
-		"\2\2X\7\3\2\2\2YZ\7\6\2\2Z[\7\5\2\2[\\\7\b\2\2\\]\7\3\2\2]^\7\t\2\2^_"+
-		"\7\3\2\2_\t\3\2\2\2`a\7\6\2\2ab\7\5\2\2bc\7\b\2\2cd\7\3\2\2de\7\t\2\2"+
-		"ef\7\3\2\2f\13\3\2\2\2gh\7\6\2\2hi\7\5\2\2ij\7\b\2\2jk\7\3\2\2kl\7\t\2"+
-		"\2lm\7\3\2\2mn\7\f\2\2no\7\3\2\2o\r\3\2\2\2pq\7\6\2\2qr\7\5\2\2rs\7\b"+
-		"\2\2st\7\3\2\2tu\7\t\2\2uv\7\3\2\2vw\7\f\2\2wx\7\3\2\2x\17\3\2\2\2yz\7"+
-		"\6\2\2z{\7\5\2\2{|\7\b\2\2|}\7\3\2\2}~\7\t\2\2~\177\7\3\2\2\177\u0080"+
-		"\7\f\2\2\u0080\u0081\7\3\2\2\u0081\21\3\2\2\2\u0082\u0083\7\6\2\2\u0083"+
-		"\u0084\7\5\2\2\u0084\u0085\7\b\2\2\u0085\u0086\7\3\2\2\u0086\u0087\7\t"+
-		"\2\2\u0087\u0088\7\3\2\2\u0088\u0089\7\21\2\2\u0089\u008a\7\3\2\2\u008a"+
-		"\u008b\7\22\2\2\u008b\u008c\7\3\2\2\u008c\23\3\2\2\2\u008d\u008e\7\r\2"+
-		"\2\u008e\u008f\7\5\2\2\u008f\u0090\7\16\2\2\u0090\u0091\7\5\2\2\u0091"+
-		"\25\3\2\2\2\u0092\u0093\7\6\2\2\u0093\u0094\7\5\2\2\u0094\27\3\2\2\2\u0095"+
-		"\u0096\7\7\2\2\u0096\u0097\7\4\2\2\u0097\31\3\2\2\2\u0098\u0099\7\17\2"+
-		"\2\u0099\u009a\7\4\2\2\u009a\33\3\2\2\2\u009b\u009c\7\20\2\2\u009c\u009d"+
-		"\7\4\2\2\u009d\35\3\2\2\2\u009e\u009f\7\b\2\2\u009f\u00a0\7\4\2\2\u00a0"+
-		"\37\3\2\2\2\u00a1\u00a2\7\t\2\2\u00a2\u00a3\7\4\2\2\u00a3!\3\2\2\2\u00a4"+
-		"\u00a5\7\n\2\2\u00a5\u00a6\7\4\2\2\u00a6#\3\2\2\2\u00a7\u00a8\7\13\2\2"+
-		"\u00a8\u00a9\7\4\2\2\u00a9%\3\2\2\2\u00aa\u00ab\7\f\2\2\u00ab\u00ac\7"+
-		"\3\2\2\u00ac\'\3\2\2\2\u00ad\u00ae\7\b\2\2\u00ae\u00af\7\3\2\2\u00af)"+
-		"\3\2\2\2\u00b0\u00b1\7\t\2\2\u00b1\u00b2\7\3\2\2\u00b2+\3\2\2\2\u00b3"+
-		"\u00b4\7\r\2\2\u00b4\u00b5\7\5\2\2\u00b5-\3\2\2\2\u00b6\u00b7\7\16\2\2"+
-		"\u00b7\u00b8\7\5\2\2\u00b8/\3\2\2\2\u00b9\u00ba\7\21\2\2\u00ba\u00bb\7"+
-		"\3\2\2\u00bb\61\3\2\2\2\u00bc\u00bd\7\22\2\2\u00bd\u00be\7\3\2\2\u00be"+
-		"\63\3\2\2\2\4@C";
+		"\7\2>\n\2\f\2\16\2A\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7"+
+		"\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3"+
+		"\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\3\16\3\16\3"+
+		"\16\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\22\3\22\3\22\3\23\3"+
+		"\23\3\23\3\24\3\24\3\24\3\25\3\25\3\25\3\26\3\26\3\26\3\27\3\27\3\27\3"+
+		"\30\3\30\3\30\3\31\3\31\3\31\3\32\3\32\3\32\3\32\2\33\2\4\6\b\n\f\16\20"+
+		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\2\u0094\2\64\3\2\2\2\4D\3\2\2\2"+
+		"\6J\3\2\2\2\bQ\3\2\2\2\nV\3\2\2\2\f[\3\2\2\2\16a\3\2\2\2\20g\3\2\2\2\22"+
+		"m\3\2\2\2\24t\3\2\2\2\26x\3\2\2\2\30{\3\2\2\2\32~\3\2\2\2\34\u0081\3\2"+
+		"\2\2\36\u0084\3\2\2\2 \u0087\3\2\2\2\"\u008a\3\2\2\2$\u008d\3\2\2\2&\u0090"+
+		"\3\2\2\2(\u0093\3\2\2\2*\u0096\3\2\2\2,\u0099\3\2\2\2.\u009c\3\2\2\2\60"+
+		"\u009f\3\2\2\2\62\u00a2\3\2\2\2\64?\5\4\3\2\65>\5\6\4\2\66>\5\b\5\2\67"+
+		">\5\n\6\28>\5\f\7\29>\5\16\b\2:>\5\20\t\2;>\5\22\n\2<>\5\24\13\2=\65\3"+
+		"\2\2\2=\66\3\2\2\2=\67\3\2\2\2=8\3\2\2\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2"+
+		"=<\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BC\7\1\2\2"+
+		"C\3\3\2\2\2DE\7\26\2\2EF\5\26\f\2FG\5\30\r\2GH\5\32\16\2HI\5\34\17\2I"+
+		"\5\3\2\2\2JK\7\27\2\2KL\5\26\f\2LM\5\36\20\2MN\5 \21\2NO\5\"\22\2OP\5"+
+		"$\23\2P\7\3\2\2\2QR\7\23\2\2RS\5\26\f\2ST\5(\25\2TU\5*\26\2U\t\3\2\2\2"+
+		"VW\7\24\2\2WX\5\26\f\2XY\5(\25\2YZ\5*\26\2Z\13\3\2\2\2[\\\7\25\2\2\\]"+
+		"\5\26\f\2]^\5(\25\2^_\5*\26\2_`\5&\24\2`\r\3\2\2\2ab\7\30\2\2bc\5\26\f"+
+		"\2cd\5(\25\2de\5*\26\2ef\5&\24\2f\17\3\2\2\2gh\7\31\2\2hi\5\26\f\2ij\5"+
+		"(\25\2jk\5*\26\2kl\5&\24\2l\21\3\2\2\2mn\7\32\2\2no\5\26\f\2op\5(\25\2"+
+		"pq\5*\26\2qr\5\60\31\2rs\5\62\32\2s\23\3\2\2\2tu\7\33\2\2uv\5,\27\2vw"+
+		"\5.\30\2w\25\3\2\2\2xy\7\6\2\2yz\7\5\2\2z\27\3\2\2\2{|\7\7\2\2|}\7\4\2"+
+		"\2}\31\3\2\2\2~\177\7\17\2\2\177\u0080\7\4\2\2\u0080\33\3\2\2\2\u0081"+
+		"\u0082\7\20\2\2\u0082\u0083\7\4\2\2\u0083\35\3\2\2\2\u0084\u0085\7\b\2"+
+		"\2\u0085\u0086\7\4\2\2\u0086\37\3\2\2\2\u0087\u0088\7\t\2\2\u0088\u0089"+
+		"\7\4\2\2\u0089!\3\2\2\2\u008a\u008b\7\n\2\2\u008b\u008c\7\4\2\2\u008c"+
+		"#\3\2\2\2\u008d\u008e\7\13\2\2\u008e\u008f\7\4\2\2\u008f%\3\2\2\2\u0090"+
+		"\u0091\7\f\2\2\u0091\u0092\7\3\2\2\u0092\'\3\2\2\2\u0093\u0094\7\b\2\2"+
+		"\u0094\u0095\7\3\2\2\u0095)\3\2\2\2\u0096\u0097\7\t\2\2\u0097\u0098\7"+
+		"\3\2\2\u0098+\3\2\2\2\u0099\u009a\7\r\2\2\u009a\u009b\7\5\2\2\u009b-\3"+
+		"\2\2\2\u009c\u009d\7\16\2\2\u009d\u009e\7\5\2\2\u009e/\3\2\2\2\u009f\u00a0"+
+		"\7\21\2\2\u00a0\u00a1\7\3\2\2\u00a1\61\3\2\2\2\u00a2\u00a3\7\22\2\2\u00a3"+
+		"\u00a4\7\3\2\2\u00a4\63\3\2\2\2\4=?";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

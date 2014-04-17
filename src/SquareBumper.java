@@ -12,7 +12,7 @@ import physics.*;
  *                position is fixed
  */
 public class SquareBumper extends Bumper {
-	
+	Board parentBoard = null;
     LineSegment side1;
     LineSegment side2;
     LineSegment side3;
@@ -35,7 +35,7 @@ public class SquareBumper extends Bumper {
      * @param y y-coordinate of bumper (should be natural number)
      * @param name name of bumper
      */
-    SquareBumper(Board parentBoard, int x, int y, String name){
+    SquareBumper(int x, int y, String name){
     	
     	this.x = (double) x;
     	this.y = (double) y;
@@ -76,7 +76,15 @@ public class SquareBumper extends Bumper {
 		return this.y;
 	}
 
-
+    @Override 
+    public String getName() {
+        return this.name;
+    }
+    
+    @Override
+    public void setParentBoard(Board parent) {
+        this.parentBoard = parent;
+    }
 
 	/**
      * ensure the rep invariant of Square Bumper is preserved

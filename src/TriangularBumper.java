@@ -26,6 +26,7 @@ public class TriangularBumper extends Bumper {
     double y;
     double orientation;
     String name;
+    Board parentBoard = null;
     
     /**
      * Constructor for Triangular Bumper
@@ -102,27 +103,21 @@ public class TriangularBumper extends Bumper {
         b.setVelocity(newV3);
     }
     
-    /**
-     * 
-     * @param b : ball object to test if in bounds 
-     * @return : true if the ball is in the space that is occupied by the bumper 
-     * 
-     */
     @Override
-    public boolean inBounds(Ball b) {
-    	b.getX();
-    	boolean inSide1 = false;
-    	boolean inSide2 = false;
-    	boolean inSide3 = false;
-        if (this.orientation == 0.0){
-        	if (b.)
-        }
+    public String getName() {
+        return this.name;
+    }
+    
+    @Override
+    public void setParentBoard(Board parent) {
+        this.parentBoard = parent;
     }
     
     /**
      * ensure the rep invariant of Triangular Bumper is preserved
      */
-    private void checkRep() {
+    public boolean checkRep() {
+        return false;
         
     }
 

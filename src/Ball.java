@@ -25,7 +25,7 @@ public class Ball {
 	private String boardName;
 	private String wallHit;
     
-    public Ball(double x, double y, double xVel, double yVel, String ballName, String boardName) {
+    public Ball(double x, double y, double xVel, double yVel, String ballName) {
         this.x = x;
         this.y = y;
         this.ballCircle = new Circle(x,y,0.25);
@@ -127,7 +127,7 @@ public class Ball {
 		this.ballVector = ballVector;
 	}
 
-	public String getBallName() {
+	public String getName() {
 		return ballName;
 	}
 
