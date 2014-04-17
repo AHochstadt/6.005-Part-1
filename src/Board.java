@@ -83,15 +83,14 @@ public class Board {
 	        this.flippers = (Flipper[]) listener.getFlippers().toArray();
 	        this.balls = listener.getBalls();
 
-	        if (listener.getGravity() != 0){
+	        if (listener.getGravity() != (Float) null){
 	            this.gravity = (double) listener.getGravity();
 	        }
-	        if (listener.getFriction1() != 0){
+	        if (listener.getFriction1() != (Float) null){
 	            this.friction1 = (double) listener.getFriction1();
 	        }
 
-
-	        if (listener.getFriction2() != 0){
+	        if (listener.getFriction2() != (Float) null){
 	            this.friction2 = (double) listener.getFriction2();
 	        }
 
