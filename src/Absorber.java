@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 
 import physics.Circle;
 import physics.LineSegment;
+import physics.Vect;
 
 /**
  * 
@@ -31,8 +33,9 @@ public class Absorber implements Stationary {
 	private ArrayList<LineSegment> sides = new ArrayList<LineSegment>();
 	private ArrayList<Circle> corners = new ArrayList<Circle>();
 	private Board parentBoard = null;
-	private ArrayList<Object> physicsObjects;
+	private ArrayList<Object> physicsObjects = new ArrayList<Object>();
 	private boolean isHoldingBall;
+	private BlockingQueue<Ball> heldBalls = (BlockingQueue<Ball>) new ArrayList<Ball>();
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -128,8 +131,16 @@ public class Absorber implements Stationary {
 	}
 
 	@Override
-	public void action() {
-		// TODO Auto-generated method stub
+	public void action() { //shoots out a ball straight up at 50 L/sec, if the absorber is currently holding >= 1 ball
+		if (!this.heldBalls.isEmpty()){
+			try {
+				Ball heldBall = this.heldBalls.take();
+				heldBall.setVelocity(new Vect(0.0,50.0));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 	}
 
