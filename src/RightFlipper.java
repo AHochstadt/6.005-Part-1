@@ -24,6 +24,10 @@ public class RightFlipper implements Flipper{
 	private Board parentBoard = null;
 	private String name;
 	private ArrayList<Object> physicsObjects;
+	private boolean flipped = false; //whether the flipper is in the flipped position
+	private boolean notFlipped = true; //whether the flipper is in the notFlipped position. We need notFlipped AND flipped because if the flipper is in motion, both are false
+	private double angularVelocity = 0.0; //starts at rest
+	private double reflectionCoeff =0.95; //default
     
     /**
      * Constructor for Right Flipper
@@ -152,6 +156,10 @@ public class RightFlipper implements Flipper{
     @Override
     public ArrayList<Object> getPhysicsObjects(){
     	return this.physicsObjects;
+    }
+    
+    public boolean isFlipped(){
+    	return this.flipped;
     }
 
 }

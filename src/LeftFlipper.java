@@ -20,6 +20,11 @@ public class LeftFlipper implements Flipper{
 	private Board parentBoard = null;
 	private String name;
 	private ArrayList<Object> physicsObjects;
+	private double angularVelocity = 0.0; //starts at rest
+	private double reflectionCoeff =0.95; //default
+	private boolean flipped = false; //whether the flipper is in the flipped position
+	private boolean notFlipped = true; //whether the flipper is in the notFlipped position. We need notFlipped AND flipped because if the flipper is in motion, both are false
+	
     
     /**
      * Constructor for Left Flipper
@@ -102,17 +107,6 @@ public class LeftFlipper implements Flipper{
    
     
     /**
-     * 
-     * @param b : the ball interacting with the flipper
-     * @effect doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
-     */
-    public void getEffect(Ball b) {
-    	Vect newVel = Geometry.reflectRotatingWall(this.flipper, this.pivot.getCenter(), 1.0, b.getCircle(), b.getVelocity());
-        b.setVelocity(newVel);
-        
-    }
-    
-    /**
      * ensure the rep invariant of Left Flipper is preserved.  Inside bounding box, with moving end, never further away than 2L from origin 
      */
     public boolean checkRep() {
@@ -123,7 +117,15 @@ public class LeftFlipper implements Flipper{
 	
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
-		// TODO Auto-generated method stub
+		if (objectHit instanceof LineSegment){//we've hit the flipper
+			LineSegment segmentHit = (LineSegment) objectHit;
+			Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff);
+			b.setVelocity(newVel);
+		} else if (objectHit instanceof Circle){
+			Circle circleHit = (Circle) objectHit;
+			Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
+			b.setVelocity(newVel);
+		}
 		
 	}
 	/**
@@ -137,7 +139,7 @@ public class LeftFlipper implements Flipper{
 	}
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		this.move();
 		
 	}
 	@Override
@@ -161,6 +163,10 @@ public class LeftFlipper implements Flipper{
     public void setParentBoard(Board parent) {
         this.parentBoard = parent;
         
+    }
+    
+    public boolean isFlipped(){
+    	return this.flipped;
     }
 
 

@@ -32,6 +32,7 @@ public class Absorber implements Stationary {
 	private ArrayList<Circle> corners = new ArrayList<Circle>();
 	private Board parentBoard = null;
 	private ArrayList<Object> physicsObjects;
+	private boolean isHoldingBall;
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -47,6 +48,7 @@ public class Absorber implements Stationary {
         this.width = (double) width;
         this.height = (double) height;
         this.name = name;
+        this.isHoldingBall = false;
         
         this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
     	this.side1 = new LineSegment((double) x, (double) y, (double) x+width, (double) y);
