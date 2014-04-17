@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 import physics.Angle;
 import physics.Circle;
@@ -15,7 +16,7 @@ import physics.Vect;
  * Rep Invariant: flipper must never move outside of the bounding box 
  *
  */
-public class RightFlipper implements Stationary{
+public class RightFlipper implements Flipper{
 	Circle pivot;
 	Circle endPoint;
     LineSegment flipper;
@@ -110,18 +111,30 @@ public class RightFlipper implements Stationary{
     /**
      * ensure the rep invariant of Right Flipper is preserved
      */
-    private void checkRep() {
-        
+    public boolean checkRep() {
+    	//TODO write this
+        return true;
     }
+	
 	@Override
-	public boolean inBounds(warmup.Ball b) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public void getEffect(warmup.Ball b) {
+	public void getEffect(Ball b, Object objectHit) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public ArrayList<Object> getPhysicsObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

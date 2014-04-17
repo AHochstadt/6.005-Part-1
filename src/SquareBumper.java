@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import physics.*;
 /**
  * 
@@ -61,6 +62,7 @@ public class SquareBumper extends Bumper {
      */
     @Override
     public void getEffect(Ball b, Object objectHit) {
+    	
     	//if ball is going to hit corner 1
     	Vect newV1 = Geometry.reflectCircle(this.corner1.getCenter(), b.getVector(), b.getVelocity());
         b.setVelocity(newV1);
@@ -97,18 +99,15 @@ public class SquareBumper extends Bumper {
        
     }
     
-    /**
-     * 
-     * @param b: ball object to test if in bounds 
-     * @return: true if the ball is in the space that is occupied by the bumper 
-     * 
-     */
     @Override
-    public boolean inBounds(Ball b) {
-    	boolean inXBounds = b.getX()>=this.getX() && b.getX()<=this.getX()+1;
-    	boolean inYBounds = b.getY()>=this.getY() && b.getY()<=this.getY()+1;
-        return inXBounds && inYBounds;
-    }
+	public void trigger() {
+    	// TODO write method
+	}
+
+
+	@Override
+	public void action() { //does nothing by definition of Bumper
+	}
     
     private double getX() {
 		return this.x;
@@ -123,8 +122,9 @@ public class SquareBumper extends Bumper {
 	/**
      * ensure the rep invariant of Square Bumper is preserved
      */
-    private void checkRep() {
-        
+    @Override
+    public boolean checkRep() {
+        return true;
     }
 
 }

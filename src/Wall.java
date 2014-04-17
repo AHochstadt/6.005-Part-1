@@ -12,7 +12,6 @@ public class Wall implements Stationary{
 	private Circle endpt1;
 	private Circle endpt2;
 	private ArrayList<Object> physicsObjects = new ArrayList<Object>();
-	
 	Wall(String location){
 		this.setLocation(location);
 		if (location.equals("up")){
@@ -87,6 +86,14 @@ public class Wall implements Stationary{
 
 	public void setEndpt2(Circle endpt2) {
 		this.endpt2 = endpt2;
+	}
+
+	@Override
+	public void trigger() {//does nothing by definition of wall
+	}
+
+	@Override
+	public void action() {//does nothing by definition of wall		
 	}
 
 }

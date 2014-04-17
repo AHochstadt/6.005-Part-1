@@ -48,4 +48,14 @@ public class Bumper implements Stationary {
 		return null;
 	}
 
+
+	@Override
+	public void trigger() {
+	}
+
+
+	@Override
+	public void action() {
+	}
+
 }
