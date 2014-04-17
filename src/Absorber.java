@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import physics.Circle;
+import physics.LineSegment;
 import warmup.Ball;
 
 /**
@@ -12,11 +16,21 @@ import warmup.Ball;
  *
  */
 public class Absorber implements Stationary {
-    double x;
-    double y;
-    double width;
-    double height;
-    String name;
+    private double x;
+    private double y;
+    private double width;
+    private double height;
+    private String name;
+	private Circle corner1;
+	private Circle corner2;
+	private Circle corner3;
+	private Circle corner4;
+	private LineSegment side1;
+	private LineSegment side2;
+	private LineSegment side3;
+	private LineSegment side4;
+	private ArrayList<LineSegment> sides = new ArrayList<LineSegment>();
+	private ArrayList<Circle> corners = new ArrayList<Circle>();
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -32,7 +46,19 @@ public class Absorber implements Stationary {
         this.width = (double) width;
         this.height = (double) height;
         this.name = name;
-        // TODO write Constructor
+        
+        this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
+    	this.side1 = new LineSegment((double) x, (double) y, (double) x+width, (double) y);
+    	this.corner2 = new Circle((double) x+width, (double) y, 0.0);
+    	this.side2 = new LineSegment((double) x+width, (double) y, (double) x+width, (double) y+height);
+    	this.corner3 = new Circle((double) x+width, (double) y+height, 0.0);
+    	this.side3 = new LineSegment((double) x+width, (double) y+height, x, (double) y+height);
+    	this.corner4 = new Circle((double) x, (double) y+height, 0.0);
+    	this.side4 = new LineSegment((double) x, (double) y, (double) x, (double) y+height);
+    	this.sides.clear();
+    	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
+    	this.corners.clear();
+    	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
     }
     
     /**
@@ -47,9 +73,27 @@ public class Absorber implements Stationary {
      */
     @Override
     public boolean inBounds(Ball b) {
-        // TODO Auto-generated method stub
-        return false;
+    	boolean inXBounds = b.getX()>=this.getX() && b.getX()<=this.getX()+this.getWidth();
+    	boolean inYBounds = b.getY()>=this.getY() && b.getY()<=this.getY()+this.getHeight();
+        return inXBounds && inYBounds;
     }
+    
+    private double getHeight() {
+		return this.height;
+	}
+
+	private double getWidth() {
+		return this.width;
+	}
+
+	private double getX() {
+		return this.x;
+	}
+    
+    private double getY() {
+		return this.y;
+	}
+    
     /**
      * ball will be removed from the board if absorber is not holding a ball (board.remove)
      * absorber will hold the ball

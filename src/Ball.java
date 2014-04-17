@@ -93,7 +93,7 @@ public class Ball {
      * @param newV the velocity to change the current velocity to
      */
     public void setVelocity(Vect newV) {
-        // TODO Auto-generated method stub
+        this.velocity = newV;
         
     }
     

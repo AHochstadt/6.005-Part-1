@@ -60,24 +60,38 @@ public class SquareBumper extends Bumper {
      * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
      */
     public void getEffect(Ball b) {
-        
-        //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
+    	//if ball is going to hit corner 1
+    	Vect newV1 = Geometry.reflectCircle(this.corner1.getCenter(), b.getVector(), b.getVelocity());
         b.setVelocity(newV1);
         
-        //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
+        //if ball is going to hit corner 2
+    	Vect newV2 = Geometry.reflectCircle(this.corner2.getCenter(), b.getVector(), b.getVelocity());
         b.setVelocity(newV2);
         
-        //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
+        //if ball is going to hit corner 3
+    	Vect newV3 = Geometry.reflectCircle(this.corner3.getCenter(), b.getVector(), b.getVelocity());
         b.setVelocity(newV3);
         
-        //if ball is going to hit side4
-        Vect newV4 = Geometry.reflectWall(this.side4, b.getVector());
+        //if ball is going to hit corner 4
+    	Vect newV4 = Geometry.reflectCircle(this.corner4.getCenter(), b.getVector(), b.getVelocity());
         b.setVelocity(newV4);
         
-        //do this for corners as well
+        //if ball is going to hit side 1
+        Vect newV5 = Geometry.reflectWall(this.side1, b.getVector());
+        b.setVelocity(newV5);
+        
+        //if ball is going to hit side 2
+        Vect newV6 = Geometry.reflectWall(this.side2, b.getVector());
+        b.setVelocity(newV6);
+        
+        //if ball is going to hit side3
+        Vect newV7 = Geometry.reflectWall(this.side3, b.getVector());
+        b.setVelocity(newV7);
+        
+        //if ball is going to hit side4
+        Vect newV8 = Geometry.reflectWall(this.side4, b.getVector());
+        b.setVelocity(newV8);
+        
         
        
     }
@@ -90,11 +104,22 @@ public class SquareBumper extends Bumper {
      */
     @Override
     public boolean inBounds(Ball b) {
-        return false;
-        //TODO
+    	boolean inXBounds = b.getX()>=this.getX() && b.getX()<=this.getX()+1;
+    	boolean inYBounds = b.getY()>=this.getY() && b.getY()<=this.getY()+1;
+        return inXBounds && inYBounds;
     }
     
-    /**
+    private double getX() {
+		return this.x;
+	}
+    
+    private double getY() {
+		return this.y;
+	}
+
+
+
+	/**
      * ensure the rep invariant of Square Bumper is preserved
      */
     private void checkRep() {
