@@ -31,6 +31,7 @@ public class Absorber implements Stationary {
 	private ArrayList<LineSegment> sides = new ArrayList<LineSegment>();
 	private ArrayList<Circle> corners = new ArrayList<Circle>();
 	private Board parentBoard = null;
+	private ArrayList<Object> physicsObjects;
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -59,6 +60,12 @@ public class Absorber implements Stationary {
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
+    	for (Object physicsObject: this.corners){ //adds corners to physicsObjects
+    		this.physicsObjects.add(physicsObject);
+    	}
+    	for (Object physicsObject: this.sides){ //adds sides to physicsObjects
+    		this.physicsObjects.add(physicsObject);
+    	}
     }
     
     /**
@@ -100,8 +107,7 @@ public class Absorber implements Stationary {
 
 	@Override
 	public ArrayList<Object> getPhysicsObjects() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.physicsObjects;
 	}
 
 	@Override

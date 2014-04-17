@@ -27,6 +27,7 @@ public class TriangularBumper extends Bumper {
     double orientation;
     String name;
 	private Board parentBoard;
+	private ArrayList<Object> physicsObjects;
 
     
     /**
@@ -43,6 +44,7 @@ public class TriangularBumper extends Bumper {
     	this.y = (double) y;
     	this.orientation = (double) orientation;
     	this.name = name;
+    	
     	
     	if (orientation == 0){
     		side1 = new LineSegment(this.x, this.y+1, this.x, this.y);
@@ -80,6 +82,7 @@ public class TriangularBumper extends Bumper {
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); //populate this.sides
     	this.corners.clear();
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); //populate this.corners
+    	this.physicsObjects.add(this.corner1); this.physicsObjects.add(this.corner2); this.physicsObjects.add(this.corner3); this.physicsObjects.add(this.side1); this.physicsObjects.add(this.side2); this.physicsObjects.add(this.side3); //populate physicsObjects
     	
     	
     }
@@ -116,6 +119,10 @@ public class TriangularBumper extends Bumper {
     	//TODO write this
         return true;
         
+    }
+    @Override
+    public ArrayList<Object> getPhysicsObjects(){
+    	return this.physicsObjects;
     }
 
 }

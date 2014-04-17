@@ -60,4 +60,18 @@ public class Bumper implements Stationary {
 		
 	}
 
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void setParentBoard(Board parent) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

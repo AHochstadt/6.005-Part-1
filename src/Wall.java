@@ -43,6 +43,8 @@ public class Wall implements Stationary{
 			this.setEndpt1(new Circle(0.0, 0.0, 0.0));
 			this.setEndpt2(new Circle(0.0, 20.0, 0.0));			
 		}
+		
+		this.physicsObjects.add(this.endpt1); this.physicsObjects.add(this.endpt2); this.physicsObjects.add(this.wallSegment); //populates physicsObjects
 	}
 
 	@Override
@@ -137,6 +139,18 @@ public class Wall implements Stationary{
 
 	public Board getParentBoard() {
 		return this.parentBoard;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setParentBoard(Board parent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

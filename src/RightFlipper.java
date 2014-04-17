@@ -23,6 +23,7 @@ public class RightFlipper implements Flipper{
     double orientation;
 	private Board parentBoard = null;
 	private String name;
+	private ArrayList<Object> physicsObjects;
     
     /**
      * Constructor for Right Flipper
@@ -55,6 +56,8 @@ public class RightFlipper implements Flipper{
     		this.pivot = new Circle((double) x,(double) y, 0.0);
     		this.endPoint = new Circle((double) x+2, (double) y, 0.0);
     	}
+    	this.physicsObjects.add(this.endPoint); this.physicsObjects.add(this.pivot); this.physicsObjects.add(this.flipper);
+
     }
     /**
      * moves the moving end of the flipper
@@ -101,15 +104,6 @@ public class RightFlipper implements Flipper{
     	return this.endPoint.getCenter().y();
     }
     
-    /**
-     * 
-     * @param b : the ball interacting with the flipper
-     * @effect : doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
-     */
-    public void getEffect(Ball b) {
-    	Vect newVel = Geometry.reflectRotatingWall(this.flipper, this.pivot.getCenter(), -1.0, b.getCircle(), b.getVelocity());
-        b.setVelocity(newVel);
-    }
     
     /**
      * ensure the rep invariant of Right Flipper is preserved
@@ -139,11 +133,6 @@ public class RightFlipper implements Flipper{
 		
 	}
 	@Override
-	public ArrayList<Object> getPhysicsObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public Board getParentBoard() {
 		return this.parentBoard;
 	}
@@ -159,6 +148,10 @@ public class RightFlipper implements Flipper{
     public void setParentBoard(Board parent) {
         this.parentBoard = parent;
         
+    }
+    @Override
+    public ArrayList<Object> getPhysicsObjects(){
+    	return this.physicsObjects;
     }
 
 }

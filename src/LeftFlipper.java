@@ -19,6 +19,7 @@ public class LeftFlipper implements Flipper{
     double orientation;
 	private Board parentBoard = null;
 	private String name;
+	private ArrayList<Object> physicsObjects;
     
     /**
      * Constructor for Left Flipper
@@ -52,6 +53,7 @@ public class LeftFlipper implements Flipper{
     		this.pivot = new Circle((double) x,(double) y+2, 0.0);
     		this.endPoint = new Circle((double) x+2, (double) y+2, 0.0);
     	}
+    	this.physicsObjects.add(this.endPoint); this.physicsObjects.add(this.pivot); this.physicsObjects.add(this.flipper);
     }
     /**
      * moves the moving end of the flipper
@@ -140,8 +142,7 @@ public class LeftFlipper implements Flipper{
 	}
 	@Override
 	public ArrayList<Object> getPhysicsObjects() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.physicsObjects;
 	}
 
 	@Override

@@ -23,7 +23,6 @@ public class SquareBumper extends Bumper {
     Circle corner3;
     Circle corner4;
     ArrayList<Circle> corners = new ArrayList<Circle>();
-
     String name;
     double x;
     double y;
@@ -55,14 +54,11 @@ public class SquareBumper extends Bumper {
     	for (Object physicsObject: this.corners){ //adds corners to physicsObjects
     		this.physicsObjects.add(physicsObject);
     	}
-    	for (Object physicsObject: this.sides){ //adds corners to physicsObjects
+    	for (Object physicsObject: this.sides){ //adds sides to physicsObjects
     		this.physicsObjects.add(physicsObject);
     	}
     }
      
-    
-    
-    
     /**
      * @author ahochstadt
      * gets the triggered gadget and triggers its action
