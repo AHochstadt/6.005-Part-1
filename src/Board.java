@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,11 +14,10 @@ import org.antlr.*;
 import org.antlr.runtime.*;
 import org.antlr.v4.*;
 import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
-
 import org.antlr.runtime.CharStream;
 
 import physics.Circle;
@@ -37,8 +35,8 @@ import physics.Vect;
 **/ 
 public class Board {
 	private ConcurrentHashMap<String, Gadget> triggerMap = new ConcurrentHashMap<String, Gadget>();
-    private final Stationary[] nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
-    private final Flipper[] flippers = null;
+    private Stationary[] nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
+    private Flipper[] flippers = null;
     private ArrayList<Ball> balls = null; //not final becuase balls can be added 
     private ArrayList<Wall> walls = null;
     private String leftWallName = ""; //either states the name of the board the wall is connected to or the empty string if it is a solid wall
@@ -65,57 +63,63 @@ public class Board {
      * @param filePath the address of the Pingball Board File specifying the board
      * @throws IOException 
      */
-    public Board(String filePath) throws IOException {
-    	try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-            	if(line.contains("board")){
-            		//parse board
-            	}
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    	
-    	CharStream stream = (CharStream) new ANTLRInputStream(new FileReader(filePath));
-        BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
-        TokenStream tokens = new CommonTokenStream((TokenSource) lexer);
-        BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
-        ParseTree tree = parser.file();
-        ((RuleContext)tree).inspect(parser);
+	public Board(String filePath) throws IOException {
+	    try {
+	        ANTLRInputStream stream = new ANTLRInputStream(new FileReader(filePath));
+	        BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
+	        CommonTokenStream tokens = new CommonTokenStream(lexer);
+	        BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
+	        ParseTree tree = parser.file();
+	        ((RuleContext)tree).inspect(parser);
 
-        ParseTreeWalker walker = new ParseTreeWalker(); 
-        MakerListener listener = new MakerListener(); 
-        walker.walk(listener, tree);
-        
-        this.nonMovingParts = (Stationary[]) listener.getStationary().toArray();
-        this.flippers = (Flipper[]) listener.getFlippers().toArray();
-        this.balls = listener.getBalls();
-        
-        if (listener.getGravity() != 0){
-        	this.gravity = (double) listener.getGravity();
-        }
-        if (listener.getFriction1() != 0){
-        	this.friction1 = (double) listener.getFriction1();
-        }
-        if (listener.getFriction2() != 0){
-        	this.friction2 = (double) listener.getFriction2();
-        }
-        
-        this.boardName = listener.getBoardName();
-        this.triggerMap.putAll(listener.getTriggerMap()); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
+	        ParseTreeWalker walker = new ParseTreeWalker(); 
+	        MakerListener listener = new MakerListener(); 
+	        walker.walk(listener, tree);
 
-        leftWall = new Wall(this, "left"); //adds walls to board, solid by default
-        upWall = new Wall(this, "up");
-        rightWall = new Wall(this, "right");
-        downWall = new Wall(this, "down");
-        
-        this.walls.clear(); 
-        this.walls.add(upWall); this.walls.add(leftWall); this.walls.add(downWall); this.walls.add(rightWall); //populates this.walls
 
-    }
+
+
+	        this.nonMovingParts = (Stationary[]) listener.getStationary().toArray();
+	        this.flippers = (Flipper[]) listener.getFlippers().toArray();
+	        this.balls = listener.getBalls();
+
+	        if (listener.getGravity() != 0){
+	            this.gravity = (double) listener.getGravity();
+	        }
+	        if (listener.getFriction1() != 0){
+	            this.friction1 = (double) listener.getFriction1();
+	        }
+
+
+	        if (listener.getFriction2() != 0){
+	            this.friction2 = (double) listener.getFriction2();
+	        }
+
+	        this.boardName = listener.getBoardName();
+	        this.triggerMap.putAll(listener.getTriggerMap()); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
+	        
+	        for (Gadget g: listener.getPartsList()) {
+	            g.setParentBoard(this);
+	        }
+
+
+	     }
+
+	catch (FileNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+
+	leftWall = new Wall(this, "left"); //adds walls to board, solid by default
+	upWall = new Wall(this, "up");
+	rightWall = new Wall(this, "right");
+	downWall = new Wall(this, "down");
+
+	this.walls.clear(); 
+	this.walls.add(upWall); this.walls.add(leftWall); this.walls.add(downWall); this.walls.add(rightWall); //populates this.walls
+
+}
+
     /**
      * @author ahochstadt
      * @param timestep timestep in seconds

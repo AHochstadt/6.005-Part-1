@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -447,12 +448,12 @@ public class MakerListener extends BoardMakerBaseListener {
     }
 
     @Override public void enterLeftFlipper(BoardMakerParser.LeftFlipperContext ctx) { }
-    @Override public void exitLeftFlipper(BoardMakerParser.LeftFlipperContext ctx) { 
+    @Override public void exitLeftFlipper(BoardMakerParser.LeftFlipperContext ctx)  { 
         //leftFlipper: NAMEFIELD NAME XFIELD INTEGER YFIELD INTEGER ORIENTATIONFIELD INTEGER;
-        String name;
-        int x;
-        int y;
-        int orientation;
+        String name = null;
+        int x = 0;
+        int y = 0;
+        int orientation = 0;
         for (int i = 0; i < 5; i++) {
             String value = stack.pop();
             String field = stack.pop();
@@ -471,8 +472,14 @@ public class MakerListener extends BoardMakerBaseListener {
                 orientation = Integer.parseInt(value);
             }
         } 
-        LeftFlipper l = new LeftFlipper(x,y,orientation, name);
-        flippers.add(l);
+        LeftFlipper l;
+        try {
+            l = new LeftFlipper(x,y,orientation, name);
+            flippers.add(l);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 
@@ -522,7 +529,7 @@ public class MakerListener extends BoardMakerBaseListener {
     public String getBoardName() {
         return this.boardName;
     }
-    public HashMap<String, Gadget> getNameMap() {
+    public HashMap<String, Gadget> getTriggerMap() {
         //getNameMap() that returns a HashMap<String, Gadget>
         HashMap<String, Gadget> newMap = new HashMap<String, Gadget>();
         for (String key: triggerMap.keySet()) {
@@ -536,6 +543,20 @@ public class MakerListener extends BoardMakerBaseListener {
         
         return newMap;
 
+    }
+    
+    public HashMap<String, Gadget> getNameMap() {
+        HashMap<String, Gadget> newMap = new HashMap<String, Gadget>();
+        for (Gadget g: allParts) {
+            newMap.put(g.getName(),  g);
+        }
+        
+        return newMap;
+        
+    }
+    
+    public ArrayList<Gadget> getPartsList() {
+        return this.allParts;
     }
 
 }
