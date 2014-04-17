@@ -39,6 +39,8 @@ public interface Flipper extends Gadget {
      */
     public double getMovingY() ;
     
+    public Board getParentBoard();
+    
 
 
     /**@author ahochstadt

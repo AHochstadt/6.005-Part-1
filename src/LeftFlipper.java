@@ -17,6 +17,8 @@ public class LeftFlipper implements Flipper{
 	Circle endPoint;
     LineSegment flipper;
     double orientation;
+	private Board parentBoard;
+	private String name;
     
     /**
      * Constructor for Left Flipper
@@ -25,9 +27,12 @@ public class LeftFlipper implements Flipper{
      * @param y y-coordinate for upperleft corner of 2Lx2L bounding box
      * @param orientation can be 0|90|180|270. Measure (in degrees) of how much the original flipper bumper is rotated. Original bumper (orientation = 0) lies on the west side of the bounding box.
      * @param name name of the flipper
+     * @param parentBoard 
      * @throws IOException if orientation does not equal 0|90|180|270
      */
-    LeftFlipper(int x, int y, int orientation, String name) throws IOException {
+    LeftFlipper(Board parentBoard, int x, int y, int orientation, String name) throws IOException {
+    	this.parentBoard = parentBoard;
+    	this.setName(name);
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);
     		this.pivot = new Circle((double) x,(double) y, 0.0);
@@ -134,6 +139,16 @@ public class LeftFlipper implements Flipper{
 	public ArrayList<Object> getPhysicsObjects() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public Board getParentBoard() {
+		return this.parentBoard;
+	}
+	public String getName() {
+		return name;
+	}
+	private void setName(String name) {
+		this.name = name;
 	}
 
 

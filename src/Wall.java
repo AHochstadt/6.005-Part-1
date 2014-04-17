@@ -7,13 +7,25 @@ import physics.Vect;
 
 
 public class Wall implements Stationary{
+	private boolean solid;
+	private String wallName;
 	private String location;
 	private LineSegment wallSegment;
 	private Circle endpt1;
 	private Circle endpt2;
 	private ArrayList<Object> physicsObjects = new ArrayList<Object>();
-	Wall(String location){
+	private Board parentBoard;
+	
+	/**
+	 * Constructor of Wall 
+	 * @param location = "left"|"up"|"right"|"down"
+	 */
+	Wall(Board parentBoard, String location){//initializes a solid wall not connected to another board
+		this.parentBoard = parentBoard;
 		this.setLocation(location);
+		this.setSolid(true);
+		this.setWallName("");
+		
 		if (location.equals("up")){
 			this.setWallSegment(new LineSegment(0.0, 0.0, 20.0, 0.0));
 			this.setEndpt1(new Circle(0.0, 0.0, 0.0));
@@ -95,5 +107,37 @@ public class Wall implements Stationary{
 	@Override
 	public void action() {//does nothing by definition of wall		
 	}
+
+	public void wallify() {
+		this.setSolid(true);
+		this.setWallName("");
+	}
+
+	public boolean isSolid() {
+		return solid;
+	}
+
+	public void setSolid(boolean solid) {
+		this.solid = solid;
+	}
+
+	public String getWallName() {
+		return wallName;
+	}
+
+	public void setWallName(String wallName) {
+		this.wallName = wallName;
+	}
+
+	public void connectWall(String connectedBoardName) {
+		this.setSolid(false);
+		this.setWallName(connectedBoardName);
+		
+	}
+
+	public Board getParentBoard() {
+		return this.parentBoard;
+	}
+
 
 }

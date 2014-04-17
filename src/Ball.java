@@ -20,7 +20,6 @@ public class Ball {
     private Vect velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 
     private Circle ballCircle;
-    private Vect ballVelocity;
 	private Vect ballVector;
 	private String ballName;
 	private String boardName;
@@ -45,7 +44,7 @@ public class Ball {
     }
     
     public Vect getVector() {
-        return this.ballVelocity;
+        return this.ballVector;
     }
 
     /**

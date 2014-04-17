@@ -21,6 +21,8 @@ public class RightFlipper implements Flipper{
 	Circle endPoint;
     LineSegment flipper;
     double orientation;
+	private Board parentBoard;
+	private String name;
     
     /**
      * Constructor for Right Flipper
@@ -31,7 +33,9 @@ public class RightFlipper implements Flipper{
      * @param name name of the flipper
      * @throws IOException if orientation != 0|90|180|270
      */
-    RightFlipper(int x, int y, int orientation, String name) throws IOException {
+    RightFlipper(Board parentBoard, int x, int y, int orientation, String name) throws IOException {
+    	this.parentBoard = parentBoard;
+    	this.setName(name);
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x+2,(double) y,(double) x+2, (double) y+2);
     		this.pivot = new Circle((double) x+2,(double) y, 0.0);
@@ -135,6 +139,16 @@ public class RightFlipper implements Flipper{
 	public ArrayList<Object> getPhysicsObjects() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public Board getParentBoard() {
+		return this.parentBoard;
+	}
+	public String getName() {
+		return name;
+	}
+	private void setName(String name) {
+		this.name = name;
 	}
 
 }

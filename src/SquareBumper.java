@@ -30,11 +30,12 @@ public class SquareBumper extends Bumper {
     /**
      * Constructor for Square Bumper
      * @author ahochstadt
+     * @param parentBoard the board that this bumper exists in
      * @param x x-coordinate of bumper (should be natural number)
      * @param y y-coordinate of bumper (should be natural number)
      * @param name name of bumper
      */
-    SquareBumper(int x, int y, String name){
+    SquareBumper(Board parentBoard, int x, int y, String name){
     	
     	this.x = (double) x;
     	this.y = (double) y;
@@ -55,49 +56,7 @@ public class SquareBumper extends Bumper {
      
     
     
-    /**
-     * 
-     * @param b: ball object that comes into contact with the bumper
-     * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
-     */
-    @Override
-    public void getEffect(Ball b, Object objectHit) {
-    	
-    	//if ball is going to hit corner 1
-    	Vect newV1 = Geometry.reflectCircle(this.corner1.getCenter(), b.getVector(), b.getVelocity());
-        b.setVelocity(newV1);
-        
-        //if ball is going to hit corner 2
-    	Vect newV2 = Geometry.reflectCircle(this.corner2.getCenter(), b.getVector(), b.getVelocity());
-        b.setVelocity(newV2);
-        
-        //if ball is going to hit corner 3
-    	Vect newV3 = Geometry.reflectCircle(this.corner3.getCenter(), b.getVector(), b.getVelocity());
-        b.setVelocity(newV3);
-        
-        //if ball is going to hit corner 4
-    	Vect newV4 = Geometry.reflectCircle(this.corner4.getCenter(), b.getVector(), b.getVelocity());
-        b.setVelocity(newV4);
-        
-        //if ball is going to hit side 1
-        Vect newV5 = Geometry.reflectWall(this.side1, b.getVector());
-        b.setVelocity(newV5);
-        
-        //if ball is going to hit side 2
-        Vect newV6 = Geometry.reflectWall(this.side2, b.getVector());
-        b.setVelocity(newV6);
-        
-        //if ball is going to hit side3
-        Vect newV7 = Geometry.reflectWall(this.side3, b.getVector());
-        b.setVelocity(newV7);
-        
-        //if ball is going to hit side4
-        Vect newV8 = Geometry.reflectWall(this.side4, b.getVector());
-        b.setVelocity(newV8);
-        
-        
-       
-    }
+    
     
     @Override
 	public void trigger() {
@@ -109,11 +68,11 @@ public class SquareBumper extends Bumper {
 	public void action() { //does nothing by definition of Bumper
 	}
     
-    private double getX() {
+    public double getX() {
 		return this.x;
 	}
     
-    private double getY() {
+    public double getY() {
 		return this.y;
 	}
 
@@ -124,6 +83,7 @@ public class SquareBumper extends Bumper {
      */
     @Override
     public boolean checkRep() {
+    	//TODO write this
         return true;
     }
 

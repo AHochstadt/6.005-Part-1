@@ -30,6 +30,7 @@ public class Absorber implements Stationary {
 	private LineSegment side4;
 	private ArrayList<LineSegment> sides = new ArrayList<LineSegment>();
 	private ArrayList<Circle> corners = new ArrayList<Circle>();
+	private Board parentBoard;
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -39,7 +40,8 @@ public class Absorber implements Stationary {
      * @param height height of the absorber
      * @param name name of the absorber. Must be unique to the board file
      */
-    Absorber(int x, int y, int width, int height, String name) {
+    Absorber(Board parentBoard, int x, int y, int width, int height, String name) {
+    	this.parentBoard = parentBoard;
         this.x = (double) x;
         this.y = (double) y; 
         this.width = (double) width;
@@ -105,6 +107,22 @@ public class Absorber implements Stationary {
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Board getParentBoard() {
+		return parentBoard;
 	}
 
 

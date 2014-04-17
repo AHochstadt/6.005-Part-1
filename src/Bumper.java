@@ -50,12 +50,14 @@ public class Bumper implements Stationary {
 
 
 	@Override
-	public void trigger() {
+	public void action() {
 	}
 
 
 	@Override
-	public void action() {
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
