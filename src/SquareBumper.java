@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import physics.*;
 /**
  * 
@@ -29,11 +30,12 @@ public class SquareBumper extends Bumper {
     /**
      * Constructor for Square Bumper
      * @author ahochstadt
+     * @param parentBoard the board that this bumper exists in
      * @param x x-coordinate of bumper (should be natural number)
      * @param y y-coordinate of bumper (should be natural number)
      * @param name name of bumper
      */
-    SquareBumper(int x, int y, String name){
+    SquareBumper(Board parentBoard, int x, int y, String name){
     	
     	this.x = (double) x;
     	this.y = (double) y;
@@ -54,51 +56,35 @@ public class SquareBumper extends Bumper {
      
     
     
-    /**
-     * 
-     * @param b: ball object that comes into contact with the bumper
-     * @effect: ball position remains unchanged.  Angle is changed to the reflection angle.  Velocity remains the same.  
-     */
-    public void getEffect(Ball b) {
-        
-        //if ball is going to hit side 1
-        Vect newV1 = Geometry.reflectWall(this.side1, b.getVector());
-        b.setVelocity(newV1);
-        
-        //if ball is going to hit side 2
-        Vect newV2 = Geometry.reflectWall(this.side2, b.getVector());
-        b.setVelocity(newV2);
-        
-        //if ball is going to hit side3
-        Vect newV3 = Geometry.reflectWall(this.side3, b.getVector());
-        b.setVelocity(newV3);
-        
-        //if ball is going to hit side4
-        Vect newV4 = Geometry.reflectWall(this.side4, b.getVector());
-        b.setVelocity(newV4);
-        
-        //do this for corners as well
-        
-       
-    }
     
-    /**
-     * 
-     * @param b: ball object to test if in bounds 
-     * @return: true if the ball is in the space that is occupied by the bumper 
-     * 
-     */
+    
     @Override
-    public boolean inBounds(Ball b) {
-        return false;
-        //TODO
-    }
+	public void trigger() {
+    	// TODO write method
+	}
+
+
+	@Override
+	public void action() { //does nothing by definition of Bumper
+	}
     
-    /**
+    public double getX() {
+		return this.x;
+	}
+    
+    public double getY() {
+		return this.y;
+	}
+
+
+
+	/**
      * ensure the rep invariant of Square Bumper is preserved
      */
-    private void checkRep() {
-        
+    @Override
+    public boolean checkRep() {
+    	//TODO write this
+        return true;
     }
 
 }

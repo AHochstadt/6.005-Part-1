@@ -1,6 +1,3 @@
-import java.lang.Object;
-
-
 import physics.*;
 /**
  * 
@@ -17,8 +14,10 @@ public class CircularBumper extends Bumper{
     Circle circleRep;
     Double x;
     Double y;
+	private Board parentBoard;
     
-    CircularBumper(double x, double y) {
+    CircularBumper(Board parentBoard, double x, double y) {
+    	this.parentBoard = parentBoard;
         this.x = x;
         this.y = y;
         this.center = new Vect(x,y);
@@ -59,21 +58,18 @@ public class CircularBumper extends Bumper{
      * @return: true if the ball is in the space that is occupied by the bumper 
      * 
      */
-    @Override
-    public boolean inBounds(Ball b) {
-        if (b.getX() < (this.x + 0.5) && b.getX() > (this.x +0.5)) {
-            if (b.getY() < (this.y +0.5) && b.getY() > (this.y + 0.5)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
     
     /**
      * ensure the rep invariant of Circular Bumper is preserved
      */
-    private void checkRep() {
-        
+    @Override
+    public boolean checkRep() {
+    	//TODO write this method
+        return true;
     }
+	public Board getParentBoard() {
+		return parentBoard;
+	}
 
 }

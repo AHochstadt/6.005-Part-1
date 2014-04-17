@@ -1,3 +1,10 @@
+import java.util.ArrayList;
+
+import physics.Circle;
+import physics.Geometry;
+import physics.LineSegment;
+import physics.Vect;
+
 /**
  * 
  * @author Lauren 
@@ -8,41 +15,49 @@
  *
  */
 public class Bumper implements Stationary {
-    
-    /**
-     * TODO: Javadoc
-     */
-    public boolean inBounds(Ball b) {
-        return false;
-        // TODO Auto-generated method stub
-        
-    }
-    
-    /**
-     * TODO: Javadoc
-     */
-    public void getEffect(Ball b) {
-        // TODO Auto-generated method stub
-        
-    }
+ 
     
     /**
      * ensure the rep invariant of Bumper is preserved
      */
-    private void checkRep() {
-        
+    public boolean checkRep() {
+        return true;
     }
 
-    @Override
-    public boolean inBounds(warmup.Ball b) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
-    @Override
-    public void getEffect(warmup.Ball b) {
-        // TODO Auto-generated method stub
-        
-    }
+    /**@author ahochstadt
+     * updates ball based on the balls recent interaction 
+     */
+	@Override
+	public void getEffect(Ball b, Object objectHit) {
+		if (objectHit instanceof Circle){
+			Circle circleHit = (Circle) objectHit;
+			Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getVector(), b.getVelocity()); //don't need reflection coef because it's 1
+			b.setVelocity(newV);
+		}
+    	if (objectHit instanceof LineSegment){
+    		LineSegment segmentHit = (LineSegment) objectHit;
+    		Vect newV = Geometry.reflectWall(segmentHit, b.getVelocity()); //don't need reflection coef because it's 1
+            b.setVelocity(newV);
+    	}
+		
+	}
+
+	@Override
+	public ArrayList<Object> getPhysicsObjects() {
+		return null;
+	}
+
+
+	@Override
+	public void action() {
+	}
+
+
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -1,5 +1,3 @@
-import java.lang.Object;
-
 import physics.*;
 /**
  * 
@@ -22,17 +20,18 @@ public class Ball {
     private Vect velocity; // ball's current velocity (spaces per second)
     private String board; //board that the ball is currently on 
     private Circle ballCircle;
-    private Vect ballVelocity;
 	private Vect ballVector;
-	private String name;
+	private String ballName;
+	private String boardName;
+	private String wallHit;
     
-    public Ball(double x, double y, double xVel, double yVel, String ballName) {
+    public Ball(double x, double y, double xVel, double yVel, String ballName, String boardName) {
         this.x = x;
         this.y = y;
         this.ballCircle = new Circle(x,y,0.25);
-        this.ballVector = new Vect(x,y);
+        this.setBallVector(new Vect(x,y));
         this.velocity = new Vect(xVel, yVel);
-        this.name = ballName;
+        this.ballName = ballName;
 
     }
 
@@ -45,7 +44,7 @@ public class Ball {
     }
     
     public Vect getVector() {
-        return this.ballVelocity;
+        return this.ballVector;
     }
 
     /**
@@ -93,7 +92,7 @@ public class Ball {
      * @param newV the velocity to change the current velocity to
      */
     public void setVelocity(Vect newV) {
-        // TODO Auto-generated method stub
+        this.velocity = newV;
         
     }
     
@@ -104,12 +103,49 @@ public class Ball {
     /**
      * ensure the rep invariant of Ball is preserved
      */
-    private void checkRep() {
-        
+    public boolean checkRep() {
+        return true;
     }
 
 	public Vect getVelocity() {
 		return velocity;
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public void setBoard(String board) {
+		this.board = board;
+	}
+
+	public Vect getBallVector() {
+		return ballVector;
+	}
+
+	public void setBallVector(Vect ballVector) {
+		this.ballVector = ballVector;
+	}
+
+	public String getBallName() {
+		return ballName;
+	}
+
+
+	public String getBoardName() {
+		return boardName;
+	}
+
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
+	}
+
+	public String getWallHit() {
+		return wallHit;
+	}
+
+	public void setWallHit(String wallHit) {
+		this.wallHit = wallHit;
 	}
 
 

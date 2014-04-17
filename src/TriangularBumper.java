@@ -110,8 +110,13 @@ public class TriangularBumper extends Bumper {
      */
     @Override
     public boolean inBounds(Ball b) {
-        return false;
-        //TODO
+    	b.getX();
+    	boolean inSide1 = false;
+    	boolean inSide2 = false;
+    	boolean inSide3 = false;
+        if (this.orientation == 0.0){
+        	if (b.)
+        }
     }
     
     /**

@@ -1,16 +1,8 @@
 import java.util.ArrayList;
 
 
-
-/**
- * 
- * @author ahochstadt 
- * 
- * An interface for stationary items.
- * 
- */
-public interface Stationary extends Gadget{
-
+public interface Gadget { 
+	
 
     /**@author ahochstadt
      * updates ball based on the balls recent interaction 
@@ -34,9 +26,5 @@ public interface Stationary extends Gadget{
      * returns a list of Circles and Segments that belong to the gadget or wall
      */
     public ArrayList<Object> getPhysicsObjects();
-
-
-
-
 
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * 
  * @author Lauren 
@@ -5,7 +7,7 @@
  * An representing flipper, an object with a stationary end and a moving end 
  * 
  */
-public interface Flipper {
+public interface Flipper extends Gadget {
 
     /**
      * moves the moving end of the flipper
@@ -14,10 +16,6 @@ public interface Flipper {
      */
     public void move();
     
-    /**
-     * returns true if Ball is in bounds of the flipper
-     */
-    public boolean inBounds(Ball b);
     /**
      * 
      * @return fixed x value 
@@ -41,11 +39,31 @@ public interface Flipper {
      */
     public double getMovingY() ;
     
-    /**
-     * modifies the ball based on the interaction 
-     * @param b : the ball interacting with the flipper
-     * @effect : doesn't change the position of the ball, changes the angle, changes the velocity to 0.95 of the original velocity
+    public Board getParentBoard();
+    
+
+
+    /**@author ahochstadt
+     * updates ball based on the balls recent interaction 
      */
-    public void getEffect(Ball b) ;
+    public void getEffect(Ball b, Object objectHit);
+    
+    /**
+     * @author ahochstadt
+     * triggers the action of whatever gadget is hooked up to the triggering gadget
+     */
+    public void trigger();
+    
+    /**
+     * @author ahochstadt
+     * executes action specified by gadget type. Triggered by some (possibly other) gadget
+     */
+    public void action();
+    
+    /**
+     * @author ahochstadt
+     * returns a list of Circles and Segments that belong to the gadget or wall
+     */
+    public ArrayList<Object> getPhysicsObjects();
 
 }

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 import physics.*;
 /**
@@ -11,11 +12,13 @@ import physics.*;
  *                stationary end of Left Flipper is fixed
  *
  */
-public class LeftFlipper implements Flipper {
+public class LeftFlipper implements Flipper{
 	Circle pivot;
 	Circle endPoint;
     LineSegment flipper;
     double orientation;
+	private Board parentBoard;
+	private String name;
     
     /**
      * Constructor for Left Flipper
@@ -24,9 +27,12 @@ public class LeftFlipper implements Flipper {
      * @param y y-coordinate for upperleft corner of 2Lx2L bounding box
      * @param orientation can be 0|90|180|270. Measure (in degrees) of how much the original flipper bumper is rotated. Original bumper (orientation = 0) lies on the west side of the bounding box.
      * @param name name of the flipper
+     * @param parentBoard 
      * @throws IOException if orientation does not equal 0|90|180|270
      */
-    LeftFlipper(int x, int y, int orientation, String name) throws IOException {
+    LeftFlipper(Board parentBoard, int x, int y, int orientation, String name) throws IOException {
+    	this.parentBoard = parentBoard;
+    	this.setName(name);
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);
     		this.pivot = new Circle((double) x,(double) y, 0.0);
@@ -91,13 +97,17 @@ public class LeftFlipper implements Flipper {
      */
     public double getMovingY() {
     	return this.endPoint.getCenter().y();
+<<<<<<< HEAD
     }
     
     @Override
     public boolean inBounds(Ball b) {
         // TODO Auto-generated method stub
         return false;
+=======
+>>>>>>> d301a3bceb211244540f99c511001934cb7ef212
     }
+   
     
     /**
      * 
@@ -113,9 +123,42 @@ public class LeftFlipper implements Flipper {
     /**
      * ensure the rep invariant of Left Flipper is preserved.  Inside bounding box, with moving end, never further away than 2L from origin 
      */
-    private void checkRep() {
-        
+    public boolean checkRep() {
+    	//TODO write this
+        return true;
     }
+	
+	
+	@Override
+	public void getEffect(Ball b, Object objectHit) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public ArrayList<Object> getPhysicsObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Board getParentBoard() {
+		return this.parentBoard;
+	}
+	public String getName() {
+		return name;
+	}
+	private void setName(String name) {
+		this.name = name;
+	}
 
 
 }
