@@ -4,6 +4,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
+import java.io.File;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.antlr.*;
+import org.antlr.runtime.*;
+import org.antlr.v4.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
+import expr.*;
+
+import org.antlr.runtime.CharStream;
 
 import physics.Circle;
 import physics.Geometry;
@@ -62,7 +80,7 @@ public class Board {
             e.printStackTrace();
         }
     	
-    	CharStream stream = (CharStream) new ANTLRInputStream(new FileReader(file));
+    	CharStream stream = (CharStream) new ANTLRInputStream(new FileReader(filePath));
         BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
         TokenStream tokens = new CommonTokenStream((TokenSource) lexer);
         BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
@@ -73,8 +91,8 @@ public class Board {
         MakerListener listener = new MakerListener(); 
         walker.walk(listener, tree);
         
-        this.nonMovingParts = listener.getStationary();
-        this.flippers = listener.getFlippers();
+        this.nonMovingParts = (Stationary[]) listener.getStationary().toArray();
+        this.flippers = (Flipper[]) listener.getFlippers().toArray();
         this.balls = listener.getBalls();
         
         if (listener.getGravity() != null){

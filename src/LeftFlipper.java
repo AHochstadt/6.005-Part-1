@@ -97,15 +97,6 @@ public class LeftFlipper implements Flipper{
      */
     public double getMovingY() {
     	return this.endPoint.getCenter().y();
-<<<<<<< HEAD
-    }
-    
-    @Override
-    public boolean inBounds(Ball b) {
-        // TODO Auto-generated method stub
-        return false;
-=======
->>>>>>> d301a3bceb211244540f99c511001934cb7ef212
     }
    
     
