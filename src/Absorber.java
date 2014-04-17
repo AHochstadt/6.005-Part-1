@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import physics.Circle;
 import physics.LineSegment;
@@ -35,7 +37,7 @@ public class Absorber implements Stationary {
 	private Board parentBoard = null;
 	private ArrayList<Object> physicsObjects = new ArrayList<Object>();
 	private boolean isHoldingBall;
-	private BlockingQueue<Ball> heldBalls = (BlockingQueue<Ball>) new ArrayList<Ball>();
+	private BlockingQueue<Ball> heldBalls = new PriorityBlockingQueue<Ball>();
     /**
      * Constructor for Absorber
      * @author ahochstadt
