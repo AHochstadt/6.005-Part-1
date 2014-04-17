@@ -19,7 +19,6 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import expr.*;
 
 import org.antlr.runtime.CharStream;
 
@@ -95,23 +94,23 @@ public class Board {
         this.flippers = (Flipper[]) listener.getFlippers().toArray();
         this.balls = listener.getBalls();
         
-        if (listener.getGravity() != null){
+        if (listener.getGravity() != 0){
         	this.gravity = (double) listener.getGravity();
         }
-        if (listener.getFriction1() != null){
+        if (listener.getFriction1() != 0){
         	this.friction1 = (double) listener.getFriction1();
         }
-        if (listener.getFriction2() != null){
+        if (listener.getFriction2() != 0){
         	this.friction2 = (double) listener.getFriction2();
         }
         
         this.boardName = listener.getBoardName();
         this.triggerMap.putAll(listener.getTriggerMap()); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
 
-        leftWall = new Wall("left"); //adds walls to board, solid by default
-        upWall = new Wall("up");
-        rightWall = new Wall("right");
-        downWall = new Wall("down");
+        leftWall = new Wall(this, "left"); //adds walls to board, solid by default
+        upWall = new Wall(this, "up");
+        rightWall = new Wall(this, "right");
+        downWall = new Wall(this, "down");
         
         this.walls.clear(); 
         this.walls.add(upWall); this.walls.add(leftWall); this.walls.add(downWall); this.walls.add(rightWall); //populates this.walls
