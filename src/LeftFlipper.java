@@ -11,7 +11,7 @@ import physics.*;
  *                stationary end of Left Flipper is fixed
  *
  */
-public class LeftFlipper implements Flipper {
+public class LeftFlipper implements Stationary{
 	Circle pivot;
 	Circle endPoint;
     LineSegment flipper;
@@ -92,12 +92,7 @@ public class LeftFlipper implements Flipper {
     public double getMovingY() {
     	return this.endPoint.getCenter().y();
     }
-    
-    @Override
-    public boolean inBounds(Ball b) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+   
     
     /**
      * 
@@ -116,6 +111,16 @@ public class LeftFlipper implements Flipper {
     private void checkRep() {
         
     }
+	@Override
+	public boolean inBounds(warmup.Ball b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void getEffect(warmup.Ball b) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

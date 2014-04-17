@@ -15,13 +15,19 @@ import warmup.Ball;
 **/ 
 public class Board {
     // TODO: initialize all this to non-null
+	public ArrayList<Stationary> triggerMap = new ArrayList<Stationary>();
     private final Stationary[] nonMovingParts = null;
     private final Flipper[] flippers = null;
     private ArrayList<Ball> balls = null; //not final becuase balls can be added 
-    private String leftWall = null; //either states the name of the ball or the String STATIONARY
-    private String rightWall = null;
-    private String topWall = null;
-    private String bottomWall = null;
+    private String leftWallName = ""; //either states the name of the ball or the String STATIONARY
+    private String rightWallName = "";
+    private String topWallName = "";
+    private String bottomWallName = "";
+    private String boardName;
+	private double gravity;
+	private double friction1;
+	private double friction2;
+	
     
     /**
      * @author ahochstadt
@@ -29,6 +35,9 @@ public class Board {
      * @param filePath the address of the Pingball Board File specifying the board
      * @throws IOException 
      */
+    
+    		
+    		
     public Board(String filePath) throws IOException {
     	try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -42,6 +51,29 @@ public class Board {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    	
+    	CharStream stream = (CharStream) new ANTLRInputStream(new FileReader(file));
+        BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
+        TokenStream tokens = new CommonTokenStream((TokenSource) lexer);
+        BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
+        ParseTree tree = parser.file();
+        ((RuleContext)tree).inspect(parser);
+
+        ParseTreeWalker walker = new ParseTreeWalker(); 
+        MakerListener listener = new MakerListener(); 
+        walker.walk(listener, tree);
+        listener.getStationary();
+        listener.getFlippers();
+        listener.getBalls();
+        
+        this.nonMovingParts = listener.getStationary();
+        this.flippers = listener.getFlippers();
+        this.balls = listener.getBalls();
+        this.gravity = (double) listener.getGravity();
+        this.friction1 = (double) listener.getFriction1();
+        this.friction2 = (double) listener.getFriction2();
+        this.boardName = listener.getBoardName();
+        this.triggerMap = listener.getTriggerMap();
 
     }
     /**
@@ -55,14 +87,21 @@ public class Board {
      */
     public String update(double timestep) {
         //I was not clear if flippers are moving in this version of the game, if so they would move here.  
-        
-        for (Ball b: balls) {
+    	
+    	for (Ball b: balls) {
             for (Stationary s: nonMovingParts) {
                 if (s.inBounds(b)) {
                     s.getEffect(b);
                 }
             }
         }
+    	
+    	boolean collisionsExist = true;
+    	while (collisionsExist){
+    		
+    	}
+        
+        
         
         for (Ball ball1: balls) {
             for (Ball ball2: balls) {
@@ -147,6 +186,10 @@ public class Board {
      */
     public void connectWall(String wallLocation, String connectedBoardName){
     	
+    }
+    
+    public String getBoardName(){
+    	return this.boardName;
     }
 
 }

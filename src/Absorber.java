@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 import physics.Circle;
 import physics.LineSegment;
-import warmup.Ball;
 
 /**
  * 
@@ -64,33 +63,23 @@ public class Absorber implements Stationary {
     /**
      * ensure the rep invariant of Absorber is preserved
      */
-    private void checkRep() {
-        
-    }
-
-    /**
-     * will return true if the ball is in the bounds of the absorber 
-     */
-    @Override
-    public boolean inBounds(Ball b) {
-    	boolean inXBounds = b.getX()>=this.getX() && b.getX()<=this.getX()+this.getWidth();
-    	boolean inYBounds = b.getY()>=this.getY() && b.getY()<=this.getY()+this.getHeight();
-        return inXBounds && inYBounds;
+    public boolean checkRep() {
+        return true;
     }
     
-    private double getHeight() {
+    public double getHeight() {
 		return this.height;
 	}
 
-	private double getWidth() {
+    public double getWidth() {
 		return this.width;
 	}
 
-	private double getX() {
+    public double getX() {
 		return this.x;
 	}
     
-    private double getY() {
+    public double getY() {
 		return this.y;
 	}
     
@@ -103,10 +92,22 @@ public class Absorber implements Stationary {
      * @param b
      */
     @Override
-    public void getEffect(Ball b) {
-        // TODO Auto-generated method stub
-        
-    }
+	public void getEffect(Ball b, Object objectHit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Object> getPhysicsObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+
 
 
 

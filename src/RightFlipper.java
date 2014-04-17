@@ -15,7 +15,7 @@ import physics.Vect;
  * Rep Invariant: flipper must never move outside of the bounding box 
  *
  */
-public class RightFlipper implements Flipper{
+public class RightFlipper implements Stationary{
 	Circle pivot;
 	Circle endPoint;
     LineSegment flipper;
@@ -62,11 +62,6 @@ public class RightFlipper implements Flipper{
         //update xMov and yMov
     }
     
-    @Override
-    public boolean inBounds(Ball b) {
-        // TODO Auto-generated method stub
-        return false;
-    }
     
     /**
      * 
@@ -118,5 +113,15 @@ public class RightFlipper implements Flipper{
     private void checkRep() {
         
     }
+	@Override
+	public boolean inBounds(warmup.Ball b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void getEffect(warmup.Ball b) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
