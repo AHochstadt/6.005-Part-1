@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +33,7 @@ import physics.Vect;
 *
 * Rep invariant: flippers, stationaryItems, and balls all must not be null
 **/ 
-public class Board {
+public class Board {	
 	private ConcurrentHashMap<String, Gadget> triggerMap = new ConcurrentHashMap<String, Gadget>();
     private ArrayList<Stationary> nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
     private ArrayList<Flipper> flippers = null;
@@ -152,6 +153,10 @@ public class Board {
 	    	}
 	    	
     	}
+    	while (!this.outgoingBalls.isEmpty()){
+    		this.sendBall(this.outgoingBalls.take())
+    	}
+    	
     	return getBoardRep();
     }
     
