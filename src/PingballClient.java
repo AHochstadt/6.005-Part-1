@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -199,19 +200,19 @@ public class PingballClient {
                         if (port < 0 || port > 65535) {
                             throw new IllegalArgumentException("port " + port + " out of range");
                         }
-                    } else if (flag.equals("--file")) {
-                        filepath = arguments.remove();
-                        
-//                        try {
-//                            Board board = new Board(filepath);
-//                        } catch (IOException e) {
-//                            // TODO Auto-generated catch block
-//                            e.printStackTrace();
-//                        }
-                                                
                     } else {
-                        throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
+                        filepath = flag;
+                        
+                        File file = new File(filepath);
+                        
+                        if ( ! file.isFile()) {
+                            throw new IllegalArgumentException("file not found: \"" + file + "\"");
+                        }
                     }
+                                                                  
+//                    else {
+//                        throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
+//                    }
                 } catch (NoSuchElementException nsee) {
                     throw new IllegalArgumentException("missing argument for " + flag);
                 } catch (NumberFormatException nfe) {
