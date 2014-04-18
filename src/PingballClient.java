@@ -26,7 +26,10 @@ import java.util.Queue;
  * 
  * Rep Invariant: board may not be null
  * 
- * TODO: Thread-safety
+ * Thread-safety: Each Client is associated with its own Thread on the server. Therefore, a Client will never be receiving 
+ *                messages from multiple Threads simultaneously. Furthermore, each Client has a Thread dedicated to handling
+ *                input from the server. Lastly, all of the methods that mutate Client (wallify, joinWall, and addBall) acquire 
+ *                the lock on this.board before proceeding so as to avoid concurrent mutation. 
  *
  */
 public class PingballClient {
@@ -153,7 +156,10 @@ public class PingballClient {
     public void addBall(double x, double y, double xVel, double yVel, String ballName) {
         
         Ball ball = new Ball(x, y, xVel, yVel, ballName);
-        this.board.addBall(ball);    
+        
+        synchronized(this.board) {
+            this.board.addBall(ball);    
+        }
     }
     
     /**
@@ -181,7 +187,9 @@ public class PingballClient {
      * @param wallLoc the location of the wall of the client that will now be solid ("left" or "right" or "up" or "down")
      */
     public void wallify(String wallLoc) {
-        this.board.wallify(wallLoc);
+        synchronized(this.board) {
+            this.board.wallify(wallLoc);
+        }
     }
     
     /**
@@ -191,7 +199,9 @@ public class PingballClient {
      * @param boardName the name of the board to which this wall will now be connected
      */
     public void joinWall(String wallLoc, String boardName) {
-        this.board.connectWall(wallLoc, boardName);
+        synchronized(this.board) {
+            this.board.connectWall(wallLoc, boardName);
+        }
     }
     
     /**
@@ -267,7 +277,16 @@ public class PingballClient {
             }
             
             while (true) {
-                System.out.println(client.board.update(0.05));
+                synchronized(client.board) {
+                    System.out.println(client.board.update(0.05));
+                }
+                // allow other threads access to client.board between updates
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
             
         } catch (IOException e) {

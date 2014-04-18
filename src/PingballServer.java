@@ -27,7 +27,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * Rep Invariant: wallMap and socketMap are non-null
  * 
- * TODO: Thread-safety argument
+ * Thread-safety: We utilize thread-safe datatypes for the mappings of walls to walls and board names to sockets, namely, ConcurrentHashMaps.
+ *                Furthermore, the interaction between each Client socket and the server is handled by a unique Thread on the server, so there
+ *                is no possibility of multiple Threads on the server interacting with the same Client. Only one user may input join commands from
+ *                console, so there is no thread danger there. 
  *
  */
 public class PingballServer {
