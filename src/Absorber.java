@@ -99,7 +99,7 @@ public class Absorber implements Stationary {
 	}
     
     /**
-     * ball will be removed from the board if absorber is not holding a ball (board.remove)
+     * ball will be removed from the board if absorber is not holding a ball 
      * absorber will hold the ball
      * 
      * if the absorber is holding a ball, then this ball will shoot out of the absorber when a ball hits the absorber (board.add)
@@ -108,7 +108,16 @@ public class Absorber implements Stationary {
      */
     @Override
 	public void getEffect(Ball b, Object objectHit) {
-		// TODO Auto-generated method stub
+		if (b.getVelocity().y()<0.0){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber
+			b.setVelocity(new Vect(0.0, 0.0));
+			b.setBallVector(new Vect(this.x+this.width-.25,this.y+this.height-.25));
+			try {
+				this.heldBalls.put(b);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
