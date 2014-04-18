@@ -40,6 +40,7 @@ public class RightFlipper implements Flipper{
      */
     RightFlipper(int x, int y, int orientation, String name) throws IOException {
     	this.setName(name);
+    	this.physicsObjects = new ArrayList<Object>();
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x+2,(double) y,(double) x+2, (double) y+2);
     		this.pivot = new Circle((double) x+2,(double) y, 0.0);

@@ -26,8 +26,6 @@ import physics.Geometry.VectPair;
 import physics.LineSegment;
 import physics.Vect;
 
-
-
 /**
 * A class representing a users Pingball board
 *
@@ -35,8 +33,8 @@ import physics.Vect;
 **/ 
 public class Board {
 	private ConcurrentHashMap<String, Gadget> triggerMap = new ConcurrentHashMap<String, Gadget>();
-    private Stationary[] nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
-    private Flipper[] flippers = null;
+    private ArrayList<Stationary> nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
+    private ArrayList<Flipper> flippers = null;
     private ArrayList<Ball> balls = null; //not final becuase balls can be added 
     private ArrayList<Wall> walls = null;
     private String leftWallName = ""; //either states the name of the board the wall is connected to or the empty string if it is a solid wall
@@ -65,7 +63,7 @@ public class Board {
      */
 	public Board(String filePath) throws IOException {
 	    try {
-	        ANTLRInputStream stream = new ANTLRInputStream(new FileReader(filePath));
+	        ANTLRInputStream stream = new ANTLRInputStream(new FileReader("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt"));
 	        BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
 	        BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
@@ -78,19 +76,20 @@ public class Board {
 
 
 
-
-	        this.nonMovingParts = (Stationary[]) listener.getStationary().toArray();
-	        this.flippers = (Flipper[]) listener.getFlippers().toArray();
+	        this.walls = new ArrayList<Wall>();
+	        this.nonMovingParts = listener.getStationary();
+	        this.flippers = listener.getFlippers();
 	        this.balls = listener.getBalls();
 
-	        if (listener.getGravity() != (Float) null){
+	        int badNumber = -9999;
+	        if (listener.getGravity() != badNumber){
 	            this.gravity = (double) listener.getGravity();
 	        }
-	        if (listener.getFriction1() != (Float) null){
+	        if (listener.getFriction1() != badNumber){
 	            this.friction1 = (double) listener.getFriction1();
 	        }
 
-	        if (listener.getFriction2() != (Float) null){
+	        if (listener.getFriction2() != badNumber){
 	            this.friction2 = (double) listener.getFriction2();
 	        }
 
@@ -100,7 +99,6 @@ public class Board {
 	        for (Gadget g: listener.getPartsList()) {
 	            g.setParentBoard(this);
 	        }
-
 
 	     }
 
@@ -408,32 +406,83 @@ public class Board {
      * @return String representation of the board's current state
      */
     public String getBoardRep() {
-        String boardRep = ""; 
+        Character[][] boardArray = new Character[20][20];
+        for (int p = 0; p < 20; p++) {
+            for (int q = 0; q < 20; q++) {
+                boardArray[p][q] = ' ';
+            }
+        }
         
-        for (int j = 0; j < 20; j++) {
-            for (int i = 0; i < 20; i++) {
-                for (Ball b: balls) {
-                    int x = (int) Math.round(b.getX());
-                    int y = (int) Math.round(b.getY());
-                    // print a ball at the current position
-                    if (x == i && y == j) {
-                        boardRep = boardRep + "*";
-                    }
-                    // print a wall piece
-                    else if (j == 0 || j == 20 - 1 || i == 0 || i == 20 - 1) {
-                        boardRep = boardRep + ".";
-                    }
-                    // print empty space
-                    else {
-                        boardRep = boardRep + " ";
+        for (Stationary g: this.nonMovingParts) {
+            if (g instanceof Absorber) {
+                int x = (int) ((Absorber) g).getX(); //upper left
+                int y = (int) ((Absorber) g).getY(); //upper left 
+                int height = (int) ((Absorber) g).getHeight(); 
+                int width = (int) ((Absorber) g).getWidth(); 
+                for (int k = 0; k < width; k++) {
+                    for (int j = 0; j < height; j++) {
+                        int xValue = x+k;
+                        int yValue = y+j;
+                        boardArray[xValue][yValue] = '=';
                     }
                 }
             }
-            boardRep = boardRep + "\n";
+            if (g instanceof Flipper) {
+                int fixedX = (int) ((Flipper) g).getFixedX();
+                int fixedY = (int) ((Flipper) g).getFixedY();
+                
+                if (g instanceof LeftFlipper) {
+                    //left flipper 
+                }
+                
+                if (g instanceof RightFlipper) {
+                    //right flipper 
+                }
+            }
+            
+            else {
+                if (g instanceof SquareBumper) {
+                    int x = (int)((SquareBumper) g).getX();
+                    int y = (int)((SquareBumper) g).getY();
+                    boardArray[x][y] = '#';  
+                }
+                
+                if (g instanceof CircularBumper) {
+                    int x = (int)((CircularBumper) g).getX();
+                    int y = (int)((CircularBumper) g).getY();
+                    boardArray[x][y] = 'O';
+                }
+                
+                if (g instanceof TriangularBumper) {
+                    int x = (int)((TriangularBumper) g).getX();
+                    int y = (int)((TriangularBumper) g).getY();
+                    boardArray[x][y] = '\\'; 
+                }
+            }
+            
+            for (Ball b: balls) {
+                int x = (int) b.getX();
+                int y = (int) b.getY();
+                boardArray[x][y] = '*';
+                
+            }
         }
+        
+        String boardRep = ""; 
+        boardRep = boardRep + "....................\n";
+        for (int l = 0; l < 20; l++) {
+            boardRep = boardRep +'.';
+            for (int m = 0; m < 20; m++) {
+                boardRep = boardRep + boardArray[m][l];
+            }
+            
+            boardRep = boardRep + ".\n";
+        }
+        
+        boardRep = boardRep + "....................\n";
         return boardRep;
     }
-    
+
     /**
      * ensure the rep invariant of Board is preserved
      */

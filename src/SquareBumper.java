@@ -50,6 +50,7 @@ public class SquareBumper extends Bumper {
     	this.sides.clear();
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
+    	this.physicsObjects = new ArrayList<Object>();
     	this.corners.add(this.corner1); this.corners.add(this.corner2); this.corners.add(this.corner3); this.corners.add(this.corner4); //populates this.corners
     	for (Object physicsObject: this.corners){ //adds corners to physicsObjects
     		this.physicsObjects.add(physicsObject);
