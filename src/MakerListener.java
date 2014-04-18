@@ -195,11 +195,11 @@ public class MakerListener extends BoardMakerBaseListener {
                 y = Float.parseFloat(value);
             }
 
-            if (field.equals("xvelocity=")) {
+            if (field.equals("xVelocity=")) {
                 xvelocity = Float.parseFloat(value);
             }
 
-            if (field.equals("yvelocity=")) {
+            if (field.equals("yVelocity=")) {
                 yvelocity = Float.parseFloat(value);
 
             }
