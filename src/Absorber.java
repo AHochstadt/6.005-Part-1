@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import physics.Circle;
@@ -37,7 +38,7 @@ public class Absorber implements Stationary {
 	private Board parentBoard = null;
 	private ArrayList<Object> physicsObjects = new ArrayList<Object>();
 	private boolean isHoldingBall;
-	private BlockingQueue<Ball> heldBalls = new PriorityBlockingQueue<Ball>();
+	private BlockingQueue<Ball> heldBalls = new LinkedBlockingQueue<Ball>();
     /**
      * Constructor for Absorber
      * @author ahochstadt
@@ -108,7 +109,9 @@ public class Absorber implements Stationary {
      */
     @Override
 	public void getEffect(Ball b, Object objectHit) {
+    	System.out.println("WE'RE IN GETEFFECT");
 		if (!(b.getPhysicsPackageVelocity().y()>=0.0)){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber, sowe make sure that this is not the case
+			System.out.println("WE DEFINITELY HIT AN ABSORBER");
 			b.setPhysicsPackageVelocity(new Vect(0.0, 0.0)); //stop the ball
 			b.setBallVector(new Vect(this.x+this.width-.25,this.y+this.height-.25));
 			try {
