@@ -20,6 +20,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.runtime.CharStream;
 
+import physics.Angle;
 import physics.Circle;
 import physics.Geometry;
 import physics.Geometry.VectPair;
@@ -162,6 +163,9 @@ public class Board {
 		for (Ball b: balls){
 			b.setBallVector(new Vect(b.getBallVector().x()+timeLeft*b.getVelocity().x(), b.getBallVector().y()+timeLeft*b.getVelocity().y())); //travels to the space with no collisions
 		}
+		for (Flipper f: this.flippers){
+			f.moveFlipper(timeLeft);
+		}
 		
 	}
 	/**
@@ -267,46 +271,116 @@ public class Board {
                 	}
                 }
             }
+            
             for (Flipper f: flippers) { //iterate through flippers
-            	for (Object objectHit: f.getPhysicsObjects()){
-                	if (objectHit instanceof Circle){ 
-                		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
-                		if(collidedAlready){
-                			if (timeUntilCollision==0.0){//this is a collision
-                				f.getEffect(b, circleHit);
-                			}
-                		} else { //this ball has not yet collided
-                			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
-                				f.getEffect(b, circleHit);
-                				collidedAlready = true;
-                    		}
-                		}
-                		
-                	} else if (objectHit instanceof LineSegment){ //if it's not a Circle, it should hypothetically be a LineSegment
-            			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
-                		if(collidedAlready){
-                			if (timeUntilCollision==0.0){//this is a collision
-                				f.getEffect(b, lineSegmentHit);
-                			}
-                		} else { //this ball has not yet collided
-                			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
-                				f.getEffect(b, lineSegmentHit);
-                				collidedAlready = true;
-                    		}
-                		}
-                	}
-                }
-            }
+            	if (!(f.isFlipping() || f.isFlippingBack())){//the flipper is stationary. Let's take care of this case first
+	            	for (Object objectHit: f.getPhysicsObjects()){
+	                	if (objectHit instanceof Circle){ 
+	                		Circle circleHit = (Circle) objectHit;
+	                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                		if(collidedAlready){
+	                			if (timeUntilCollision==0.0){//this is a collision
+	                				f.getEffect(b, circleHit);
+	                			}
+	                		} else { //this ball has not yet collided
+	                			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
+	                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+	                				f.getEffect(b, circleHit);
+	                				collidedAlready = true;
+	                    		}
+	                		}
+	                		
+	                	} else if (objectHit instanceof LineSegment){ //if it's not a Circle, it should hypothetically be a LineSegment
+	            			LineSegment lineSegmentHit = (LineSegment) objectHit;
+	                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                		if(collidedAlready){
+	                			if (timeUntilCollision==0.0){//this is a collision
+	                				f.getEffect(b, lineSegmentHit);
+	                			}
+	                		} else { //this ball has not yet collided
+	                			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
+	                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+	                				f.getEffect(b, lineSegmentHit);
+	                				collidedAlready = true;
+	                    		}
+	                		}
+	                	}
+	                }
+	            } else { //the flippers are moving
+	            	for (Object objectHit: f.getPhysicsObjects()){
+	            		if (objectHit instanceof Circle){ 
+	                		Circle circleHit = (Circle) objectHit;
+	                		/////////////////
+	            			double timeUntilCollision = timeUntilFirstCollision +1; //initialize timeUntilCollision
+	                		Circle proposedEndpt = f.getEndpt(); //meaningless initialization inside the flipper's bounding box.
+	                		if (circleHit.equals(f.getPivot())){
+	                			timeUntilCollision = Geometry.timeUntilBallBallCollision(f.getPivot(), new Vect(0.0,0.0), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                		} else { //the circle is an endpoint of the flipper
+		            			if (f instanceof LeftFlipper){
+		                			if (f.isFlipping()){ //flipper is in process of flipping (moving with a +theta angular velocity for left flipper)
+		                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+		                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+		                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a -theta angular velocity for left flipper)
+		                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+		                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+		                			}
+		            			} else if (f instanceof RightFlipper) {
+		            				if (f.isFlipping()){ //flipper is in process of flipping (moving with a -theta angular velocity for right flipper)
+		            					timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+		                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+		                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a +theta angular velocity for right flipper)
+		                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+		                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+		                			}
+		            			}
+		            			if (timeUntilCollision<=timeUntilFirstCollision){
+		            				if (f.inBoundingBox(proposedEndpt)){ //makes sure that we aren't extending past the boundingBox when we collide with the ball. This check may not work if timeStep*f.getAngularVelocity >= 270, but that would have to mean a high angular velocity and a long timeStep (5 times longer than our current timestep of .05 at our angular velocity of 1080 L/sec) 
+		            					b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+		                				//f.trigger();
+		                				f.getEffect(b, circleHit);
+		                				collidedAlready = true;
+		            				}
+		                   		}
+	                		}
+	                				
+	            		} else if (objectHit instanceof LineSegment){
+	            			LineSegment lineSegmentHit = (LineSegment) objectHit;
+	            			double timeUntilCollision = timeUntilFirstCollision +1; //initialize timeUntilCollision
+	            			Circle proposedEndpt = f.getEndpt(); //meaningless initialization inside the flipper's bounding box.
+	            			if (f instanceof LeftFlipper){
+	                			if (f.isFlipping()){ //flipper is in process of flipping (moving with a +theta angular velocity for left flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+	                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a -theta angular velocity for left flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+	                			}
+	            			} else if (f instanceof RightFlipper) {
+	            				if (f.isFlipping()){ //flipper is in process of flipping (moving with a -theta angular velocity for right flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+	                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a +theta angular velocity for right flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+	                			}
+	            			}
+	            			if (timeUntilCollision<=timeUntilFirstCollision){
+	            				if (f.inBoundingBox(proposedEndpt)){ //makes sure that we aren't extending past the boundingBox when we collide with the ball. This check may not work if timeStep*f.getAngularVelocity >= 270, but that would have to mean a high angular velocity and a long timeStep (5 times longer than our current timestep of .05 at our angular velocity of 1080 L/sec) 
+	            					b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+	                				//f.trigger();
+	                				f.getEffect(b, lineSegmentHit);
+	                				collidedAlready = true;
+	            				}
+	                   		}
+	            		}
+	            	}
+	            }
+            	f.moveFlipper(timeUntilFirstCollision);
+	        }
             if (!collidedAlready){
 				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilFirstCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilFirstCollision*b.getVelocity().y())); //travels to the space with no collisions
             }
-            
-        }	
-	
+        }
 	}
 	/**
      * @author ahochstadt
@@ -358,15 +432,68 @@ public class Board {
                 for (Object objectHit: f.getPhysicsObjects()){
                 	if (objectHit instanceof LineSegment){
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
-                		if (timeUntilCollision<timeUntilFirstCollision){
-                			timeUntilFirstCollision = timeUntilCollision;
-                		}
+            			double timeUntilCollision = timeUntilFirstCollision +1; //initialize timeUntilCollision
+            			Circle proposedEndpt = f.getEndpt(); //meaningless initialization inside the flipper's bounding box.
+            			if (f instanceof LeftFlipper){
+                			if (f.isFlipping()){ //flipper is in process of flipping (moving with a +theta angular velocity for left flipper)
+                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a -theta angular velocity for left flipper)
+                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+                			} else { //flipper is not moving
+                				timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                			}
+            			} else if (f instanceof RightFlipper) {
+            				if (f.isFlipping()){ //flipper is in process of flipping (moving with a -theta angular velocity for right flipper)
+                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a +theta angular velocity for right flipper)
+                				timeUntilCollision = Geometry.timeUntilRotatingWallCollision(lineSegmentHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                				proposedEndpt = Geometry.rotateAround(f.getEndpt(), f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+                			} else { //flipper is not moving
+                				timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                			}
+            			}
+            			if (timeUntilCollision<timeUntilFirstCollision){
+            				if (f.inBoundingBox(proposedEndpt)){ //makes sure that we aren't extending past the boundingBox when we collide with the ball. This check may not work if timeStep*f.getAngularVelocity >= 270, but that would have to mean a high angular velocity and a long timeStep (5 times longer than our current timestep of .05 at our angular velocity of 1080 L/sec) 
+                    			timeUntilFirstCollision = timeUntilCollision;
+            				}
+                   		}
+            			
                 	} else if (objectHit instanceof Circle){ //if it's not a LineSegment, it should hypothetically be a circle
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
-                		if (timeUntilCollision<timeUntilFirstCollision){
-                			timeUntilFirstCollision = timeUntilCollision;
+                		double timeUntilCollision = timeUntilFirstCollision +1; //initialize timeUntilCollision
+                		Circle proposedEndpt = f.getEndpt(); //meaningless initialization inside the flipper's bounding box.
+                		if (circleHit.equals(f.getPivot())){
+                			timeUntilCollision = Geometry.timeUntilBallBallCollision(f.getPivot(), new Vect(0.0,0.0), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+                		} else { //the circle is an endpoint of the flipper
+	            			if (f instanceof LeftFlipper){
+	                			if (f.isFlipping()){ //flipper is in process of flipping (moving with a +theta angular velocity for left flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+	                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a -theta angular velocity for left flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+	                			} else { //flipper is not moving
+	                				timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                			}
+	            			} else if (f instanceof RightFlipper) {
+	            				if (f.isFlipping()){ //flipper is in process of flipping (moving with a -theta angular velocity for right flipper)
+	            					timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), (-1)*f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle((-1)*f.getAngularVelocity()*timeUntilCollision));
+	                			} else if (f.isFlippingBack()){ //flipper is in process of flippingBack (moving with a +theta angular velocity for right flipper)
+	                				timeUntilCollision = Geometry.timeUntilRotatingCircleCollision(circleHit, f.getPivot().getCenter(), f.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                				proposedEndpt = Geometry.rotateAround(circleHit, f.getPivot().getCenter(), new Angle(f.getAngularVelocity()*timeUntilCollision));
+	                			} else { //flipper is not moving
+	                				timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
+	                			}
+	            			}
+	            			if (timeUntilCollision<timeUntilFirstCollision){
+	            				if (f.inBoundingBox(proposedEndpt)){ //makes sure that we aren't extending past the boundingBox when we collide with the ball. This check may not work if timeStep*f.getAngularVelocity >= 270, but that would have to mean a high angular velocity and a long timeStep (5 times longer than our current timestep of .05 at our angular velocity of 1080 L/sec) 
+	                    			timeUntilFirstCollision = timeUntilCollision;
+	            				}
+	                   		}
                 		}
                 	}
                 }
@@ -576,13 +703,11 @@ public class Board {
 
                 }
             }
-            
-            for (Ball b: balls) {
-                int x = (int) b.getBallVector().x();
-                int y = (int) b.getBallVector().y();
-                boardArray[x][y] = '*';
-                
-            }
+        }
+        for (Ball b: balls) {
+            int x = (int) b.getBallVector().x();
+            int y = (int) b.getBallVector().y();
+            boardArray[x][y] = '*';
         }
         
         String boardRep = ""; 
