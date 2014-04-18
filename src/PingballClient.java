@@ -8,7 +8,16 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
+
+import org.antlr.*;
+import org.antlr.runtime.*;
+import org.antlr.v4.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.TokenSource;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
  * 
@@ -59,6 +68,9 @@ public class PingballClient {
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
         
+        // tell the server the name of its board 
+        this.out.println("MYNAMEIS" + this.board.getBoardName());
+        
         background();
     }
     
@@ -71,7 +83,7 @@ public class PingballClient {
                 String line;
                 try {
                     while ((line = in.readLine()) != null) {
-                        // do stuff
+                        processServerInput(line);
                     }
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
@@ -81,36 +93,71 @@ public class PingballClient {
         });
         thread.start();
     }
- 
+    
     /**
-     * Assign board to be the Board this client uses in playing Pingball
+     * Parse input from the server 
      * 
-     * @param board the Board this client will use in playing Pingball
+     * requires that line take one of the two forms
+     * "RECBALL ballX ballY ballVelX ballVelY ballName"
+     * "WALLIFY wallLoc"
      */
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-    
-    /**
-     * Given a message from the server that a new Ball is to enter this.board, add it to the board
-     */
-    public void addBall() {
+    public void processServerInput(String line) {
+        String[] lineList = line.split(" ");
+        
+        if (lineList[0].equals("RECBALL")) {
+            Double ballX = Double.parseDouble(lineList[1]);
+            Double ballY = Double.parseDouble(lineList[2]);
+            Double ballVelX = Double.parseDouble(lineList[3]);
+            Double ballVelY = Double.parseDouble(lineList[4]);
+            String ballName = lineList[5];
+            
+            this.addBall(ballX, ballY, ballVelX, ballVelY, ballName);
+        }
+        
+        else if(lineList[0].equals("WALLIFY")) {
+            String wallLoc = lineList[1];
+            
+            this.wallify(wallLoc);
+        }
+        
+        else {
+            String wallLoc = lineList[1];
+            String boardName = lineList[2];
+            
+            this.joinWall(wallLoc, boardName);
+        }
         
     }
     
     /**
-     * If a Ball will leave the current game Board, add it to the server's queue
+     * Add a ball to the board
      */
-//    public void sendBall(Ball ball) {
-//        this.queue.add(ball);
-//        this.board.removeBall(ball);
-//    }
+    public void addBall(double x, double y, double xVel, double yVel, String ballName) {
+        
+        Ball ball = new Ball(x, y, xVel, yVel, ballName);
+        this.board.addBall(ball);    
+    }
     
     /**
-     * Update the walls of this.board to indicate new connections or that old connections are no longer in place
+     * If a Ball will leave the current game Board, send a board message to the server
      */
-    public void updateWalls() {
-        
+    public void sendBall(Ball ball) {
+        this.out.println("SENDBALL" + " " + ball.getBoardName() + " " + ball.getWallHit() + " " + ball.getName() + " " + ball.getX() + " " + ball.getY() +
+                " " + ball.getBallVector().x() + " " + ball.getBallVector().y());
+    }
+    
+    /**
+     * Update the wall at wallLoc of this.board to indicate it is solid
+     */
+    public void wallify(String wallLoc) {
+        this.board.wallify(wallLoc);
+    }
+    
+    /**
+     * Update the wall at wallLoc of this.board to indicate that it is connected to a wall of boardName
+     */
+    public void joinWall(String wallLoc, String boardName) {
+        this.board.connectWall(wallLoc, boardName);
     }
     
     /**
@@ -179,17 +226,24 @@ public class PingballClient {
 
         try {
             PingballClient client;
+            //Board b = new Board("/Users/DylanJoss/Documents/MIT Spring 2014/6.005/pingball-phase1/src/sampleBoard1.txt");
             if (host == null) {
                 // TODO: start up this client in single-machine play
                 client = new PingballClient(new Board(filepath));
+                //client = new PingballClient(b);
             }
             else {
                 // TODO: connect to the server and start up this client in client-server play
                 client = new PingballClient(new Board(filepath), host, port);
+                //client = new PingballClient(b, host, port);
             }
+            
+            while (true) {
+                System.out.println(client.board.update(0.05));
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }        
     }
-
 }
