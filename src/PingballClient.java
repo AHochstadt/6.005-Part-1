@@ -9,6 +9,16 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import org.antlr.*;
+import org.antlr.runtime.*;
+import org.antlr.v4.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.TokenSource;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 /**
  * 
  * @author DylanJoss
@@ -216,13 +226,16 @@ public class PingballClient {
 
         try {
             PingballClient client;
+            //Board b = new Board("/Users/DylanJoss/Documents/MIT Spring 2014/6.005/pingball-phase1/src/sampleBoard1.txt");
             if (host == null) {
                 // TODO: start up this client in single-machine play
                 client = new PingballClient(new Board(filepath));
+                //client = new PingballClient(b);
             }
             else {
                 // TODO: connect to the server and start up this client in client-server play
                 client = new PingballClient(new Board(filepath), host, port);
+                //client = new PingballClient(b, host, port);
             }
             
             while (true) {
