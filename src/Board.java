@@ -427,18 +427,6 @@ public class Board {
                     }
                 }
             }
-            if (g instanceof Flipper) {
-                int fixedX = (int) ((Flipper) g).getFixedX();
-                int fixedY = (int) ((Flipper) g).getFixedY();
-                
-                if (g instanceof LeftFlipper) {
-                    //left flipper 
-                }
-                
-                if (g instanceof RightFlipper) {
-                    //right flipper 
-                }
-            }
             
             else {
                 if (g instanceof SquareBumper) {
@@ -446,17 +434,148 @@ public class Board {
                     int y = (int)((SquareBumper) g).getY();
                     boardArray[x][y] = '#';  
                 }
-                
+
                 if (g instanceof CircularBumper) {
                     int x = (int)((CircularBumper) g).getX();
                     int y = (int)((CircularBumper) g).getY();
                     boardArray[x][y] = 'O';
                 }
-                
+
                 if (g instanceof TriangularBumper) {
                     int x = (int)((TriangularBumper) g).getX();
                     int y = (int)((TriangularBumper) g).getY();
                     boardArray[x][y] = '\\'; 
+                }
+            }
+
+            for (Flipper f: flippers) {
+                int fixedX = (int) ((Flipper) f).getFixedX();
+                int fixedY = (int) ((Flipper) f).getFixedY();
+                
+                System.out.println("fixedX" + ((Integer) fixedX).toString());
+                System.out.println("fixedY" + ((Integer) fixedY).toString());
+
+                if (f instanceof LeftFlipper) {
+                    int orientation = (int) ((LeftFlipper) f).getOrientation();
+                    boolean flipped = ((LeftFlipper) f).isFlipped();
+
+                    if (orientation == 0) {
+                        System.out.println("I am making a left flipper");
+                        if (flipped) {
+                            boardArray[fixedX][fixedY] = '-';
+                            boardArray[fixedX+1][fixedY] = '-';
+                        }
+
+                        else {
+                            boardArray[fixedX][fixedY] = '|';
+                            boardArray[fixedX][fixedY+1] = '|';
+
+                        }
+                    }
+
+                    else if (orientation == 90) {
+                        if (flipped) {
+                            boardArray[fixedX-1][fixedY] = '|';
+                            boardArray[fixedX-1][fixedY+1] = '|';
+                        }
+
+                        else {
+                            boardArray[fixedX-1][fixedY] = '-';
+                            boardArray[fixedX-1][fixedY] = '-';
+                        }
+
+                    }
+
+                    else if (orientation == 180) {
+                        if (flipped) {
+                            boardArray[fixedX-1][fixedY-1] = '-';
+                            boardArray[fixedX-2][fixedY-1] = '-';
+                        }
+
+                        else {
+                            boardArray[fixedX-1][fixedY-1] = '|';
+                            boardArray[fixedX-1][fixedY-2] = '|';
+
+                        }
+
+                    }
+
+                    else {
+                        if (flipped) {
+                            boardArray[fixedX][fixedY-1] = '|';
+                            boardArray[fixedX][fixedY-2] = '|';
+                        }
+
+                        else {
+                            boardArray[fixedX][fixedY-1] = '-';
+                            boardArray[fixedX+1][fixedY-1] = '-';
+                        }
+
+                    }
+
+                }
+
+                else {
+                    int orientation = (int) ((RightFlipper) f).getOrientation();
+                    boolean flipped = ((RightFlipper) f).isFlipped();
+
+                    if (orientation == 0) {
+                        if (flipped) {
+                            boardArray[fixedX-1][fixedY] = '-';
+                            boardArray[fixedX-1][fixedY] = '-';
+                        }
+
+                        else {
+                            System.out.println("I am making a right flipper");
+                            System.out.println(fixedX);
+                            System.out.println(fixedY);
+                            boardArray[fixedX-1][fixedY] = '|';
+                            boardArray[fixedX-1][fixedY+1] = '|';
+
+                        }
+                    }
+
+                    else if (orientation == 90) {
+                        if (flipped) {
+                            boardArray[fixedX-1][fixedY-1] = '|';
+                            boardArray[fixedX-1][fixedY-2] = '|';
+                        }
+
+                        else {
+                            boardArray[fixedX-1][fixedY-1] = '-';
+                            boardArray[fixedX-2][fixedY-1] = '-';
+                        }
+
+                    }
+
+                    else if (orientation == 180) {
+                        if (flipped) {
+                            boardArray[fixedX][fixedY-1] = '|';
+                            boardArray[fixedX][fixedY-2] = '|';
+                        }
+
+                        else {
+                            boardArray[fixedX][fixedY-1] = '-';
+                            boardArray[fixedX+1][fixedY-1] = '-';
+                        }
+
+                    }
+
+                    else {
+                        if (flipped) {
+                            boardArray[fixedX][fixedY] = '-';
+                            boardArray[fixedX+1][fixedY] = '-';
+                        }
+
+                        else {
+                            boardArray[fixedX][fixedY] = '|';
+                            boardArray[fixedX][fixedY+1] = '|';
+                        }
+
+                    }
+
+
+
                 }
             }
             

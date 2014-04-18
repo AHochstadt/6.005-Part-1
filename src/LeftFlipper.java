@@ -169,6 +169,9 @@ public class LeftFlipper implements Flipper{
     public boolean isFlipped(){
     	return this.flipped;
     }
+    public double getOrientation() {
+        return this.orientation;
+    }
 
 
 }
