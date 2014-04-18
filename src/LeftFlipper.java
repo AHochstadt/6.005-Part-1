@@ -20,11 +20,10 @@ public class LeftFlipper implements Flipper{
 	private Board parentBoard = null;
 	private String name;
 	private ArrayList<Object> physicsObjects;
-	private double angularVelocity = 0.0; //starts at rest
+	private double angularVelocity = 1080; //starts at rest
 	private double reflectionCoeff =0.95; //default
 	private boolean flipped = false; //whether the flipper is in the flipped position
 	private boolean notFlipped = true; //whether the flipper is in the notFlipped position. We need notFlipped AND flipped because if the flipper is in motion, both are false
-	
     
     /**
      * Constructor for Left Flipper
@@ -67,8 +66,8 @@ public class LeftFlipper implements Flipper{
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        //Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
-        //Geometry.rotateAround(this.endPoint, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
+        flipped = false;
+        notFlipped = false;
     }
     
     
@@ -174,6 +173,11 @@ public class LeftFlipper implements Flipper{
     }
     public double getOrientation() {
         return this.orientation;
+    }
+    @Override
+    public void moveUpdate(int timeStep) {
+        if (flipped == false && notFlipped == false && )
+        
     }
 
 

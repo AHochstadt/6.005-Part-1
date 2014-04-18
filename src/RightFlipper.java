@@ -176,4 +176,10 @@ public class RightFlipper implements Flipper{
         return this.orientation;
     }
 
+    @Override
+    public void moveUpdate(int timeStep) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
