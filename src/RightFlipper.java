@@ -42,24 +42,24 @@ public class RightFlipper implements Flipper{
     	this.setName(name);
     	this.physicsObjects = new ArrayList<Object>();
     	if (orientation == 0){
-    		this.flipper = new LineSegment((double) x+2,(double) y,(double) x+2, (double) y+2);
-    		this.pivot = new Circle((double) x+2,(double) y, 0.0);
-    		this.endPoint = new Circle((double) x+2, (double) y+2, 0.0);
+    		this.flipper = new LineSegment((double) x+2,(double) 20.0-y,(double) x+2, (double) 20.0-(y+2));
+    		this.pivot = new Circle((double) x+2,(double) 20.0-y, 0.0);
+    		this.endPoint = new Circle((double) x+2, (double) 20.0-(y+2), 0.0);
     	} else if (orientation == 90){
-    		this.flipper = new LineSegment((double) x,(double) y+2,(double) x+2, (double) y+2);
-    		this.pivot = new Circle((double) x+2,(double) y+2, 0.0);
-    		this.endPoint = new Circle((double) x, (double) y+2, 0.0);
+    		this.flipper = new LineSegment((double) x,(double) 20.0-(y+2),(double) x+2, (double) 20.0-(y+2));
+    		this.pivot = new Circle((double) x+2,(double) 20.0-(y+2), 0.0);
+    		this.endPoint = new Circle((double) x, (double) 20.0-(y+2), 0.0);
     	} else if (orientation == 180){
-    		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);
-    		this.pivot = new Circle((double) x,(double) y+2, 0.0);
-    		this.endPoint = new Circle((double) x, (double) y, 0.0);
+    		this.flipper = new LineSegment((double) x,(double) 20.0-y,(double) x, (double) 20.0-(y+2));
+    		this.pivot = new Circle((double) x,(double) 20.0-(y+2), 0.0);
+    		this.endPoint = new Circle((double) x, (double) 20.0-y, 0.0);
     	} else {
     		if (orientation != 270){
     			throw new IOException("Invalid orientation");
     		}
-    		this.flipper = new LineSegment((double) x,(double) y,(double) x+2, (double) y);
-    		this.pivot = new Circle((double) x,(double) y, 0.0);
-    		this.endPoint = new Circle((double) x+2, (double) y, 0.0);
+    		this.flipper = new LineSegment((double) x,(double) 20.0-y,(double) x+2, (double) 20.0-y);
+    		this.pivot = new Circle((double) x,(double) 20.0-y, 0.0);
+    		this.endPoint = new Circle((double) x+2, (double) 20.0-y, 0.0);
     	}
     	this.physicsObjects.add(this.endPoint); this.physicsObjects.add(this.pivot); this.physicsObjects.add(this.flipper);
 

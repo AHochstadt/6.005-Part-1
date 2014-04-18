@@ -39,14 +39,14 @@ public class SquareBumper extends Bumper {
     	this.x = (double) x;
     	this.y = (double) y;
     	this.name = name;
-    	this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
-    	this.side1 = new LineSegment((double) x, (double) y, (double) x+1, (double) y);
-    	this.corner2 = new Circle((double) x+1, (double) y, 0.0);
-    	this.side2 = new LineSegment((double) x+1, (double) y, (double) x+1, (double) y+1);
-    	this.corner3 = new Circle((double) x+1, (double) y+1, 0.0);
-    	this.side3 = new LineSegment((double) x+1, (double) y+1, x, (double) y+1);
-    	this.corner4 = new Circle((double) x, (double) y+1, 0.0);
-    	this.side4 = new LineSegment((double) x, (double) y, (double) x, (double) y+1);
+    	this.corner1 = new Circle((double) x, (double) 20.0-y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
+    	this.side1 = new LineSegment((double) x, (double) 20.0-y, (double) x+1, (double) 20.0-y);
+    	this.corner2 = new Circle((double) x+1, (double) 20.0-y, 0.0);
+    	this.side2 = new LineSegment((double) x+1, (double) 20.0-y, (double) x+1, (double) 20.0-(y+1));
+    	this.corner3 = new Circle((double) x+1, (double) 20.0-(y+1), 0.0);
+    	this.side3 = new LineSegment((double) x+1, (double) 20.0-(y+1), x, (double) 20.0-(y+1));
+    	this.corner4 = new Circle((double) x, (double) 20.0-(y+1), 0.0);
+    	this.side4 = new LineSegment((double) x, (double) 20.0-y, (double) x, (double) 20.0-(y+1));
     	this.sides.clear();
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
@@ -71,6 +71,22 @@ public class SquareBumper extends Bumper {
     	    triggeredGadget.action();
     	}
     }
+    
+    @Override
+	public void getEffect(Ball b, Object objectHit) {
+    	System.out.println("WE HAVE HIT A SQUARE BUMPER");
+		if (objectHit instanceof Circle){
+			Circle circleHit = (Circle) objectHit;
+			Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getVector(), b.getVelocity()); //don't need reflection coef because it's 1
+			b.setVelocity(newV);
+		}
+    	if (objectHit instanceof LineSegment){
+    		LineSegment segmentHit = (LineSegment) objectHit;
+    		Vect newV = Geometry.reflectWall(segmentHit, b.getVelocity()); //don't need reflection coef because it's 1
+            b.setVelocity(newV);
+    	}
+		
+	}
 
 
 	@Override

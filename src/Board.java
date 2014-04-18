@@ -63,12 +63,12 @@ public class Board {
      */
 	public Board(String filePath) throws IOException {
 	    try {
-	        ANTLRInputStream stream = new ANTLRInputStream(new FileReader("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt"));
+	        ANTLRInputStream stream = new ANTLRInputStream(new FileReader(filePath));
 	        BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
 	        BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
 	        ParseTree tree = parser.file();
-	        ((RuleContext)tree).inspect(parser);
+	        //((RuleContext)tree).inspect(parser);
 
 	        ParseTreeWalker walker = new ParseTreeWalker(); 
 	        MakerListener listener = new MakerListener(); 
@@ -180,9 +180,9 @@ public class Board {
             for (int j=0; j<balls.size(); j++) {
             	Ball ball2 = balls.get(j);
             	if (i!=j && !collidedArray.get(i) && !collidedArray.get(j)){ //makes sure we have different balls and we haven't yet collided them before
-	                double timeUntilCollision = Geometry.timeUntilBallBallCollision(ball1.getCircle(), ball1.getVelocity(), ball2.getCircle(), ball2.getVelocity());
+	                double timeUntilCollision = Geometry.timeUntilBallBallCollision(ball1.getPhysicsPackageCircle(), ball1.getPhysicsPackageVelocity(), ball2.getPhysicsPackageCircle(), ball2.getPhysicsPackageVelocity());
 	                if (timeUntilCollision<=timeUntilFirstCollision){ //we have a new collision
-	        			VectPair newVels = Geometry.reflectBalls(ball1.getBallVector(), 1.0, ball1.getVelocity(), ball2.getBallVector(), 1.0, ball2.getVelocity());
+	        			VectPair newVels = Geometry.reflectBalls(ball1.getPhysicsPackageBallVector(), 1.0, ball1.getPhysicsPackageVelocity(), ball2.getPhysicsPackageBallVector(), 1.0, ball2.getPhysicsPackageVelocity());
 	        			ball1.setVelocity(newVels.v1);
 	        			ball2.setVelocity(newVels.v2);
 	        			collidedArray.set(i, true);
@@ -321,6 +321,10 @@ public class Board {
                 	if (objectHit instanceof LineSegment){
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
                 		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		if (lineSegmentHit.p1().x() == 0.0 && lineSegmentHit.p1().y() == 2.0 && lineSegmentHit.p2().x() == 1.0 && lineSegmentHit.p2().y() == 2.0){ //this is the first wall of the square bumper
+                			System.out.println(timeUntilCollision);
+                			System.out.println(b.getBallVector());
+                		}
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
