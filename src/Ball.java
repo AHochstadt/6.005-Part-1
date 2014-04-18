@@ -43,7 +43,11 @@ public class Ball {
     }
     
     public Circle getCircle() {
-        return this.ballCircle;
+        return new Circle(ballVector.x(), ballVector.y(), 0.25);
+    }
+    
+    public Circle getPhysicsPackageCircle() {
+        return new Circle(ballVector.x(), 20.0-ballVector.y(), 0.25);
     }
 
     /**
@@ -56,10 +60,31 @@ public class Ball {
 	public Vect getVelocity() {
 		return velocity;
 	}
+	
+	/**
+	 * Converts current ball velocity vector to cartesian coordinates for use in Physics Package
+	 * @return cartesian vector
+	 */
+	public Vect getPhysicsPackageVelocity() {
+		double x = velocity.x();
+		double y = 20.0-velocity.y();
+		return new Vect(x, y);
+	}
 
 	public Vect getBallVector() {
 		return ballVector;
 	}
+	
+	/**
+	 * Converts current ball position vector to cartesian coordinates for use in Physics Package
+	 * @return cartesian vector
+	 */
+	public Vect getPhysicsPackageBallVector() {
+		double x = ballVector.x();
+		double y = 20.0-ballVector.y();
+		return new Vect(x, y);
+	}
+
 
 	public void setBallVector(Vect ballVector) {
 		this.ballVector = ballVector;

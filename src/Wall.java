@@ -27,21 +27,21 @@ public class Wall implements Stationary{
 		this.setWallName("");
 		
 		if (location.equals("up")){
-			this.setWallSegment(new LineSegment(0.0, 0.0, 20.0, 0.0));
-			this.setEndpt1(new Circle(0.0, 0.0, 0.0));
-			this.setEndpt2(new Circle(20.0, 0.0, 0.0));			
-		} else if (location.equals("right")){
-			this.setWallSegment(new LineSegment(20.0, 0.0, 20.0, 20.0));
-			this.setEndpt1(new Circle(20.0, 0.0, 0.0));
-			this.setEndpt2(new Circle(20.0, 20.0, 0.0));			
-		} else if (location.equals("down")){
 			this.setWallSegment(new LineSegment(0.0, 20.0, 20.0, 20.0));
 			this.setEndpt1(new Circle(0.0, 20.0, 0.0));
 			this.setEndpt2(new Circle(20.0, 20.0, 0.0));			
-		} else { //location should be "left"
-			this.setWallSegment(new LineSegment(0.0, 0.0, 0.0, 20.0));
+		} else if (location.equals("right")){
+			this.setWallSegment(new LineSegment(20.0, 20.0, 20.0, 0.0));
+			this.setEndpt1(new Circle(20.0, 20.0, 0.0));
+			this.setEndpt2(new Circle(20.0, 0.0, 0.0));			
+		} else if (location.equals("down")){
+			this.setWallSegment(new LineSegment(0.0, 0.0, 20.0, 0.0));
 			this.setEndpt1(new Circle(0.0, 0.0, 0.0));
-			this.setEndpt2(new Circle(0.0, 20.0, 0.0));			
+			this.setEndpt2(new Circle(20.0, 0.0, 0.0));			
+		} else { //location should be "left"
+			this.setWallSegment(new LineSegment(0.0, 20.0, 0.0, 0.0));
+			this.setEndpt1(new Circle(0.0, 20.0, 0.0));
+			this.setEndpt2(new Circle(0.0, 0.0, 0.0));			
 		}
 		
 		this.physicsObjects.add(this.endpt1); this.physicsObjects.add(this.endpt2); this.physicsObjects.add(this.wallSegment); //populates physicsObjects

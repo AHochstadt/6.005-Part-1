@@ -55,14 +55,14 @@ public class Absorber implements Stationary {
         this.name = name;
         this.isHoldingBall = false;
         
-        this.corner1 = new Circle((double) x, (double) y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
-    	this.side1 = new LineSegment((double) x, (double) y, (double) x+width, (double) y);
-    	this.corner2 = new Circle((double) x+width, (double) y, 0.0);
-    	this.side2 = new LineSegment((double) x+width, (double) y, (double) x+width, (double) y+height);
-    	this.corner3 = new Circle((double) x+width, (double) y+height, 0.0);
-    	this.side3 = new LineSegment((double) x+width, (double) y+height, x, (double) y+height);
-    	this.corner4 = new Circle((double) x, (double) y+height, 0.0);
-    	this.side4 = new LineSegment((double) x, (double) y, (double) x, (double) y+height);
+        this.corner1 = new Circle((double) x, (double) 20.0-y, 0.0); //creates the line segments and corners starting at (x,y) and going around in a clockwise fashion
+    	this.side1 = new LineSegment((double) x, (double) 20.0-y, (double) x+width, (double) 20.0-y);
+    	this.corner2 = new Circle((double) x+width, (double) 20.0-y, 0.0);
+    	this.side2 = new LineSegment((double) x+width, (double) 20.0-y, (double) x+width, (double) 20.0-(y+height));
+    	this.corner3 = new Circle((double) x+width, (double) 20.0-(y+height), 0.0);
+    	this.side3 = new LineSegment((double) x+width, (double) 20.0-(y+height), x, (double) 20.0-(y+height));
+    	this.corner4 = new Circle((double) x, (double) 20.0-(y+height), 0.0);
+    	this.side4 = new LineSegment((double) x, (double) 20.0-y, (double) x, (double) 20.0-(y+height));
     	this.sides.clear();
     	this.sides.add(this.side1); this.sides.add(this.side2); this.sides.add(this.side3); this.sides.add(this.side4); //populates this.sides
     	this.corners.clear();
