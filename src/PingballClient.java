@@ -143,7 +143,7 @@ public class PingballClient {
      * If a Ball will leave the current game Board, send a board message to the server
      */
     public void sendBall(Ball ball) {
-        this.out.println("SENDBALL" + " " + ball.getBoardName() + " " + ball.getWallHit() + " " + ball.getName() + " " + ball.getX() + " " + ball.getY() +
+        this.out.println("SENDBALL" + " " + ball.getBoardName() + " " + ball.getWallHit() + " " + ball.getName() + " " + ball.getBallVector().x() + " " + ball.getBallVector().y() +
                 " " + ball.getBallVector().x() + " " + ball.getBallVector().y());
     }
     
