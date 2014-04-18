@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -10,9 +9,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 
@@ -21,29 +18,25 @@ import java.util.concurrent.LinkedBlockingQueue;
  * A class representing the server that runs the Pingball games
  * 
  * serverSocket: the socket with which the server uses to listen to client requests to connect
- * 
- * queue: the message queue that holds Balls exiting one Board and entering another
- * 
- * wallConnections: a mapping of walls to the other wall to which they are connected
- *                  wallConnections.get(wallA) = wallB iff wallConnections.get(wallB) = wallA
+ *  
+ * wallMap: a mapping of String representations of walls to each other
+ *          wallMap.get(wallA) = wallB iff wallMap.get(wallB) = wallA
+ *          String representations take the form (left|right|up|down)boardName        
  *                  
- * clients: a mapping of Board names to Client instances that are currently on the server
+ * socketMap: a mapping of Board names to Socket instances that are currently connected to the server
  * 
- * Rep Invariant: queue, wallConnections, and clients are non-null
+ * Rep Invariant: wallMap and socketMap are non-null
  * 
  * TODO: Thread-safety argument
  *
  */
-@SuppressWarnings("unused") // to be removed later
 public class PingballServer {
     
     private final ServerSocket serverSocket;
     
+    private final Map<String, String> wallMap;
+    
     private final Map<String, Socket> socketMap;
-    
-    private final BlockingQueue<Ball> queue;
-    
-    private final Map<String, String> wallMap; //maps the connected walls to eachother. Keys and values take the form (left|right|up|down)boardname
         
     /**
      * Make a Pingball Server that listens for connections on port.
@@ -53,10 +46,9 @@ public class PingballServer {
      * @throws IOException if the main server socket is broken
      */
     public PingballServer(int port) throws IOException { 
+        this.serverSocket = new ServerSocket(port);        
     	this.wallMap = new ConcurrentHashMap<String, String>();
     	this.socketMap = new ConcurrentHashMap<String, Socket>();
-        this.serverSocket = new ServerSocket(port);        
-        this.queue = new LinkedBlockingQueue<Ball>();  
         
         background();
         
@@ -64,7 +56,8 @@ public class PingballServer {
     }
     
     /**
-     * Listen for messages from console
+     * Listen for messages from console and process as necessary; messages from the console will only ever be join commands.
+     * See joinCommand Javadoc for join command protocol.  
      */
     public void background() {
         Thread thread = new Thread(new Runnable() {
@@ -95,7 +88,6 @@ public class PingballServer {
         while (true) {
             //block until a client connects
             final Socket socket = serverSocket.accept();
-            //PingballClient client = new PingballClient(socket, this.queue);
             
          // create a new thread for each client
             Thread thread = new Thread(new Runnable() {
@@ -119,8 +111,6 @@ public class PingballServer {
             });
             thread.start();
                        
-            // add the client's Board and the client to the mapping of active clients
-            //this.clients.put(client.getBoard().getBoardName(), client);
         }
         
     }
@@ -167,7 +157,7 @@ public class PingballServer {
     
 
     /**
-     * Given a command to join two walls, handle it
+     * Given a command to join two walls, handle it.
      * 
      * @param command Usage: "h NAME_left NAME_right" or "v NAME_top NAME_bottom"
      * @throws IOException if socket connection somewhere is unsuccessful
@@ -234,7 +224,7 @@ public class PingballServer {
     /**
      * Sends a RECBALL message to the appropriate board's client
      * @param wallLoc (left|right|up|down)
-     * @param recievingBoard the name of the board recieving the board
+     * @param receivingBoard the name of the board receiving the board
      * @param ballX 
      * @param ballY
      * @param ballVelX
@@ -242,51 +232,55 @@ public class PingballServer {
      * @param ballname
      * @throws IOException if socket connection is unsuccessful
      */
-    private void sendBallMessage(String wallLoc, String recievingBoard, String ballX, String ballY, String ballVelX, String ballVelY, String ballname) throws IOException {
-		Socket recievingSocket = this.socketMap.get(recievingBoard);
-    	PrintWriter recBallOut = new PrintWriter(recievingSocket.getOutputStream(), true);
-		recBallOut.println("RECBALL "+ballX+" "+ballY+" "+ballVelX+" "+ballVelY+" "+ballname);
+    private void sendBallMessage(String wallLoc, String receivingBoard, String ballX, String ballY, String ballVelX, String ballVelY, String ballname) throws IOException {
+		Socket receivingSocket = this.socketMap.get(receivingBoard);
+    	PrintWriter recBallOut = new PrintWriter(receivingSocket.getOutputStream(), true);
+		recBallOut.println("RECBALL " + ballX + " " + ballY + " " + ballVelX + " " + ballVelY + " " + ballname);
 	}
 
 	/**
      * Given a client request to join two walls of a Board or Boards together, join them together
      * 
      * @param boardName1 the first Board whose Wall we are joining
-     * @param wall1 boardName1's Board to be joined
-     * @param boardName2 the first Board whose Wall we are joining
-     * @param wall2 boardName1's Board to be joined
+     * @param wall1 boardName1's Wall to be joined
+     * @param boardName2 the second Board whose Wall we are joining
+     * @param wall2 boardName2's Wall to be joined
      * @throws IOException if socket connection in wallify is unsuccessful
      */
-    public void connectWalls(String boardName1, String wallLoc1, String boardName2, String wallLoc2 ) throws IOException {
+    public void connectWalls(String boardName1, String wallLoc1, String boardName2, String wallLoc2) throws IOException {
     	
-    	if (this.wallMap.containsKey(wallLoc1+boardName1)){ //this wall is already connected to another wall...we need to wallify that wall.
-    		String connectedWall = this.wallMap.get(wallLoc1+boardName1);
-    		if (connectedWall.startsWith("left")){
+        // if the first Wall is already connected somewhere, we sever that connection (make the Wall solid)
+    	if (this.wallMap.containsKey(wallLoc1 + boardName1)) {
+    	    
+    		String connectedWall = this.wallMap.get(wallLoc1 + boardName1);
+    		if (connectedWall.startsWith("left")) {
     			wallify(connectedWall.substring(4), connectedWall.substring(0,4));
     		}
-    		if (connectedWall.startsWith("right")){
+    		if (connectedWall.startsWith("right")) {
     			wallify(connectedWall.substring(5), connectedWall.substring(0,5));
     		}
-    		if (connectedWall.startsWith("up")){
+    		if (connectedWall.startsWith("up")) {
     			wallify(connectedWall.substring(2), connectedWall.substring(0,2));
     		}
-    		if (connectedWall.startsWith("down")){
+    		if (connectedWall.startsWith("down")) {
     			wallify(connectedWall.substring(4), connectedWall.substring(0,4));
     		}
     	}
     	
-    	if (this.wallMap.containsKey(wallLoc2+boardName2)){ //this wall is already connected to another wall...we need to wallify that wall.
-    		String connectedWall = this.wallMap.get(wallLoc2+boardName2);
-    		if (connectedWall.startsWith("left")){
+        // if the second Wall is already connected somewhere, we sever that connection (make the Wall solid)
+    	if (this.wallMap.containsKey(wallLoc2 + boardName2)) {
+    	    
+    		String connectedWall = this.wallMap.get(wallLoc2 + boardName2);
+    		if (connectedWall.startsWith("left")) {
     			wallify(connectedWall.substring(4), connectedWall.substring(0,4));
     		}
-    		if (connectedWall.startsWith("right")){
+    		if (connectedWall.startsWith("right")) {
     			wallify(connectedWall.substring(5), connectedWall.substring(0,5));
     		}
-    		if (connectedWall.startsWith("up")){
+    		if (connectedWall.startsWith("up")) {
     			wallify(connectedWall.substring(2), connectedWall.substring(0,2));
     		}
-    		if (connectedWall.startsWith("down")){
+    		if (connectedWall.startsWith("down")) {
     			wallify(connectedWall.substring(4), connectedWall.substring(0,4));
     		}
     	}
@@ -294,11 +288,10 @@ public class PingballServer {
     	sendJoinMessage(boardName1, wallLoc1, boardName2);
     	sendJoinMessage(boardName2, wallLoc2, boardName1);
     	
-    	this.wallMap.put(wallLoc1+boardName1, wallLoc2+boardName2);
-    	this.wallMap.put(wallLoc2+boardName2, wallLoc1+boardName1);
-    	
-    	
+    	this.wallMap.put(wallLoc1 + boardName1, wallLoc2 + boardName2);
+    	this.wallMap.put(wallLoc2 + boardName2, wallLoc1 + boardName1);	
     }
+    
     /**
      * Finds the correct socket and sends a JOINWALL message to the appropriate board's client
      * @param boardname board we are targetting
@@ -306,10 +299,10 @@ public class PingballServer {
      * @param wallName the name of the board we are connecting the wall to
      * @throws IOException if socket does not connect successfully
      */
-    private void sendJoinMessage(String boardname, String wallLoc, String wallName) throws IOException {
-		Socket joinSocket = this.socketMap.get(boardname);
+    private void sendJoinMessage(String boardName, String wallLoc, String wallName) throws IOException {
+		Socket joinSocket = this.socketMap.get(boardName);
     	PrintWriter joinOut = new PrintWriter(joinSocket.getOutputStream(), true);
-		joinOut.println("JOINWALL "+wallLoc+" "+wallName);
+		joinOut.println("JOINWALL " + wallLoc + " " + wallName);
 		
 	}
 
@@ -319,10 +312,10 @@ public class PingballServer {
      * @param wallLoc (up|down|left|right)
      * @throws IOException if socket connection is unsuccesful
      */
-    public void wallify(String boardname, String wallLoc) throws IOException{
-    	Socket wallifySocket = this.socketMap.get(boardname);
+    public void wallify(String boardName, String wallLoc) throws IOException{
+    	Socket wallifySocket = this.socketMap.get(boardName);
     	PrintWriter wallifyOut = new PrintWriter(wallifySocket.getOutputStream(), true);
-    	wallifyOut.println("WALLIFY "+wallLoc);    	
+    	wallifyOut.println("WALLIFY " + wallLoc);    	
     }
     
     /**
@@ -389,7 +382,8 @@ public class PingballServer {
      * Ensure the rep invariants of queue and wallConnections are maintained at all times
      */
     private void checkRep() {
-        assert(this.queue != null);
+        assert(this.wallMap != null);
+        assert(this.socketMap != null);
     }
 
 }
