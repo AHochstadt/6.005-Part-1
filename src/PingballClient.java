@@ -18,23 +18,32 @@ import java.util.concurrent.BlockingQueue;
  * 
  * board: the Board instance this client is using to play
  * 
- * queue: the queue on the server that contains the Balls that left board
+ * queue: the queue on the server that contains messages from Clients
  *
  */
 public class PingballClient {
 
     private Board board;
-    //private final BlockingQueue<Ball> queue; 
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
     
+    /**
+     * Start up a new client for single-machine Pingball 
+     * 
+     * @param board the Board this client is using to play
+     * @param hostname the hostname of the server to connect to
+     * @param port the port of the server to connect to
+     */
     public PingballClient(Board board) {
         this.board = board;
+        this.socket = null;
+        this.in = null;
+        this.out = null;
     }
  
     /**
-     * Start up a new client playing Pingball 
+     * Start up a new client for client-machine Pingball 
      * 
      * @param board the Board this client is using to play
      * @param queue the queue the server uses for processing Balls that have left some Client's Board
@@ -46,41 +55,33 @@ public class PingballClient {
      */
     public PingballClient(Board board, String hostname, int port) throws IOException {
         this.board = board;
-        //this.queue = queue;  
         this.socket = new Socket(hostname, port);
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        
+        background();
     }
     
+    /**
+     * Listen for messages from server
+     */
     public void background() {
-        
-        
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                // handle the client
+                String line;
                 try {
-                    handleConnection(socket);
-                }
-                catch (IOException e) {
-                    e.printStackTrace(); // but don't terminate serve()
-                }
-                finally {
-                    try {
-                        socket.close();
+                    while ((line = in.readLine()) != null) {
+                        // do stuff
                     }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
         });
         thread.start();
-        
-        while (true) {
-            // call this.board.update()
-        }
     }
-    
+ 
     /**
      * Assign board to be the Board this client uses in playing Pingball
      * 
@@ -100,10 +101,10 @@ public class PingballClient {
     /**
      * If a Ball will leave the current game Board, add it to the server's queue
      */
-    public void sendBall(Ball ball) {
-        this.queue.add(ball);
-        this.board.removeBall(ball);
-    }
+//    public void sendBall(Ball ball) {
+//        this.queue.add(ball);
+//        this.board.removeBall(ball);
+//    }
     
     /**
      * Update the walls of this.board to indicate new connections or that old connections are no longer in place
@@ -154,12 +155,12 @@ public class PingballClient {
                     } else if (flag.equals("--file")) {
                         filepath = arguments.remove();
                         
-                        try {
-                            Board board = new Board(filepath);
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            Board board = new Board(filepath);
+//                        } catch (IOException e) {
+//                            // TODO Auto-generated catch block
+//                            e.printStackTrace();
+//                        }
                                                 
                     } else {
                         throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
@@ -177,11 +178,14 @@ public class PingballClient {
         }
 
         try {
+            PingballClient client;
             if (host == null) {
                 // TODO: start up this client in single-machine play
+                client = new PingballClient(new Board(filepath));
             }
             else {
                 // TODO: connect to the server and start up this client in client-server play
+                client = new PingballClient(new Board(filepath), host, port);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -62,6 +62,27 @@ public class PingballServer {
     }
     
     /**
+     * Listen for messages from console
+     */
+    public void background() {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                String line;
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+                    while ((line = in.readLine()) != null) {
+                        // do stuff
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+    
+    /**
      * Run the server, listening for client connections and handling them.
      * 
      * @throws IOException if the main server socket is broken
