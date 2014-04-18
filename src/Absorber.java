@@ -108,8 +108,8 @@ public class Absorber implements Stationary {
      */
     @Override
 	public void getEffect(Ball b, Object objectHit) {
-		if (b.getVelocity().y()<0.0){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber
-			b.setVelocity(new Vect(0.0, 0.0));
+		if (!(b.getPhysicsPackageVelocity().y()>=0.0)){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber, sowe make sure that this is not the case
+			b.setPhysicsPackageVelocity(new Vect(0.0, 0.0)); //stop the ball
 			b.setBallVector(new Vect(this.x+this.width-.25,this.y+this.height-.25));
 			try {
 				this.heldBalls.put(b);
@@ -148,7 +148,7 @@ public class Absorber implements Stationary {
 		if (!this.heldBalls.isEmpty()){
 			try {
 				Ball heldBall = this.heldBalls.take();
-				heldBall.setVelocity(new Vect(0.0,50.0));
+				heldBall.setPhysicsPackageVelocity(new Vect(0.0,50.0));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

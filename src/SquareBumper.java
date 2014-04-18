@@ -77,13 +77,13 @@ public class SquareBumper extends Bumper {
     	System.out.println("WE HAVE HIT A SQUARE BUMPER");
 		if (objectHit instanceof Circle){
 			Circle circleHit = (Circle) objectHit;
-			Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getVector(), b.getVelocity()); //don't need reflection coef because it's 1
-			b.setVelocity(newV);
+			Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getPhysicsPackageBallVector(), b.getPhysicsPackageVelocity()); //don't need reflection coef because it's 1
+			b.setPhysicsPackageVelocity(newV);
 		}
     	if (objectHit instanceof LineSegment){
     		LineSegment segmentHit = (LineSegment) objectHit;
-    		Vect newV = Geometry.reflectWall(segmentHit, b.getVelocity()); //don't need reflection coef because it's 1
-            b.setVelocity(newV);
+    		Vect newV = Geometry.reflectWall(segmentHit, b.getPhysicsPackageVelocity()); //don't need reflection coef because it's 1
+            b.setPhysicsPackageVelocity(newV);
     	}
 		
 	}

@@ -46,7 +46,7 @@ public class Ball {
     * @param newV the velocity to change the current velocity to
     */
    public void setPhysicsPackageVelocity(Vect newV) {
-       double newY = 20.0-newV.y();
+       double newY = 0.0-newV.y();
 	   this.velocity = new Vect(newV.x(), newY);
        
    }
@@ -76,7 +76,7 @@ public class Ball {
 	 */
 	public Vect getPhysicsPackageVelocity() {
 		double x = velocity.x();
-		double y = 20.0-velocity.y();
+		double y = 0.0-velocity.y();
 		return new Vect(x, y);
 	}
 
@@ -118,6 +118,11 @@ public class Ball {
 
 	public void setWallHit(String wallHit) {
 		this.wallHit = wallHit;
+	}
+
+	public void setPhysicsPackageBallVector(Vect vect) {
+		double y = 20.0-vect.y();
+		this.ballVector = new Vect(vect.x(), y);
 	}
 
 

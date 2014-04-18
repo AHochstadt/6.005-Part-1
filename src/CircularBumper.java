@@ -33,8 +33,9 @@ public class CircularBumper extends Bumper{
         this.y = y;
         this.physicsObjects = new ArrayList<Object>();
         //make sure to keep the +.5 in the lines below or make sure to keep the inputs to Vect and Circle doubles somehow
-        this.center = new Vect(x+.5,y+.5); //+.5 because (x, y) specifies the upper left corner of the gadget
-        this.circleRep = new Circle(x+.5,y+.5,0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
+        this.center = new Vect(x+.5,20.0-(y+.5)); //+.5 because (x, y) specifies the upper left corner of the gadget
+        //not sure if center should be treated as a physics object. It currently is.
+        this.circleRep = new Circle(x+.5,20.0-(y+.5),0.5); //+.5 because (x, y) specifies the upper left corner of the gadget
         this.physicsObjects.add(circleRep);
         }
     
