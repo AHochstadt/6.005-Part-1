@@ -1,9 +1,14 @@
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * 
@@ -12,19 +17,77 @@ import java.util.Queue;
  * A class representing a Pingball client
  * 
  * board: the Board instance this client is using to play
+ * 
+ * queue: the queue on the server that contains the Balls that left board
  *
  */
 public class PingballClient {
 
-    private final Board board = null; // will re-assign later
+    private Board board;
+    //private final BlockingQueue<Ball> queue; 
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    
+    public PingballClient(Board board) {
+        this.board = board;
+    }
+ 
+    /**
+     * Start up a new client playing Pingball 
+     * 
+     * @param board the Board this client is using to play
+     * @param queue the queue the server uses for processing Balls that have left some Client's Board
+     *        and will enter some other Client's board
+     * @param hostname the hostname of the server to connect to
+     * @param port the port of the server to connect to
+     * 
+     * @throws IOException if can't connect
+     */
+    public PingballClient(Board board, String hostname, int port) throws IOException {
+        this.board = board;
+        //this.queue = queue;  
+        this.socket = new Socket(hostname, port);
+        this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+    }
+    
+    public void background() {
+        
+        
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                // handle the client
+                try {
+                    handleConnection(socket);
+                }
+                catch (IOException e) {
+                    e.printStackTrace(); // but don't terminate serve()
+                }
+                finally {
+                    try {
+                        socket.close();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+        
+        while (true) {
+            // call this.board.update()
+        }
+    }
     
     /**
-     * Start up a new client playing Pingball
+     * Assign board to be the Board this client uses in playing Pingball
      * 
      * @param board the Board this client will use in playing Pingball
      */
-    public PingballClient(Board board) {
-        
+    public void setBoard(Board board) {
+        this.board = board;
     }
     
     /**
@@ -35,10 +98,11 @@ public class PingballClient {
     }
     
     /**
-     * If a ball will leave the current game Board, send a message to the server indicating as such
+     * If a Ball will leave the current game Board, add it to the server's queue
      */
-    public void sendBall() {
-        
+    public void sendBall(Ball ball) {
+        this.queue.add(ball);
+        this.board.removeBall(ball);
     }
     
     /**
@@ -46,6 +110,13 @@ public class PingballClient {
      */
     public void updateWalls() {
         
+    }
+    
+    /**
+     * Return the Board being used by this PingballClient
+     */
+    public Board getBoard() {
+        return this.board;
     }
     
     /**
@@ -61,12 +132,12 @@ public class PingballClient {
      * 
      * FILE is a required argument specifying a file pathname of the Pingball board that this client should run.
      * 
-     * @param args
+     * @param args command line arguments
      */
     public static void main(String[] args) {
-        int port = 10987;
-        File file = null;
         String host = null;
+        int port = 10987;
+        String filepath = null;
         
         Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
         try {
@@ -81,13 +152,15 @@ public class PingballClient {
                             throw new IllegalArgumentException("port " + port + " out of range");
                         }
                     } else if (flag.equals("--file")) {
-                        file = new File(arguments.remove());
+                        filepath = arguments.remove();
                         
-                        // TODO: Load the board from the file here, using the Parser 
-                        
-                        if ( ! file.isFile()) {
-                            throw new IllegalArgumentException("file not found: \"" + file + "\"");
+                        try {
+                            Board board = new Board(filepath);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
                         }
+                                                
                     } else {
                         throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
                     }
@@ -99,7 +172,7 @@ public class PingballClient {
             }
         } catch (IllegalArgumentException iae) {
             System.err.println(iae.getMessage());
-            System.err.println("PingballClient [--host HOST] [--port PORT] FILE");
+            System.err.println("usage: PingballClient [--host HOST] [--port PORT] FILE");
             return;
         }
 
