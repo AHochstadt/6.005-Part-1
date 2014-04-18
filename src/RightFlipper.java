@@ -77,8 +77,18 @@ public class RightFlipper implements Flipper{
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        //Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
-        //update xMov and yMov
+    	System.out.println("in MOVE");
+    	if (this.flipped){
+    		this.flipped = false;
+    		this.flippingBack =true;
+    		this.flipping = false; //this should already be false, but just in case
+    		this.notFlipped = true; //this should already be false, but just in case
+    	} else if (this.notFlipped){
+    		this.notFlipped = false;
+    		this.flipping =true;
+    		this.flippingBack = false; //this should already be false, but just in case
+    		this.flipped = true; //this should already be false, but just in case
+    	}
     }
     
     
@@ -127,6 +137,7 @@ public class RightFlipper implements Flipper{
 	
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
+		System.out.println("We've definitely hit a rightflipper. Flipped is "+this.isFlipped());
 		if (this.flipping){
 			if (objectHit instanceof LineSegment){//we've hit the flipper
 				LineSegment segmentHit = (LineSegment) objectHit;
@@ -173,7 +184,7 @@ public class RightFlipper implements Flipper{
     }
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		this.move();
 		
 	}
 	@Override
@@ -243,6 +254,7 @@ public class RightFlipper implements Flipper{
 	public void moveFlipper(double timestep) {
 		Circle proposedEndpt = new Circle(this.endPoint.getCenter().x(), this.endPoint.getCenter().y(), 0.0); //initiallizes to copy of current Endpoint
 		if (this.flipping) { //right flipper moving in the -theta direction
+			System.out.println("flipping");
 			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle((-1)*this.angularVelocity*timestep));
 			if (this.inBoundingBox(proposedEndpt)){
 				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);
@@ -262,6 +274,7 @@ public class RightFlipper implements Flipper{
 				}
 			}
 		} else if (this.flippingBack) { //right flipper moving in the +theta direction
+			System.out.println("flipping");
 			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle(this.angularVelocity*timestep));
 			if (this.inBoundingBox(proposedEndpt)){
 				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);

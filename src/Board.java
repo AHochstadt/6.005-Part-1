@@ -170,7 +170,9 @@ public class Board {
 			b.setBallVector(new Vect(b.getBallVector().x()+timeLeft*b.getVelocity().x(), b.getBallVector().y()+timeLeft*b.getVelocity().y())); //travels to the space with no collisions
 		}
 		for (Flipper f: this.flippers){
-			f.moveFlipper(timeLeft);
+			if (f.isFlipping() || f.isFlippingBack()){
+				f.moveFlipper(timeLeft);
+			}
 		}
 		
 	}

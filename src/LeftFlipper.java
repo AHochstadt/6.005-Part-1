@@ -72,16 +72,17 @@ public class LeftFlipper implements Flipper{
      * flipper will never move outside of the bounding box 
      */
     public void move() {
+    	System.out.println("in MOVE");
     	if (this.flipped){
     		this.flipped = false;
     		this.flippingBack =true;
     		this.flipping = false; //this should already be false, but just in case
-    		this.notFlipped = false; //this should already be false, but just in case
+    		this.notFlipped = true; //this should already be false, but just in case
     	} else if (this.notFlipped){
     		this.notFlipped = false;
     		this.flipping =true;
     		this.flippingBack = false; //this should already be false, but just in case
-    		this.flipped = false; //this should already be false, but just in case
+    		this.flipped = true; //this should already be false, but just in case
     	}
     }
     
@@ -132,6 +133,7 @@ public class LeftFlipper implements Flipper{
 	
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
+		System.out.println("We've definitely hit a leftflipper. Flipped is "+this.isFlipped());
 		if (this.flipping){
 			if (objectHit instanceof LineSegment){//we've hit the flipper
 				LineSegment segmentHit = (LineSegment) objectHit;
@@ -248,8 +250,10 @@ public class LeftFlipper implements Flipper{
 	}
 	@Override
 	public void moveFlipper(double timestep) {
+		System.out.println("in moveFlipper()");
 		Circle proposedEndpt = new Circle(this.endPoint.getCenter().x(), this.endPoint.getCenter().y(), 0.0); //initiallizes to copy of current Endpoint
 		if (this.flipping) { //left flipper moving in the +theta direction
+			System.out.println("flipping");
 			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle(this.angularVelocity*timestep));
 			if (this.inBoundingBox(proposedEndpt)){
 				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);
@@ -269,6 +273,7 @@ public class LeftFlipper implements Flipper{
 				}
 			}
 		} else if (this.flippingBack) { //left flipper moving in the -theta direction
+			System.out.println("flippingBack");
 			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle((-1)*this.angularVelocity*timestep));
 			if (this.inBoundingBox(proposedEndpt)){
 				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);
