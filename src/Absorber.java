@@ -137,9 +137,11 @@ public class Absorber implements Stationary {
      */
     @Override
 	public void trigger() {
-    	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
-    	triggeredGadget.action();
-	}
+        Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+        if (triggeredGadget != null) {
+            triggeredGadget.action();
+        }
+    }
 
 	@Override
 	public void action() { //shoots out a ball straight up at 50 L/sec, if the absorber is currently holding >= 1 ball
