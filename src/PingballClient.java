@@ -280,6 +280,13 @@ public class PingballClient {
                 synchronized(client.board) {
                     System.out.println(client.board.update(0.05));
                 }
+                synchronized(client.board){
+                	for(Ball outgoingBall: client.board.getOutgoingBalls()){
+                		client.board.balls.remove(outgoingBall);
+                		client.sendBall(outgoingBall);
+                	}
+                	client.board.outgoingBalls.clear();
+                }
                 // allow other threads access to client.board between updates
                 try {
                     Thread.sleep(50);
