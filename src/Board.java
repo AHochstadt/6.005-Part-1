@@ -548,7 +548,27 @@ public class Board {
      * @return String representation of the board's current state
      */
     public String getBoardRep() {
+        String tWall = "";
+        String bWall = "";
+        String rWall = "";
+        String lWall = "";
         Character[][] boardArray = new Character[20][20];
+        if (upWall.getName() != null) {
+            tWall = upWall.getName(); 
+        }
+
+        if (downWall.getName() != null) {
+            bWall = downWall.getName();
+        }
+
+        if (leftWall.getName() != null) {
+            lWall = leftWall.getName();
+        }
+
+        if (rightWall.getName() != null) {
+            rWall = rightWall.getName();
+        }
+
         for (int p = 0; p < 20; p++) {
             for (int q = 0; q < 20; q++) {
                 boardArray[p][q] = ' ';
@@ -710,8 +730,6 @@ public class Board {
 
                     }
 
-
-
                 }
             }
         }
@@ -722,17 +740,49 @@ public class Board {
         }
         
         String boardRep = ""; 
-        boardRep = boardRep + "....................\n";
+        for (int w = 0; w < 22; w++) {
+            System.out.println(tWall);
+            if (!tWall.isEmpty()) {
+                boardRep = boardRep + tWall.substring(0,1);
+                tWall = tWall.substring(1);
+            }
+            else {
+                boardRep = boardRep + '.';
+            }
+        }
+        boardRep = boardRep + "\n";
         for (int l = 0; l < 20; l++) {
-            boardRep = boardRep +'.';
+            if (!lWall.isEmpty()) {
+                boardRep = boardRep + lWall.substring(0, 1) ;
+                lWall = lWall.substring(1);
+            }
+            else {
+                boardRep = boardRep +'.';
+            }
             for (int m = 0; m < 20; m++) {
                 boardRep = boardRep + boardArray[m][l];
             }
+            if (!rWall.isEmpty()) {
+                boardRep = boardRep + rWall.substring(0, 1) ;
+                rWall = rWall.substring(1);
+            }
+            else {
+                boardRep = boardRep +'.';
+            }
             
-            boardRep = boardRep + ".\n";
+            boardRep = boardRep + "\n";
         }
         
-        boardRep = boardRep + "....................\n";
+        for (int g = 0; g < 22; g++) {
+            if (!bWall.isEmpty()) {
+                boardRep = boardRep + bWall.substring(0,1);
+                bWall = bWall.substring(1);
+            }
+            else {
+                boardRep = boardRep + '.';
+            }
+        }
+        boardRep = boardRep + "\n";
         return boardRep;
     }
 
