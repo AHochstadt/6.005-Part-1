@@ -160,7 +160,7 @@ public class Board {
      */
     private void updateWithoutCollision(double timeLeft) {
 		for (Ball b: balls){
-			b.setBallVector(new Vect(b.getX()+timeLeft*b.getVelocity().x(), b.getY()+timeLeft*b.getVelocity().y())); //travels to the space with no collisions
+			b.setBallVector(new Vect(b.getBallVector().x()+timeLeft*b.getVelocity().x(), b.getBallVector().y()+timeLeft*b.getVelocity().y())); //travels to the space with no collisions
 		}
 		
 	}
@@ -207,7 +207,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				s.trigger();
                 				s.getEffect(b, circleHit);
                 				collidedAlready = true;
@@ -224,7 +224,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				s.trigger();
                 				s.getEffect(b, lineSegmentHit);
                 				collidedAlready = true;
@@ -244,7 +244,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				s.getEffect(b, circleHit);
                 				collidedAlready = true;
                     		}
@@ -259,7 +259,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				s.getEffect(b, lineSegmentHit);
                 				collidedAlready = true;
                     		}
@@ -278,7 +278,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				f.getEffect(b, circleHit);
                 				collidedAlready = true;
                     		}
@@ -293,7 +293,7 @@ public class Board {
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
-                				b.setBallVector(new Vect(b.getX()+timeUntilCollision*b.getVelocity().x(), b.getY()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
+                				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
                 				f.getEffect(b, lineSegmentHit);
                 				collidedAlready = true;
                     		}
@@ -302,7 +302,7 @@ public class Board {
                 }
             }
             if (!collidedAlready){
-				b.setBallVector(new Vect(b.getX()+timeUntilFirstCollision*b.getVelocity().x(), b.getY()+timeUntilFirstCollision*b.getVelocity().y())); //travels to the space with no collisions
+				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilFirstCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilFirstCollision*b.getVelocity().y())); //travels to the space with no collisions
             }
             
         }	
@@ -574,8 +574,8 @@ public class Board {
             }
             
             for (Ball b: balls) {
-                int x = (int) b.getX();
-                int y = (int) b.getY();
+                int x = (int) b.getBallVector().x();
+                int y = (int) b.getBallVector().y();
                 boardArray[x][y] = '*';
                 
             }
