@@ -28,6 +28,10 @@ public class RightFlipper implements Flipper{
 	private boolean notFlipped = true; //whether the flipper is in the notFlipped position. We need notFlipped AND flipped because if the flipper is in motion, both are false
 	private double angularVelocity = 0.0; //starts at rest
 	private double reflectionCoeff =0.95; //default
+	private boolean flipping;
+	private boolean flippingBack;
+	private double x;
+	private double y;
     
     /**
      * Constructor for Right Flipper
@@ -39,6 +43,9 @@ public class RightFlipper implements Flipper{
      * @throws IOException if orientation != 0|90|180|270
      */
     RightFlipper(int x, int y, int orientation, String name) throws IOException {
+    	this.x = (double) x;
+    	this.y = (double) y;
+    	
     	this.setName(name);
     	this.physicsObjects = new ArrayList<Object>();
     	if (orientation == 0){
@@ -120,14 +127,36 @@ public class RightFlipper implements Flipper{
 	
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
-		if (objectHit instanceof LineSegment){//we've hit the flipper
-			LineSegment segmentHit = (LineSegment) objectHit;
-			Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff);
-			b.setVelocity(newVel);
-		} else if (objectHit instanceof Circle){
-			Circle circleHit = (Circle) objectHit;
-			Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
-			b.setVelocity(newVel);
+		if (this.flipping){
+			if (objectHit instanceof LineSegment){//we've hit the flipper
+				LineSegment segmentHit = (LineSegment) objectHit;
+				Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), (-1)*this.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff);
+				b.setPhysicsPackageVelocity(newVel);
+			} else if (objectHit instanceof Circle){
+				Circle circleHit = (Circle) objectHit;
+				Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), (-1)*this.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
+				b.setPhysicsPackageVelocity(newVel);
+			}
+		} else if (this.flippingBack){
+			if (objectHit instanceof LineSegment){//we've hit the flipper
+				LineSegment segmentHit = (LineSegment) objectHit;
+				Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), this.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff);
+				b.setPhysicsPackageVelocity(newVel);
+			} else if (objectHit instanceof Circle){
+				Circle circleHit = (Circle) objectHit;
+				Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), this.getAngularVelocity(), b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
+				b.setPhysicsPackageVelocity(newVel);
+			}
+		} else {
+			if (objectHit instanceof LineSegment){//we've hit the flipper
+				LineSegment segmentHit = (LineSegment) objectHit;
+				Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), 0.0, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff);
+				b.setPhysicsPackageVelocity(newVel);
+			} else if (objectHit instanceof Circle){
+				Circle circleHit = (Circle) objectHit;
+				Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), 0.0, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
+				b.setPhysicsPackageVelocity(newVel);
+			}
 		}
 		
 	}
@@ -175,11 +204,84 @@ public class RightFlipper implements Flipper{
     public double getOrientation() {
         return this.orientation;
     }
-
+    
     @Override
-    public void moveUpdate(int timeStep) {
-        // TODO Auto-generated method stub
-        
-    }
+	public boolean isFlipping() {
+		return flipping;
+	}
+    @Override
+	public void setFlipping(boolean flipping) {
+		this.flipping = flipping;
+	}
+    @Override
+	public boolean isFlippingBack() {
+		return flippingBack;
+	}
+    @Override
+	public void setFlippingBack(boolean flippingBack) {
+		this.flippingBack = flippingBack;
+	}
+	@Override
+	public Circle getPivot() {
+		return this.pivot;
+	}
+	@Override
+	public double getAngularVelocity() {
+		return this.angularVelocity;
+	}
+	@Override
+	public Circle getEndpt() {
+		return this.endPoint;
+	}
+	@Override
+	public boolean inBoundingBox(Circle proposedEndpt) {
+		double propX = proposedEndpt.getCenter().x();
+		double propY = 20.0-proposedEndpt.getCenter().y();
+		return ((propX<=this.x+2.0) && (propY<=this.y+2.0) && (propX>=this.x) && (propX>=this.x)); //proposed endpoints lie in the bounding box
+	}
+	@Override
+	public void moveFlipper(double timestep) {
+		Circle proposedEndpt = new Circle(this.endPoint.getCenter().x(), this.endPoint.getCenter().y(), 0.0); //initiallizes to copy of current Endpoint
+		if (this.flipping) { //right flipper moving in the -theta direction
+			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle((-1)*this.angularVelocity*timestep));
+			if (this.inBoundingBox(proposedEndpt)){
+				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);
+			} else { //TODO fix below right
+				this.flipped = true;
+				this.flipping = false;
+				this.notFlipped = false; //shouldn't be necessary but it doesn't hurt
+				this.flippingBack = false; //shouldn't be necessary but it doesn't hurt
+				if (this.orientation == 0.0){
+					this.endPoint = new Circle(this.x, 20-(this.y), 0.0);
+				} else if (this.orientation == 90.0){
+					this.endPoint = new Circle(this.x+2, 20-(this.y), 0.0);
+				} else if (this.orientation == 180.0){
+					this.endPoint = new Circle(this.x+2, 20-(this.y+2), 0.0);
+				} else if (this.orientation == 270.0){ //should be the last possibility
+					this.endPoint = new Circle(this.x, 20-(this.y+2), 0.0);
+				}
+			}
+		} else if (this.flippingBack) { //right flipper moving in the +theta direction
+			proposedEndpt = Geometry.rotateAround(this.getEndpt(), getPivot().getCenter(), new Angle(this.angularVelocity*timestep));
+			if (this.inBoundingBox(proposedEndpt)){
+				this.endPoint = new Circle(proposedEndpt.getCenter().x(), proposedEndpt.getCenter().y(), 0.0);
+			} else {
+				this.notFlipped = true;
+				this.flippingBack = false;
+				this.flipped = false; //shouldn't be necessary but it doesn't hurt
+				this.flipping = false; //shouldn't be necessary but it doesn't hurt
+				if (this.orientation == 0.0){
+					this.endPoint = new Circle(this.x+2, 20-(this.y+2), 0.0);
+				} else if (this.orientation == 90.0){
+					this.endPoint = new Circle(this.x, 20-(this.y+2), 0.0);
+				} else if (this.orientation == 180.0){
+					this.endPoint = new Circle(this.x, 20-(this.y), 0.0);
+				} else if (this.orientation == 270.0){ //should be the last possibility
+					this.endPoint = new Circle(this.x+2, 20-(this.y), 0.0);
+				}
+			}
+		}
+		this.flipper = new LineSegment(this.endPoint.getCenter().x(), this.endPoint.getCenter().y(), this.pivot.getCenter().x(), this.pivot.getCenter().y());
+	}
 
 }

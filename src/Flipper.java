@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import physics.Circle;
+import physics.Vect;
+
 /**
  * 
  * @author Lauren 
@@ -65,9 +68,26 @@ public interface Flipper extends Gadget {
      * returns a list of Circles and Segments that belong to the gadget or wall
      */
     public ArrayList<Object> getPhysicsObjects();
-    
-    /**
-     * method to be called to update the movement of the flipper
-     */
-    public void moveUpdate(int timeStep);
+
+	boolean isFlipped();
+
+	double getOrientation();
+
+	boolean isFlipping();
+
+	void setFlipping(boolean flipping);
+
+	boolean isFlippingBack();
+
+	void setFlippingBack(boolean flippingBack);
+
+	public Circle getPivot();
+
+	public double getAngularVelocity();
+
+	public Circle getEndpt();
+
+	public boolean inBoundingBox(Circle proposedEndpt);
+
+	public void moveFlipper(double timeLeft);
 }
