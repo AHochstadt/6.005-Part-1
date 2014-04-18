@@ -36,11 +36,11 @@ public class MainTest {
         System.out.println(listener.getFlippers());
         System.out.println(listener.getBalls());**/
         
-        //Board lauren = new Board("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard4.txt");
-        Board andrew = new Board("C:/Users/ahochstadt/pingball-phase1/src/sampleBoard2-1.txt");
+        Board lauren = new Board("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt");
+        //Board andrew = new Board("C:/Users/ahochstadt/pingball-phase1/src/sampleBoard2-1.txt");
         while (true) {
             Thread.sleep(50);
-            System.out.println(andrew.update(0.05));
+            System.out.println(lauren.update(0.05));
             
         }
     }

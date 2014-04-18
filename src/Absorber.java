@@ -110,10 +110,14 @@ public class Absorber implements Stationary {
     @Override
 	public void getEffect(Ball b, Object objectHit) {
     	System.out.println("WE'RE IN GETEFFECT");
-		if (!(b.getPhysicsPackageVelocity().y()>=0.0)){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber, sowe make sure that this is not the case
-			System.out.println("WE DEFINITELY HIT AN ABSORBER");
+    	if (this.heldBalls.contains(b)) {
+    	    //do nothing
+    	}
+    	
+    	else if (!(b.getPhysicsPackageVelocity().y()>=30.0)){ //if upward velocity >= 0.0, then the ball is being shot out of the absorber or is being held in the absorber, sowe make sure that this is not the case
 			b.setPhysicsPackageVelocity(new Vect(0.0, 0.0)); //stop the ball
 			b.setBallVector(new Vect(this.x+this.width-.25,this.y+this.height-.25));
+			b.inAbsorberQueue = true;
 			try {
 				this.heldBalls.put(b);
 			} catch (InterruptedException e) {
@@ -140,7 +144,9 @@ public class Absorber implements Stationary {
      */
     @Override
 	public void trigger() {
+        System.out.println(this.parentBoard.getTriggerMap());
         Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+        System.out.println(triggeredGadget);
         if (triggeredGadget != null) {
             triggeredGadget.action();
         }
@@ -152,6 +158,9 @@ public class Absorber implements Stationary {
 			try {
 				Ball heldBall = this.heldBalls.take();
 				heldBall.setPhysicsPackageVelocity(new Vect(0.0,50.0));
+	            heldBall.setPhysicsPackageBallVector(new Vect(heldBall.getPhysicsPackageBallVector().x(), y-height));
+	            heldBall.inAbsorberQueue = false;
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -135,11 +135,13 @@ public class Board {
     	double timeLeft = timestep;
     	
     	for (Ball b: balls) { //set all balls to their new velocities so we can begin updating
+    	    if (!b.inAbsorberQueue) {
     		double proposedXVel = b.getVelocity().x()*(1-this.friction1*timestep - this.friction2*b.getVelocity().x()*timestep); //from approximation formula given in assignment
     		double proposedYVel = b.getVelocity().y()*(1-this.friction1*timestep - this.friction2*b.getVelocity().y()*timestep); //from approximation formula given in assignment
     		proposedYVel += this.gravity*timestep; //approximate new y velocity due to gravity. += because +y is defined as down
     		Vect proposedVel = new Vect(proposedXVel, proposedYVel);
     		b.setVelocity(proposedVel);
+    	    }
     	}
     	
     	while (timeElapsed < timestep){
@@ -201,6 +203,7 @@ public class Board {
         }
     	for (int i=0; i<balls.size(); i++) {
     		Ball b = balls.get(i);
+    		if (!b.inAbsorberQueue) {
     		boolean collidedAlready = collidedArray.get(i);
     		
     		for (Stationary s: nonMovingParts) { //iterate through stationary gadgets
@@ -210,14 +213,15 @@ public class Board {
                 		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
-                				s.trigger();
+
                 				s.getEffect(b, circleHit);
+                                s.trigger();
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
                 				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
-                				s.trigger();
                 				s.getEffect(b, circleHit);
+                                s.trigger();
                 				collidedAlready = true;
                     		}
                 		}
@@ -227,14 +231,15 @@ public class Board {
                 		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
-                				s.trigger();
+
                 				s.getEffect(b, lineSegmentHit);
+                                s.trigger();
                 			}
                 		} else { //this ball has not yet collided
                 			if (timeUntilCollision<=timeUntilFirstCollision){//this is a collision
                 				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilCollision*b.getVelocity().y())); //travels to the space where the ball will collide
-                				s.trigger();
                 				s.getEffect(b, lineSegmentHit);
+                                s.trigger();
                 				collidedAlready = true;
                     		}
                 		}
@@ -385,6 +390,7 @@ public class Board {
 				b.setBallVector(new Vect(b.getBallVector().x()+timeUntilFirstCollision*b.getVelocity().x(), b.getBallVector().y()+timeUntilFirstCollision*b.getVelocity().y())); //travels to the space with no collisions
             }
         }
+    	}
 	}
 	/**
      * @author ahochstadt
@@ -394,6 +400,7 @@ public class Board {
     private double getTimeUntilFirstCollision(double timestep) {
     	double timeUntilFirstCollision = timestep + 1.0;
     	for (Ball b: balls) {
+    	    if (!b.inAbsorberQueue) {
             for (Stationary s: nonMovingParts) { //iterate through stationary gadgets
                 for (Object objectHit: s.getPhysicsObjects()){
                 	if (objectHit instanceof LineSegment){
@@ -502,7 +509,7 @@ public class Board {
                 	}
                 }
             }
-            
+    	    }
         }
         for (Ball ball1: balls) {
             for (Ball ball2: balls) {

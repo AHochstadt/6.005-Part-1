@@ -674,12 +674,11 @@ public class MakerListener extends BoardMakerBaseListener {
         for (String key : triggerMap.keySet()) {
             String value = triggerMap.get(key);
             for (Gadget g : allParts) {
-                if (g.getName() == value) {
+                if (g.getName().equals(value)) {
                     newMap.put(key, g);
                 }
             }
         }
-
         return newMap;
 
     }

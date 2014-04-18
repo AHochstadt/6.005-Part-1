@@ -20,6 +20,7 @@ public class Ball {
 	private String ballName;
 	private String boardName;
 	private String wallHit;
+    boolean inAbsorberQueue = false;
     
     public Ball(double x, double y, double xVel, double yVel, String ballName) {
         this.ballCircle = new Circle(x,y,0.25);
