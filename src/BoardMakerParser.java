@@ -23,9 +23,9 @@ public class BoardMakerParser extends Parser {
 		BALLLABLE=20, RIGHTFLIPPERLABLE=21, LEFTFLIPPERLABLE=22, ABSORBERLABLE=23, 
 		FIRELABLE=24, INTEGER=25, FLOAT=26, NAME=27;
 	public static final String[] tokenNames = {
-		"<INVALID>", "WHITESPACE", "COMMENT", "'name='", "'gravity='", "'x='", 
-		"'y='", "'xVelocity='", "'yVelocity='", "'orientation='", "'trigger='", 
-		"'action='", "'friction1='", "'friction2='", "'width='", "'height='", 
+		"<INVALID>", "WHITESPACE", "COMMENT", "NAMEFIELD", "GRAVITYFIELD", "XFIELD", 
+		"YFIELD", "XVELOCITYFIELD", "YVELOCITYFIELD", "ORIENTATIONFIELD", "TRIGGERFIELD", 
+		"ACTIONFIELD", "FRICTION1FIELD", "FRICTION2FIELD", "WIDTHFIELD", "HEIGHTFIELD", 
 		"'squareBumper'", "'circleBumper'", "'triangleBumper'", "'board'", "'ball'", 
 		"'rightFlipper'", "'leftFlipper'", "'absorber'", "'fire'", "INTEGER", 
 		"FLOAT", "NAME"
@@ -253,14 +253,36 @@ public class BoardMakerParser extends Parser {
 	public final BoardContext board() throws RecognitionException {
 		BoardContext _localctx = new BoardContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_board);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(66); match(BOARDLABLE);
 			setState(67); name();
-			setState(68); gravity();
-			setState(69); friction1();
-			setState(70); friction2();
+			setState(69);
+			_la = _input.LA(1);
+			if (_la==GRAVITYFIELD) {
+				{
+				setState(68); gravity();
+				}
+			}
+
+			setState(72);
+			_la = _input.LA(1);
+			if (_la==FRICTION1FIELD) {
+				{
+				setState(71); friction1();
+				}
+			}
+
+			setState(75);
+			_la = _input.LA(1);
+			if (_la==FRICTION2FIELD) {
+				{
+				setState(74); friction2();
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -311,12 +333,12 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(72); match(BALLLABLE);
-			setState(73); name();
-			setState(74); xball();
-			setState(75); yball();
-			setState(76); xvelocity();
-			setState(77); yvelocity();
+			setState(77); match(BALLLABLE);
+			setState(78); name();
+			setState(79); xball();
+			setState(80); yball();
+			setState(81); xvelocity();
+			setState(82); yvelocity();
 			}
 		}
 		catch (RecognitionException re) {
@@ -361,10 +383,10 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(79); match(SQUAREBUMPERLABLE);
-			setState(80); name();
-			setState(81); x();
-			setState(82); y();
+			setState(84); match(SQUAREBUMPERLABLE);
+			setState(85); name();
+			setState(86); x();
+			setState(87); y();
 			}
 		}
 		catch (RecognitionException re) {
@@ -409,10 +431,10 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(84); match(CIRCLEBUMPERLABLE);
-			setState(85); name();
-			setState(86); x();
-			setState(87); y();
+			setState(89); match(CIRCLEBUMPERLABLE);
+			setState(90); name();
+			setState(91); x();
+			setState(92); y();
 			}
 		}
 		catch (RecognitionException re) {
@@ -460,11 +482,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89); match(TRIANGLEBUMPERLABLE);
-			setState(90); name();
-			setState(91); x();
-			setState(92); y();
-			setState(93); orientation();
+			setState(94); match(TRIANGLEBUMPERLABLE);
+			setState(95); name();
+			setState(96); x();
+			setState(97); y();
+			setState(98); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -512,11 +534,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(95); match(RIGHTFLIPPERLABLE);
-			setState(96); name();
-			setState(97); x();
-			setState(98); y();
-			setState(99); orientation();
+			setState(100); match(RIGHTFLIPPERLABLE);
+			setState(101); name();
+			setState(102); x();
+			setState(103); y();
+			setState(104); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -564,11 +586,11 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101); match(LEFTFLIPPERLABLE);
-			setState(102); name();
-			setState(103); x();
-			setState(104); y();
-			setState(105); orientation();
+			setState(106); match(LEFTFLIPPERLABLE);
+			setState(107); name();
+			setState(108); x();
+			setState(109); y();
+			setState(110); orientation();
 			}
 		}
 		catch (RecognitionException re) {
@@ -619,12 +641,12 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(107); match(ABSORBERLABLE);
-			setState(108); name();
-			setState(109); x();
-			setState(110); y();
-			setState(111); width();
-			setState(112); height();
+			setState(112); match(ABSORBERLABLE);
+			setState(113); name();
+			setState(114); x();
+			setState(115); y();
+			setState(116); width();
+			setState(117); height();
 			}
 		}
 		catch (RecognitionException re) {
@@ -666,9 +688,9 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114); match(FIRELABLE);
-			setState(115); trigger();
-			setState(116); action();
+			setState(119); match(FIRELABLE);
+			setState(120); trigger();
+			setState(121); action();
 			}
 		}
 		catch (RecognitionException re) {
@@ -705,8 +727,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118); match(NAMEFIELD);
-			setState(119); match(NAME);
+			setState(123); match(NAMEFIELD);
+			setState(124); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -743,8 +765,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(121); match(GRAVITYFIELD);
-			setState(122); match(FLOAT);
+			setState(126); match(GRAVITYFIELD);
+			setState(127); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -781,8 +803,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124); match(FRICTION1FIELD);
-			setState(125); match(FLOAT);
+			setState(129); match(FRICTION1FIELD);
+			setState(130); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -819,8 +841,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(127); match(FRICTION2FIELD);
-			setState(128); match(FLOAT);
+			setState(132); match(FRICTION2FIELD);
+			setState(133); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -857,8 +879,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130); match(XFIELD);
-			setState(131); match(FLOAT);
+			setState(135); match(XFIELD);
+			setState(136); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -895,8 +917,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133); match(YFIELD);
-			setState(134); match(FLOAT);
+			setState(138); match(YFIELD);
+			setState(139); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -933,8 +955,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(136); match(XVELOCITYFIELD);
-			setState(137); match(FLOAT);
+			setState(141); match(XVELOCITYFIELD);
+			setState(142); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -971,8 +993,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(139); match(YVELOCITYFIELD);
-			setState(140); match(FLOAT);
+			setState(144); match(YVELOCITYFIELD);
+			setState(145); match(FLOAT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1009,8 +1031,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(142); match(ORIENTATIONFIELD);
-			setState(143); match(INTEGER);
+			setState(147); match(ORIENTATIONFIELD);
+			setState(148); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1047,8 +1069,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(145); match(XFIELD);
-			setState(146); match(INTEGER);
+			setState(150); match(XFIELD);
+			setState(151); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1085,8 +1107,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(148); match(YFIELD);
-			setState(149); match(INTEGER);
+			setState(153); match(YFIELD);
+			setState(154); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1123,8 +1145,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(151); match(TRIGGERFIELD);
-			setState(152); match(NAME);
+			setState(156); match(TRIGGERFIELD);
+			setState(157); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1161,8 +1183,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(154); match(ACTIONFIELD);
-			setState(155); match(NAME);
+			setState(159); match(ACTIONFIELD);
+			setState(160); match(NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1199,8 +1221,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(157); match(WIDTHFIELD);
-			setState(158); match(INTEGER);
+			setState(162); match(WIDTHFIELD);
+			setState(163); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1237,8 +1259,8 @@ public class BoardMakerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(160); match(HEIGHTFIELD);
-			setState(161); match(INTEGER);
+			setState(165); match(HEIGHTFIELD);
+			setState(166); match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1253,46 +1275,49 @@ public class BoardMakerParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\2\3\35\u00a6\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b"+
+		"\2\3\35\u00ab\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b"+
 		"\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t"+
 		"\20\4\21\t\21\4\22\t\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t"+
 		"\27\4\30\t\30\4\31\t\31\4\32\t\32\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
-		"\7\2>\n\2\f\2\16\2A\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3"+
-		"\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\3\16\3\16\3"+
-		"\16\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\22\3\22\3\22\3\23\3"+
-		"\23\3\23\3\24\3\24\3\24\3\25\3\25\3\25\3\26\3\26\3\26\3\27\3\27\3\27\3"+
-		"\30\3\30\3\30\3\31\3\31\3\31\3\32\3\32\3\32\3\32\2\33\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\2\u0094\2\64\3\2\2\2\4D\3\2\2\2"+
-		"\6J\3\2\2\2\bQ\3\2\2\2\nV\3\2\2\2\f[\3\2\2\2\16a\3\2\2\2\20g\3\2\2\2\22"+
-		"m\3\2\2\2\24t\3\2\2\2\26x\3\2\2\2\30{\3\2\2\2\32~\3\2\2\2\34\u0081\3\2"+
-		"\2\2\36\u0084\3\2\2\2 \u0087\3\2\2\2\"\u008a\3\2\2\2$\u008d\3\2\2\2&\u0090"+
-		"\3\2\2\2(\u0093\3\2\2\2*\u0096\3\2\2\2,\u0099\3\2\2\2.\u009c\3\2\2\2\60"+
-		"\u009f\3\2\2\2\62\u00a2\3\2\2\2\64?\5\4\3\2\65>\5\6\4\2\66>\5\b\5\2\67"+
-		">\5\n\6\28>\5\f\7\29>\5\16\b\2:>\5\20\t\2;>\5\22\n\2<>\5\24\13\2=\65\3"+
-		"\2\2\2=\66\3\2\2\2=\67\3\2\2\2=8\3\2\2\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2"+
-		"=<\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BC\7\1\2\2"+
-		"C\3\3\2\2\2DE\7\25\2\2EF\5\26\f\2FG\5\30\r\2GH\5\32\16\2HI\5\34\17\2I"+
-		"\5\3\2\2\2JK\7\26\2\2KL\5\26\f\2LM\5\36\20\2MN\5 \21\2NO\5\"\22\2OP\5"+
-		"$\23\2P\7\3\2\2\2QR\7\22\2\2RS\5\26\f\2ST\5(\25\2TU\5*\26\2U\t\3\2\2\2"+
-		"VW\7\23\2\2WX\5\26\f\2XY\5(\25\2YZ\5*\26\2Z\13\3\2\2\2[\\\7\24\2\2\\]"+
-		"\5\26\f\2]^\5(\25\2^_\5*\26\2_`\5&\24\2`\r\3\2\2\2ab\7\27\2\2bc\5\26\f"+
-		"\2cd\5(\25\2de\5*\26\2ef\5&\24\2f\17\3\2\2\2gh\7\30\2\2hi\5\26\f\2ij\5"+
-		"(\25\2jk\5*\26\2kl\5&\24\2l\21\3\2\2\2mn\7\31\2\2no\5\26\f\2op\5(\25\2"+
-		"pq\5*\26\2qr\5\60\31\2rs\5\62\32\2s\23\3\2\2\2tu\7\32\2\2uv\5,\27\2vw"+
-		"\5.\30\2w\25\3\2\2\2xy\7\5\2\2yz\7\35\2\2z\27\3\2\2\2{|\7\6\2\2|}\7\34"+
-		"\2\2}\31\3\2\2\2~\177\7\16\2\2\177\u0080\7\34\2\2\u0080\33\3\2\2\2\u0081"+
-		"\u0082\7\17\2\2\u0082\u0083\7\34\2\2\u0083\35\3\2\2\2\u0084\u0085\7\7"+
-		"\2\2\u0085\u0086\7\34\2\2\u0086\37\3\2\2\2\u0087\u0088\7\b\2\2\u0088\u0089"+
-		"\7\34\2\2\u0089!\3\2\2\2\u008a\u008b\7\t\2\2\u008b\u008c\7\34\2\2\u008c"+
-		"#\3\2\2\2\u008d\u008e\7\n\2\2\u008e\u008f\7\34\2\2\u008f%\3\2\2\2\u0090"+
-		"\u0091\7\13\2\2\u0091\u0092\7\33\2\2\u0092\'\3\2\2\2\u0093\u0094\7\7\2"+
-		"\2\u0094\u0095\7\33\2\2\u0095)\3\2\2\2\u0096\u0097\7\b\2\2\u0097\u0098"+
-		"\7\33\2\2\u0098+\3\2\2\2\u0099\u009a\7\f\2\2\u009a\u009b\7\35\2\2\u009b"+
-		"-\3\2\2\2\u009c\u009d\7\r\2\2\u009d\u009e\7\35\2\2\u009e/\3\2\2\2\u009f"+
-		"\u00a0\7\20\2\2\u00a0\u00a1\7\33\2\2\u00a1\61\3\2\2\2\u00a2\u00a3\7\21"+
-		"\2\2\u00a3\u00a4\7\33\2\2\u00a4\63\3\2\2\2\4=?";
+		"\7\2>\n\2\f\2\16\2A\13\2\3\2\3\2\3\3\3\3\3\3\5\3H\n\3\3\3\5\3K\n\3\3\3"+
+		"\5\3N\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6"+
+		"\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\f\3\f\3\f"+
+		"\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3"+
+		"\21\3\22\3\22\3\22\3\23\3\23\3\23\3\24\3\24\3\24\3\25\3\25\3\25\3\26\3"+
+		"\26\3\26\3\27\3\27\3\27\3\30\3\30\3\30\3\31\3\31\3\31\3\32\3\32\3\32\3"+
+		"\32\2\33\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\2\u009c"+
+		"\2\64\3\2\2\2\4D\3\2\2\2\6O\3\2\2\2\bV\3\2\2\2\n[\3\2\2\2\f`\3\2\2\2\16"+
+		"f\3\2\2\2\20l\3\2\2\2\22r\3\2\2\2\24y\3\2\2\2\26}\3\2\2\2\30\u0080\3\2"+
+		"\2\2\32\u0083\3\2\2\2\34\u0086\3\2\2\2\36\u0089\3\2\2\2 \u008c\3\2\2\2"+
+		"\"\u008f\3\2\2\2$\u0092\3\2\2\2&\u0095\3\2\2\2(\u0098\3\2\2\2*\u009b\3"+
+		"\2\2\2,\u009e\3\2\2\2.\u00a1\3\2\2\2\60\u00a4\3\2\2\2\62\u00a7\3\2\2\2"+
+		"\64?\5\4\3\2\65>\5\6\4\2\66>\5\b\5\2\67>\5\n\6\28>\5\f\7\29>\5\16\b\2"+
+		":>\5\20\t\2;>\5\22\n\2<>\5\24\13\2=\65\3\2\2\2=\66\3\2\2\2=\67\3\2\2\2"+
+		"=8\3\2\2\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2=<\3\2\2\2>A\3\2\2\2?=\3\2\2\2"+
+		"?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BC\7\1\2\2C\3\3\2\2\2DE\7\25\2\2EG\5\26"+
+		"\f\2FH\5\30\r\2GF\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IK\5\32\16\2JI\3\2\2\2JK"+
+		"\3\2\2\2KM\3\2\2\2LN\5\34\17\2ML\3\2\2\2MN\3\2\2\2N\5\3\2\2\2OP\7\26\2"+
+		"\2PQ\5\26\f\2QR\5\36\20\2RS\5 \21\2ST\5\"\22\2TU\5$\23\2U\7\3\2\2\2VW"+
+		"\7\22\2\2WX\5\26\f\2XY\5(\25\2YZ\5*\26\2Z\t\3\2\2\2[\\\7\23\2\2\\]\5\26"+
+		"\f\2]^\5(\25\2^_\5*\26\2_\13\3\2\2\2`a\7\24\2\2ab\5\26\f\2bc\5(\25\2c"+
+		"d\5*\26\2de\5&\24\2e\r\3\2\2\2fg\7\27\2\2gh\5\26\f\2hi\5(\25\2ij\5*\26"+
+		"\2jk\5&\24\2k\17\3\2\2\2lm\7\30\2\2mn\5\26\f\2no\5(\25\2op\5*\26\2pq\5"+
+		"&\24\2q\21\3\2\2\2rs\7\31\2\2st\5\26\f\2tu\5(\25\2uv\5*\26\2vw\5\60\31"+
+		"\2wx\5\62\32\2x\23\3\2\2\2yz\7\32\2\2z{\5,\27\2{|\5.\30\2|\25\3\2\2\2"+
+		"}~\7\5\2\2~\177\7\35\2\2\177\27\3\2\2\2\u0080\u0081\7\6\2\2\u0081\u0082"+
+		"\7\34\2\2\u0082\31\3\2\2\2\u0083\u0084\7\16\2\2\u0084\u0085\7\34\2\2\u0085"+
+		"\33\3\2\2\2\u0086\u0087\7\17\2\2\u0087\u0088\7\34\2\2\u0088\35\3\2\2\2"+
+		"\u0089\u008a\7\7\2\2\u008a\u008b\7\34\2\2\u008b\37\3\2\2\2\u008c\u008d"+
+		"\7\b\2\2\u008d\u008e\7\34\2\2\u008e!\3\2\2\2\u008f\u0090\7\t\2\2\u0090"+
+		"\u0091\7\34\2\2\u0091#\3\2\2\2\u0092\u0093\7\n\2\2\u0093\u0094\7\34\2"+
+		"\2\u0094%\3\2\2\2\u0095\u0096\7\13\2\2\u0096\u0097\7\33\2\2\u0097\'\3"+
+		"\2\2\2\u0098\u0099\7\7\2\2\u0099\u009a\7\33\2\2\u009a)\3\2\2\2\u009b\u009c"+
+		"\7\b\2\2\u009c\u009d\7\33\2\2\u009d+\3\2\2\2\u009e\u009f\7\f\2\2\u009f"+
+		"\u00a0\7\35\2\2\u00a0-\3\2\2\2\u00a1\u00a2\7\r\2\2\u00a2\u00a3\7\35\2"+
+		"\2\u00a3/\3\2\2\2\u00a4\u00a5\7\20\2\2\u00a5\u00a6\7\33\2\2\u00a6\61\3"+
+		"\2\2\2\u00a7\u00a8\7\21\2\2\u00a8\u00a9\7\33\2\2\u00a9\63\3\2\2\2\7=?"+
+		"GJM";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

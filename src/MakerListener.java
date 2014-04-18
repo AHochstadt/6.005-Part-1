@@ -296,7 +296,7 @@ public class MakerListener extends BoardMakerBaseListener {
     @Override
     public void exitBoard(BoardMakerParser.BoardContext ctx) {
         // board: NAMEFIELD NAME GRAVITYFIELD FLOAT FRICTION1FIELD FLOAT FRICTION2FIELD FLOAT;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < stack.size(); i++) {
             String value = stack.pop();
             String field = stack.pop();
             if (field.equals("name=")) {
