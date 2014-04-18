@@ -44,9 +44,7 @@ public class PingballServer {
     private final BlockingQueue<Ball> queue;
     
     private final Map<String, String> wallMap; //maps the connected walls to eachother. Keys and values take the form (left|right|up|down)boardname
-    
-    private final Map<String, PingballClient> clients;
-    
+        
     /**
      * Make a Pingball Server that listens for connections on port.
      * 
@@ -59,7 +57,8 @@ public class PingballServer {
     	this.socketMap = new ConcurrentHashMap<String, Socket>();
         this.serverSocket = new ServerSocket(port);        
         this.queue = new LinkedBlockingQueue<Ball>();  
-        this.clients = new ConcurrentHashMap<String, PingballClient>();
+        
+        background();
         
         checkRep();
     }
@@ -74,7 +73,7 @@ public class PingballServer {
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
                     while ((line = in.readLine()) != null) {
-                        // do stuff
+                        joinCommand(line);
                     }
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
@@ -161,9 +160,6 @@ public class PingballServer {
      * @throws IOException if socket connection is unsuccessful
      */
     private void handleRequest(String input) throws IOException {
-    	if (input.startsWith("h ") || input.startsWith("v ")){
-    		joinCommand(input);
-    	} 
     	if (input.startsWith("SENDBALL")){
     		sendBall(input);
     	}
@@ -394,7 +390,6 @@ public class PingballServer {
      */
     private void checkRep() {
         assert(this.queue != null);
-        assert(this.clients != null);
     }
 
 }
