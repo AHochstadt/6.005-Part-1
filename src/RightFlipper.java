@@ -70,7 +70,7 @@ public class RightFlipper implements Flipper{
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
+        //Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
         //update xMov and yMov
     }
     
@@ -120,7 +120,15 @@ public class RightFlipper implements Flipper{
 	
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
-		// TODO Auto-generated method stub
+		if (objectHit instanceof LineSegment){//we've hit the flipper
+			LineSegment segmentHit = (LineSegment) objectHit;
+			Vect newVel = Geometry.reflectRotatingWall(segmentHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff);
+			b.setVelocity(newVel);
+		} else if (objectHit instanceof Circle){
+			Circle circleHit = (Circle) objectHit;
+			Vect newVel = Geometry.reflectRotatingCircle(circleHit, this.pivot.getCenter(), this.angularVelocity, b.getCircle(), b.getVelocity(), this.reflectionCoeff); //if objectHit is our pivot, then we're rotating our pivot around our pivot, which is fine
+			b.setVelocity(newVel);
+		}
 		
 	}
 	/**
