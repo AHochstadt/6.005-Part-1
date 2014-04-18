@@ -57,16 +57,20 @@ public class Wall implements Stationary{
      */
 	@Override
 	public void getEffect(Ball b, Object objectHit) {
-		if (objectHit instanceof Circle){
-			Circle circleHit = (Circle) objectHit;
-			Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getVector(), b.getVelocity()); //don't need reflection coef because it's 1
-			b.setVelocity(newV);
+		if (this.isSolid()){
+			if (objectHit instanceof Circle){
+				Circle circleHit = (Circle) objectHit;
+				Vect newV = Geometry.reflectCircle(circleHit.getCenter(), b.getVector(), b.getVelocity()); //don't need reflection coef because it's 1
+				b.setVelocity(newV);
+			}
+	    	if (objectHit instanceof LineSegment){
+	    		LineSegment segmentHit = (LineSegment) objectHit;
+	    		Vect newV = Geometry.reflectWall(segmentHit, b.getVelocity()); //don't need reflection coef because it's 1
+	            b.setVelocity(newV);
+	    	}
+		} else { //send the ball away!
+			//board.sendBall(b);
 		}
-    	if (objectHit instanceof LineSegment){
-    		LineSegment segmentHit = (LineSegment) objectHit;
-    		Vect newV = Geometry.reflectWall(segmentHit, b.getVelocity()); //don't need reflection coef because it's 1
-            b.setVelocity(newV);
-    	}
 		
 	}
 
