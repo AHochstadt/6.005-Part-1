@@ -65,5 +65,9 @@ public interface Flipper extends Gadget {
      * returns a list of Circles and Segments that belong to the gadget or wall
      */
     public ArrayList<Object> getPhysicsObjects();
-
+    
+    /**
+     * method to be called to update the movement of the flipper
+     */
+    public void moveUpdate(int timeStep);
 }
