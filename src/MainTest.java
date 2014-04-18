@@ -1,5 +1,4 @@
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,7 +18,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 //this is function generating board 
 public class MainTest {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
         /**ANTLRInputStream stream = new ANTLRInputStream(new FileReader("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt"));
         BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -38,6 +37,9 @@ public class MainTest {
         System.out.println(listener.getBalls());**/
         
         Board b = new Board("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt");
-        System.out.println(b.getBoardRep());
+        while (true) {
+            Thread.sleep(50);
+            b.update(0.05);
+        }
     }
 }

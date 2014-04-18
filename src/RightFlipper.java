@@ -138,8 +138,10 @@ public class RightFlipper implements Flipper{
     @Override
 	public void trigger() {
     	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
-    	triggeredGadget.action();
-	}
+    	if (triggeredGadget != null) {
+    	    triggeredGadget.action();
+    	}
+    }
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub

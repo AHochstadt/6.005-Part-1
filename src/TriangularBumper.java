@@ -97,7 +97,9 @@ public class TriangularBumper extends Bumper {
     @Override
 	public void trigger() {
     	Gadget triggeredGadget = this.parentBoard.getTriggerMap().get(this.name);
+    	if (triggeredGadget != null) {
     	triggeredGadget.action();
+    	}
 	}
     
     @Override

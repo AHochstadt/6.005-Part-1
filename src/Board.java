@@ -94,7 +94,7 @@ public class Board {
 	        }
 
 	        this.boardName = listener.getBoardName();
-	        this.triggerMap.putAll(listener.getTriggerMap()); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
+	        this.triggerMap = listener.getTriggerMap(); //puts all of the mappings into a ConcurrentHashMap this.triggerMap
 	        
 	        for (Gadget g: listener.getPartsList()) {
 	            g.setParentBoard(this);
@@ -452,15 +452,12 @@ public class Board {
                 int fixedX = (int) ((Flipper) f).getFixedX();
                 int fixedY = (int) ((Flipper) f).getFixedY();
                 
-                System.out.println("fixedX" + ((Integer) fixedX).toString());
-                System.out.println("fixedY" + ((Integer) fixedY).toString());
 
                 if (f instanceof LeftFlipper) {
                     int orientation = (int) ((LeftFlipper) f).getOrientation();
                     boolean flipped = ((LeftFlipper) f).isFlipped();
 
                     if (orientation == 0) {
-                        System.out.println("I am making a left flipper");
                         if (flipped) {
                             boardArray[fixedX][fixedY] = '-';
                             boardArray[fixedX+1][fixedY] = '-';
@@ -526,9 +523,6 @@ public class Board {
                         }
 
                         else {
-                            System.out.println("I am making a right flipper");
-                            System.out.println(fixedX);
-                            System.out.println(fixedY);
                             boardArray[fixedX-1][fixedY] = '|';
                             boardArray[fixedX-1][fixedY+1] = '|';
 

@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -667,9 +668,9 @@ public class MakerListener extends BoardMakerBaseListener {
         return this.boardName;
     }
 
-    public HashMap<String, Gadget> getTriggerMap() {
+    public ConcurrentHashMap<String, Gadget> getTriggerMap() {
         // getNameMap() that returns a HashMap<String, Gadget>
-        HashMap<String, Gadget> newMap = new HashMap<String, Gadget>();
+        ConcurrentHashMap<String, Gadget> newMap = new ConcurrentHashMap<String, Gadget>();
         for (String key : triggerMap.keySet()) {
             String value = triggerMap.get(key);
             for (Gadget g : allParts) {
