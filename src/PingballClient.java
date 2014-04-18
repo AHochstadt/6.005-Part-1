@@ -10,16 +10,6 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-import org.antlr.*;
-import org.antlr.runtime.*;
-import org.antlr.v4.*;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
 /**
  * 
  * @author DylanJoss
@@ -28,7 +18,15 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  * 
  * board: the Board instance this client is using to play
  * 
- * queue: the queue on the server that contains messages from Clients
+ * socket: the socket with which the client is using to connect to the server
+ * 
+ * in: input stream from this client's socket
+ * 
+ * out: output stream to this client's socket
+ * 
+ * Rep Invariant: board may not be null
+ * 
+ * TODO: Thread-safety
  *
  */
 public class PingballClient {
@@ -39,25 +37,21 @@ public class PingballClient {
     private PrintWriter out;
     
     /**
-     * Start up a new client for single-machine Pingball 
+     * Start up a new client for single-machine Pingball play
      * 
      * @param board the Board this client is using to play
-     * @param hostname the hostname of the server to connect to
-     * @param port the port of the server to connect to
      */
     public PingballClient(Board board) {
         this.board = board;
-        this.socket = null;
-        this.in = null;
-        this.out = null;
+        
+        checkRep();
     }
  
     /**
-     * Start up a new client for client-machine Pingball 
+     * Start up a new client for client-server Pingball play
      * 
      * @param board the Board this client is using to play
-     * @param queue the queue the server uses for processing Balls that have left some Client's Board
-     *        and will enter some other Client's board
+     * @param socket the Socket with which the client is using to connect to the server
      * @param hostname the hostname of the server to connect to
      * @param port the port of the server to connect to
      * 
@@ -69,16 +63,20 @@ public class PingballClient {
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
         
-        // tell the server the name of its board 
+        // tell the server the name of its board so the server can keep track of the active client sockets
         this.out.println("MYNAMEIS" + this.board.getBoardName());
         
+        checkRep();
+        
+        // continuously listen for server input
         background();
     }
     
     /**
-     * Listen for messages from server
+     * Listen for messages from server in the background and process them as necessary.
+     * The wire protocol for the messages is described in the Javadoc of processServerInput
      */
-    public void background() {
+    private void background() {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 String line;
@@ -96,13 +94,25 @@ public class PingballClient {
     }
     
     /**
-     * Parse input from the server 
+     * Parse input from the server and take appropriate action.
      * 
-     * requires that line take one of the two forms
-     * "RECBALL ballX ballY ballVelX ballVelY ballName"
-     * "WALLIFY wallLoc"
+     * requires that line take one of the three forms
+     * "RECBALL ballX ballY ballVelX ballVelY ballName" - client is receiving a ball and must instantiate it with the appropriate parameters
+     *     before adding it to the Board
+     *     ballX: x-coordinate of the ball to be added
+     *     ballY: y-coordinate of the ball to be added
+     *     ballVelX: x-component of the velocity of the ball to be added
+     *     ballVelY: y-component of the velocity of the ball to be added
+     *     ballName: name of the ball to be added
+     * "WALLIFY wallLoc" - client is being told that one of its walls is now solid i.e. no longer connected to some other Board's wall
+     *     wallLoc: the location of the wall of the client that will now be solid ("left" or "right" or "up" or "down")
+     * "JOINWALL wallLoc boardName" - client is being told that one of its walls is now connected to some other Board's wall
+     *     wallLoc: the location of the wall of the client that will now be permeable ("left" or "right" or "up" or "down")
+     *     
+     * 
+     * @param line a line of input sent from the server
      */
-    public void processServerInput(String line) {
+    private void processServerInput(String line) {
         String[] lineList = line.split(" ");
         
         if (lineList[0].equals("RECBALL")) {
@@ -121,6 +131,7 @@ public class PingballClient {
             this.wallify(wallLoc);
         }
         
+        // JOINWALL
         else {
             String wallLoc = lineList[1];
             String boardName = lineList[2];
@@ -131,7 +142,13 @@ public class PingballClient {
     }
     
     /**
-     * Add a ball to the board
+     * Given the appropriate Ball parameters, instantiate and add a ball to the Board.
+     * 
+     * @param x x-coordinate of the ball to be added
+     * @param y y-coordinate of the ball to be added
+     * @param xVel x-component of the velocity of the ball to be added
+     * @param yVel y-component of the velocity of the ball to be added
+     * @param ballName name of the ball to be added
      */
     public void addBall(double x, double y, double xVel, double yVel, String ballName) {
         
@@ -140,22 +157,38 @@ public class PingballClient {
     }
     
     /**
-     * If a Ball will leave the current game Board, send a board message to the server
+     * If a Ball will leave the current game Board, send a SENDBALL message to the server indicating as such.
+     * 
+     * "SENDBALL boardName wallHit ballName ballX ballY ballVelX ballVelY"
+     *    boardName: the name of the Board this Ball came from
+     *    wallHit: the name of the wall this Ball "hit" before exiting the Board
+     *    ballX: the ball's x-coordinate
+     *    ballY: the ball's y-coordinate
+     *    ballVelX: the x-component of the ball's velocity
+     *    ballVelY: the y-component of the ball's velocity
+     * 
+     * @param ball the Ball which is leaving the Board
      */
     public void sendBall(Ball ball) {
-        this.out.println("SENDBALL" + " " + ball.getBoardName() + " " + ball.getWallHit() + " " + ball.getName() + " " + ball.getBallVector().x() + " " + ball.getBallVector().y() +
-                " " + ball.getBallVector().x() + " " + ball.getBallVector().y());
+        this.out.println("SENDBALL" + " " + ball.getBoardName() + " " + ball.getWallHit() + " " + ball.getName() + " " + 
+                ball.getBallVector().x() + " " + ball.getBallVector().y() + 
+                " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
     }
     
     /**
-     * Update the wall at wallLoc of this.board to indicate it is solid
+     * Update the wall at wallLoc of this.board to indicate it is solid.
+     * 
+     * @param wallLoc the location of the wall of the client that will now be solid ("left" or "right" or "up" or "down")
      */
     public void wallify(String wallLoc) {
         this.board.wallify(wallLoc);
     }
     
     /**
-     * Update the wall at wallLoc of this.board to indicate that it is connected to a wall of boardName
+     * Update the wall at wallLoc of this.board to indicate that it is connected to a wall of boardName.
+     * 
+     * @param wallLoc the location of the wall of the client that will now be permeable ("left" or "right" or "up" or "down")
+     * @param boardName the name of the board to which this wall will now be connected
      */
     public void joinWall(String wallLoc, String boardName) {
         this.board.connectWall(wallLoc, boardName);
@@ -209,10 +242,7 @@ public class PingballClient {
                             throw new IllegalArgumentException("file not found: \"" + file + "\"");
                         }
                     }
-                                                                  
-//                    else {
-//                        throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
-//                    }
+
                 } catch (NoSuchElementException nsee) {
                     throw new IllegalArgumentException("missing argument for " + flag);
                 } catch (NumberFormatException nfe) {
@@ -227,16 +257,13 @@ public class PingballClient {
 
         try {
             PingballClient client;
-            //Board b = new Board("/Users/DylanJoss/Documents/MIT Spring 2014/6.005/pingball-phase1/src/sampleBoard1.txt");
+            // Start up in single-machine play
             if (host == null) {
-                // TODO: start up this client in single-machine play
                 client = new PingballClient(new Board(filepath));
-                //client = new PingballClient(b);
             }
+            // Start up in client-server play
             else {
-                // TODO: connect to the server and start up this client in client-server play
                 client = new PingballClient(new Board(filepath), host, port);
-                //client = new PingballClient(b, host, port);
             }
             
             while (true) {
@@ -246,5 +273,12 @@ public class PingballClient {
         } catch (IOException e) {
             e.printStackTrace();
         }        
+    }
+    
+    /**
+     * Ensure the rep invariant of PingballClient is maintained at all times.
+     */
+    private void checkRep() {
+        assert(this.board != null);
     }
 }
