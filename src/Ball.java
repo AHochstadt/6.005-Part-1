@@ -125,6 +125,8 @@ public class Ball {
 
 	public void setBallVector(Vect ballVector) {
 		this.ballVector = ballVector;
+		this.x = ballVector.x();
+		this.y = ballVector.y();
 	}
 
 	public String getName() {
