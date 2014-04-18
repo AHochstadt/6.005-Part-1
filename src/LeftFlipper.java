@@ -67,8 +67,8 @@ public class LeftFlipper implements Flipper{
      * flipper will never move outside of the bounding box 
      */
     public void move() {
-        Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
-        Geometry.rotateAround(this.endPoint, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
+        //Geometry.rotateAround(this.flipper, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
+        //Geometry.rotateAround(this.endPoint, new Vect(this.pivot.getCenter().x(), this.pivot.getCenter().y()), new Angle(90));
     }
     
     
@@ -168,6 +168,9 @@ public class LeftFlipper implements Flipper{
     
     public boolean isFlipped(){
     	return this.flipped;
+    }
+    public double getOrientation() {
+        return this.orientation;
     }
 
 
