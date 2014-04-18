@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,11 +33,12 @@ import physics.Vect;
 *
 * Rep invariant: flippers, stationaryItems, and balls all must not be null
 **/ 
-public class Board {
+public class Board {	
+	public ArrayList<Ball> outgoingBalls = new ArrayList<Ball>(); 
 	private ConcurrentHashMap<String, Gadget> triggerMap = new ConcurrentHashMap<String, Gadget>();
     private ArrayList<Stationary> nonMovingParts = null; //includes all gadgets and walls--basically anything that a ball can collide with except for other balls.
     private ArrayList<Flipper> flippers = null;
-    private ArrayList<Ball> balls = null; //not final becuase balls can be added 
+    public ArrayList<Ball> balls = null; //not final becuase balls can be added 
     private ArrayList<Wall> walls = null;
     private String leftWallName = ""; //either states the name of the board the wall is connected to or the empty string if it is a solid wall
     private String rightWallName = ""; //either states the name of the board the wall is connected to or the empty string if it is a solid wall
@@ -81,6 +83,7 @@ public class Board {
 	        this.nonMovingParts = listener.getStationary();
 	        this.flippers = listener.getFlippers();
 	        this.balls = listener.getBalls();
+	       
 
 	        int badNumber = -9999;
 	        if (listener.getGravity() != badNumber){
@@ -152,6 +155,7 @@ public class Board {
 	    	}
 	    	
     	}
+    	
     	return getBoardRep();
     }
     
@@ -857,6 +861,14 @@ public class Board {
 	}
 	public ConcurrentHashMap<String, Gadget> getTriggerMap(){
 		return this.triggerMap;
+	}
+
+	public ArrayList<Ball> getOutgoingBalls() {
+		return outgoingBalls;
+	}
+
+	public void setOutgoingBalls(ArrayList<Ball> outgoingBalls) {
+		this.outgoingBalls = outgoingBalls;
 	}
 
 }

@@ -68,8 +68,9 @@ public class Wall implements Stationary{
 	    		Vect newV = Geometry.reflectWall(segmentHit, b.getPhysicsPackageVelocity()); //don't need reflection coef because it's 1
 	            b.setPhysicsPackageVelocity(newV);
 	    	}
-		} else { //send the ball away!
-			//board.sendBall(b);
+		} else { 
+			b.setWallHit(this.location);
+			parentBoard.outgoingBalls.add(b);
 		}
 		
 	}
