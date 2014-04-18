@@ -20,7 +20,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class MainTest {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        ANTLRInputStream stream = new ANTLRInputStream(new FileReader("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt"));
+        /**ANTLRInputStream stream = new ANTLRInputStream(new FileReader("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt"));
         BoardMakerLexer lexer = new BoardMakerLexer((org.antlr.v4.runtime.CharStream) stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         BoardMakerParser parser = new BoardMakerParser((org.antlr.v4.runtime.TokenStream) tokens);
@@ -34,5 +34,10 @@ public class MainTest {
         listener.getFlippers();
         listener.getBalls();
         System.out.println(listener.getStationary());
+        System.out.println(listener.getFlippers());
+        System.out.println(listener.getBalls());**/
+        
+        Board b = new Board("/Users/Catherine/Dropbox/Classes/Spring2014/6.005/pingball-phase1/src/sampleBoard1.txt");
+        System.out.println(b.getBoardRep());
     }
 }

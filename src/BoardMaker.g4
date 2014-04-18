@@ -1,5 +1,7 @@
 grammar BoardMaker;
 
+//Collaboration Statement: Used code from recitation as a basis for this grammar 
+
 // This puts a Java package statement at the top of the output Java files.
 @header {
 }
@@ -29,16 +31,16 @@ grammar BoardMaker;
  * *** ANTLR requires tokens to be CAPITALIZED, like START_ITALIC, END_ITALIC, and TEXT.
  */
 
-INTEGER : [0-9]+;
-FLOAT : '-'?([0-9]+'.'[0-9]*|'.'?[0-9]+);
-NAME :[A-Za-z_][A-Za-z_0-9]*;
+
+WHITESPACE : [ \t\r\n]+ -> skip ;
+COMMENT : '#' ~('\n'|'\r')* '\r'? '\n'-> skip;
 
 NAMEFIELD: 'name=';
 GRAVITYFIELD: 'gravity=';
 XFIELD: 'x=';
 YFIELD: 'y=';
-XVELOCITYFIELD: 'xvelocity=';
-YVELOCITYFIELD: 'yvelocity=';
+XVELOCITYFIELD: 'xVelocity=';
+YVELOCITYFIELD: 'yVelocity=';
 ORIENTATIONFIELD: 'orientation=';
 TRIGGERFIELD: 'trigger=';
 ACTIONFIELD: 'action=';
@@ -55,6 +57,12 @@ RIGHTFLIPPERLABLE: 'rightFlipper';
 LEFTFLIPPERLABLE: 'leftFlipper';
 ABSORBERLABLE: 'absorber';
 FIRELABLE: 'fire';
+
+INTEGER : [0-9]+;
+FLOAT : '-'?([0-9]+'.'[0-9]*|'.'?[0-9]+);
+NAME :[A-Za-z_][A-Za-z_0-9]*;
+
+
 
 
 
@@ -90,5 +98,4 @@ width: WIDTHFIELD INTEGER;
 height: HEIGHTFIELD INTEGER;
 
 
-COMMENT : '#' ~('\n'|'\r')* '\r'? '\n'-> skip;
-WHITESPACE : [ \t\r\n]+ -> skip ;
+

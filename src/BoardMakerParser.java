@@ -16,19 +16,19 @@ public class BoardMakerParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		INTEGER=1, FLOAT=2, NAME=3, NAMEFIELD=4, GRAVITYFIELD=5, XFIELD=6, YFIELD=7, 
-		XVELOCITYFIELD=8, YVELOCITYFIELD=9, ORIENTATIONFIELD=10, TRIGGERFIELD=11, 
-		ACTIONFIELD=12, FRICTION1FIELD=13, FRICTION2FIELD=14, WIDTHFIELD=15, HEIGHTFIELD=16, 
-		SQUAREBUMPERLABLE=17, CIRCLEBUMPERLABLE=18, TRIANGLEBUMPERLABLE=19, BOARDLABLE=20, 
-		BALLLABLE=21, RIGHTFLIPPERLABLE=22, LEFTFLIPPERLABLE=23, ABSORBERLABLE=24, 
-		FIRELABLE=25, COMMENT=26, WHITESPACE=27;
+		WHITESPACE=1, COMMENT=2, NAMEFIELD=3, GRAVITYFIELD=4, XFIELD=5, YFIELD=6, 
+		XVELOCITYFIELD=7, YVELOCITYFIELD=8, ORIENTATIONFIELD=9, TRIGGERFIELD=10, 
+		ACTIONFIELD=11, FRICTION1FIELD=12, FRICTION2FIELD=13, WIDTHFIELD=14, HEIGHTFIELD=15, 
+		SQUAREBUMPERLABLE=16, CIRCLEBUMPERLABLE=17, TRIANGLEBUMPERLABLE=18, BOARDLABLE=19, 
+		BALLLABLE=20, RIGHTFLIPPERLABLE=21, LEFTFLIPPERLABLE=22, ABSORBERLABLE=23, 
+		FIRELABLE=24, INTEGER=25, FLOAT=26, NAME=27;
 	public static final String[] tokenNames = {
-		"<INVALID>", "INTEGER", "FLOAT", "NAME", "'name='", "'gravity='", "'x='", 
-		"'y='", "'xvelocity='", "'yvelocity='", "'orientation='", "'trigger='", 
+		"<INVALID>", "WHITESPACE", "COMMENT", "'name='", "'gravity='", "'x='", 
+		"'y='", "'xVelocity='", "'yVelocity='", "'orientation='", "'trigger='", 
 		"'action='", "'friction1='", "'friction2='", "'width='", "'height='", 
 		"'squareBumper'", "'circleBumper'", "'triangleBumper'", "'board'", "'ball'", 
-		"'rightFlipper'", "'leftFlipper'", "'absorber'", "'fire'", "COMMENT", 
-		"WHITESPACE"
+		"'rightFlipper'", "'leftFlipper'", "'absorber'", "'fire'", "INTEGER", 
+		"FLOAT", "NAME"
 	};
 	public static final int
 		RULE_file = 0, RULE_board = 1, RULE_ball = 2, RULE_squareBumper = 3, RULE_circleBumper = 4, 
@@ -1273,26 +1273,26 @@ public class BoardMakerParser extends Parser {
 		">\5\n\6\28>\5\f\7\29>\5\16\b\2:>\5\20\t\2;>\5\22\n\2<>\5\24\13\2=\65\3"+
 		"\2\2\2=\66\3\2\2\2=\67\3\2\2\2=8\3\2\2\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2"+
 		"=<\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BC\7\1\2\2"+
-		"C\3\3\2\2\2DE\7\26\2\2EF\5\26\f\2FG\5\30\r\2GH\5\32\16\2HI\5\34\17\2I"+
-		"\5\3\2\2\2JK\7\27\2\2KL\5\26\f\2LM\5\36\20\2MN\5 \21\2NO\5\"\22\2OP\5"+
-		"$\23\2P\7\3\2\2\2QR\7\23\2\2RS\5\26\f\2ST\5(\25\2TU\5*\26\2U\t\3\2\2\2"+
-		"VW\7\24\2\2WX\5\26\f\2XY\5(\25\2YZ\5*\26\2Z\13\3\2\2\2[\\\7\25\2\2\\]"+
-		"\5\26\f\2]^\5(\25\2^_\5*\26\2_`\5&\24\2`\r\3\2\2\2ab\7\30\2\2bc\5\26\f"+
-		"\2cd\5(\25\2de\5*\26\2ef\5&\24\2f\17\3\2\2\2gh\7\31\2\2hi\5\26\f\2ij\5"+
-		"(\25\2jk\5*\26\2kl\5&\24\2l\21\3\2\2\2mn\7\32\2\2no\5\26\f\2op\5(\25\2"+
-		"pq\5*\26\2qr\5\60\31\2rs\5\62\32\2s\23\3\2\2\2tu\7\33\2\2uv\5,\27\2vw"+
-		"\5.\30\2w\25\3\2\2\2xy\7\6\2\2yz\7\5\2\2z\27\3\2\2\2{|\7\7\2\2|}\7\4\2"+
-		"\2}\31\3\2\2\2~\177\7\17\2\2\177\u0080\7\4\2\2\u0080\33\3\2\2\2\u0081"+
-		"\u0082\7\20\2\2\u0082\u0083\7\4\2\2\u0083\35\3\2\2\2\u0084\u0085\7\b\2"+
-		"\2\u0085\u0086\7\4\2\2\u0086\37\3\2\2\2\u0087\u0088\7\t\2\2\u0088\u0089"+
-		"\7\4\2\2\u0089!\3\2\2\2\u008a\u008b\7\n\2\2\u008b\u008c\7\4\2\2\u008c"+
-		"#\3\2\2\2\u008d\u008e\7\13\2\2\u008e\u008f\7\4\2\2\u008f%\3\2\2\2\u0090"+
-		"\u0091\7\f\2\2\u0091\u0092\7\3\2\2\u0092\'\3\2\2\2\u0093\u0094\7\b\2\2"+
-		"\u0094\u0095\7\3\2\2\u0095)\3\2\2\2\u0096\u0097\7\t\2\2\u0097\u0098\7"+
-		"\3\2\2\u0098+\3\2\2\2\u0099\u009a\7\r\2\2\u009a\u009b\7\5\2\2\u009b-\3"+
-		"\2\2\2\u009c\u009d\7\16\2\2\u009d\u009e\7\5\2\2\u009e/\3\2\2\2\u009f\u00a0"+
-		"\7\21\2\2\u00a0\u00a1\7\3\2\2\u00a1\61\3\2\2\2\u00a2\u00a3\7\22\2\2\u00a3"+
-		"\u00a4\7\3\2\2\u00a4\63\3\2\2\2\4=?";
+		"C\3\3\2\2\2DE\7\25\2\2EF\5\26\f\2FG\5\30\r\2GH\5\32\16\2HI\5\34\17\2I"+
+		"\5\3\2\2\2JK\7\26\2\2KL\5\26\f\2LM\5\36\20\2MN\5 \21\2NO\5\"\22\2OP\5"+
+		"$\23\2P\7\3\2\2\2QR\7\22\2\2RS\5\26\f\2ST\5(\25\2TU\5*\26\2U\t\3\2\2\2"+
+		"VW\7\23\2\2WX\5\26\f\2XY\5(\25\2YZ\5*\26\2Z\13\3\2\2\2[\\\7\24\2\2\\]"+
+		"\5\26\f\2]^\5(\25\2^_\5*\26\2_`\5&\24\2`\r\3\2\2\2ab\7\27\2\2bc\5\26\f"+
+		"\2cd\5(\25\2de\5*\26\2ef\5&\24\2f\17\3\2\2\2gh\7\30\2\2hi\5\26\f\2ij\5"+
+		"(\25\2jk\5*\26\2kl\5&\24\2l\21\3\2\2\2mn\7\31\2\2no\5\26\f\2op\5(\25\2"+
+		"pq\5*\26\2qr\5\60\31\2rs\5\62\32\2s\23\3\2\2\2tu\7\32\2\2uv\5,\27\2vw"+
+		"\5.\30\2w\25\3\2\2\2xy\7\5\2\2yz\7\35\2\2z\27\3\2\2\2{|\7\6\2\2|}\7\34"+
+		"\2\2}\31\3\2\2\2~\177\7\16\2\2\177\u0080\7\34\2\2\u0080\33\3\2\2\2\u0081"+
+		"\u0082\7\17\2\2\u0082\u0083\7\34\2\2\u0083\35\3\2\2\2\u0084\u0085\7\7"+
+		"\2\2\u0085\u0086\7\34\2\2\u0086\37\3\2\2\2\u0087\u0088\7\b\2\2\u0088\u0089"+
+		"\7\34\2\2\u0089!\3\2\2\2\u008a\u008b\7\t\2\2\u008b\u008c\7\34\2\2\u008c"+
+		"#\3\2\2\2\u008d\u008e\7\n\2\2\u008e\u008f\7\34\2\2\u008f%\3\2\2\2\u0090"+
+		"\u0091\7\13\2\2\u0091\u0092\7\33\2\2\u0092\'\3\2\2\2\u0093\u0094\7\7\2"+
+		"\2\u0094\u0095\7\33\2\2\u0095)\3\2\2\2\u0096\u0097\7\b\2\2\u0097\u0098"+
+		"\7\33\2\2\u0098+\3\2\2\2\u0099\u009a\7\f\2\2\u009a\u009b\7\35\2\2\u009b"+
+		"-\3\2\2\2\u009c\u009d\7\r\2\2\u009d\u009e\7\35\2\2\u009e/\3\2\2\2\u009f"+
+		"\u00a0\7\20\2\2\u00a0\u00a1\7\33\2\2\u00a1\61\3\2\2\2\u00a2\u00a3\7\21"+
+		"\2\2\u00a3\u00a4\7\33\2\2\u00a4\63\3\2\2\2\4=?";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

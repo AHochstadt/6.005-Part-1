@@ -44,7 +44,9 @@ public class TriangularBumper extends Bumper {
     	this.y = (double) y;
     	this.orientation = (double) orientation;
     	this.name = name;
-    	
+    	this.sides = new ArrayList<LineSegment>();
+    	this.corners = new ArrayList<Circle>();
+    	this.physicsObjects = new ArrayList<Object>();
     	
     	if (orientation == 0){
     		side1 = new LineSegment(this.x, this.y+1, this.x, this.y);
@@ -123,6 +125,15 @@ public class TriangularBumper extends Bumper {
     @Override
     public ArrayList<Object> getPhysicsObjects(){
     	return this.physicsObjects;
+    }
+
+
+    public double getX() {
+        return this.x;
+    }
+    
+    public double getY() {
+        return this.y;
     }
 
 }

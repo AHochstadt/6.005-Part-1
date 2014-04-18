@@ -37,6 +37,7 @@ public class LeftFlipper implements Flipper{
      * @throws IOException if orientation does not equal 0|90|180|270
      */
     LeftFlipper(int x, int y, int orientation, String name) throws IOException {
+        this.physicsObjects = new ArrayList<Object>();
     	this.setName(name);
     	if (orientation == 0){
     		this.flipper = new LineSegment((double) x,(double) y,(double) x, (double) y+2);

@@ -35,6 +35,8 @@ public interface Stationary extends Gadget{
      */
     public ArrayList<Object> getPhysicsObjects();
 
+    String getName();
+
 
 
 
