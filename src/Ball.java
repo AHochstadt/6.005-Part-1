@@ -41,6 +41,15 @@ public class Ball {
         this.velocity = newV;
         
     }
+    /**
+    * 
+    * @param newV the velocity to change the current velocity to
+    */
+   public void setPhysicsPackageVelocity(Vect newV) {
+       double newY = 20.0-newV.y();
+	   this.velocity = new Vect(newV.x(), newY);
+       
+   }
     
     public Circle getCircle() {
         return new Circle(ballVector.x(), ballVector.y(), 0.25);

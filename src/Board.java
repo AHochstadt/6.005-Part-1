@@ -199,7 +199,7 @@ public class Board {
                 for (Object objectHit: s.getPhysicsObjects()){
                 	if (objectHit instanceof Circle){ 
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				s.trigger();
@@ -216,7 +216,7 @@ public class Board {
                 		
                 	} else if (objectHit instanceof LineSegment){ //if it's not a Circle, it should hypothetically be a LineSegment
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				s.trigger();
@@ -237,7 +237,7 @@ public class Board {
             	for (Object objectHit: s.getPhysicsObjects()){
                 	if (objectHit instanceof Circle){ 
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				s.getEffect(b, circleHit);
@@ -252,7 +252,7 @@ public class Board {
                 		
                 	} else if (objectHit instanceof LineSegment){ //if it's not a Circle, it should hypothetically be a LineSegment
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				s.getEffect(b, lineSegmentHit);
@@ -271,7 +271,7 @@ public class Board {
             	for (Object objectHit: f.getPhysicsObjects()){
                 	if (objectHit instanceof Circle){ 
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				f.getEffect(b, circleHit);
@@ -286,7 +286,7 @@ public class Board {
                 		
                 	} else if (objectHit instanceof LineSegment){ //if it's not a Circle, it should hypothetically be a LineSegment
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if(collidedAlready){
                 			if (timeUntilCollision==0.0){//this is a collision
                 				f.getEffect(b, lineSegmentHit);
@@ -320,7 +320,7 @@ public class Board {
                 for (Object objectHit: s.getPhysicsObjects()){
                 	if (objectHit instanceof LineSegment){
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (lineSegmentHit.p1().x() == 0.0 && lineSegmentHit.p1().y() == 2.0 && lineSegmentHit.p2().x() == 1.0 && lineSegmentHit.p2().y() == 2.0){ //this is the first wall of the square bumper
                 			System.out.println(timeUntilCollision);
                 			System.out.println(b.getBallVector());
@@ -330,7 +330,7 @@ public class Board {
                 		}
                 	} else if (objectHit instanceof Circle){ //if it's not a LineSegment, it should hypothetically be a circle
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
@@ -341,13 +341,13 @@ public class Board {
                 for (Object objectHit: s.getPhysicsObjects()){
                 	if (objectHit instanceof LineSegment){
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
                 	} else if (objectHit instanceof Circle){ //if it's not a LineSegment, it should hypothetically be a circle
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
@@ -358,13 +358,13 @@ public class Board {
                 for (Object objectHit: f.getPhysicsObjects()){
                 	if (objectHit instanceof LineSegment){
             			LineSegment lineSegmentHit = (LineSegment) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilWallCollision(lineSegmentHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
                 	} else if (objectHit instanceof Circle){ //if it's not a LineSegment, it should hypothetically be a circle
                 		Circle circleHit = (Circle) objectHit;
-                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getCircle(), b.getVelocity());
+                		double timeUntilCollision = Geometry.timeUntilCircleCollision(circleHit, b.getPhysicsPackageCircle(), b.getPhysicsPackageVelocity());
                 		if (timeUntilCollision<timeUntilFirstCollision){
                 			timeUntilFirstCollision = timeUntilCollision;
                 		}
@@ -376,7 +376,7 @@ public class Board {
         for (Ball ball1: balls) {
             for (Ball ball2: balls) {
             	if (!ball1.equals(ball2)){ //make sure that the balls are different balls
-	                double timeUntilCollision = Geometry.timeUntilBallBallCollision(ball1.getCircle(), ball1.getVelocity(), ball2.getCircle(), ball2.getVelocity());
+	                double timeUntilCollision = Geometry.timeUntilBallBallCollision(ball1.getPhysicsPackageCircle(), ball1.getPhysicsPackageVelocity(), ball2.getPhysicsPackageCircle(), ball2.getPhysicsPackageVelocity());
 	                if (timeUntilCollision<timeUntilFirstCollision){
 	        			timeUntilFirstCollision = timeUntilCollision;
 	        		}
